@@ -23,7 +23,7 @@ const About = () => {
           className="text-center mb-16"
         >
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Đá Ong Chu Lai - Đá của ngôi nhà Việt
+            Đá ong Chu Lai - Đá của ngôi nhà Việt
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Chuyên cung cấp đá ong tự nhiên chất lượng cao, góp phần tạo nên những công trình kiến trúc độc đáo và bền vững.
@@ -40,7 +40,7 @@ const About = () => {
           >
             <h2 className="text-2xl font-semibold text-gray-900">Về chúng tôi</h2>
             <p className="text-gray-600">
-              Đá Ong Chu Lai tự hào là đơn vị tiên phong trong lĩnh vực khai thác và cung cấp đá ong 
+              Đá ong Chu Lai tự hào là đơn vị tiên phong trong lĩnh vực khai thác và cung cấp đá ong 
               tự nhiên tại khu vực miền Trung. Với hơn 10 năm kinh nghiệm, chúng tôi cam kết mang đến 
               những sản phẩm đá ong chất lượng cao, đáp ứng mọi nhu cầu xây dựng và trang trí.
             </p>

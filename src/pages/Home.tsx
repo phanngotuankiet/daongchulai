@@ -23,7 +23,7 @@ const Home = () => {
               className="text-center"
             >
               <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-                Đá Ong Chu Lai
+                Đá ong Chu Lai
               </h1>
               <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
                 Chất lượng tạo nên thương hiệu - Uy tín làm nên giá trị
