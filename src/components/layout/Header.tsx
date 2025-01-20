@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCartIcon, MagnifyingGlassIcon, Bars3Icon } from '@heroicons/react/24/outline';
+import { Bars3Icon } from '@heroicons/react/24/outline';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,20 +33,20 @@ const Header = () => {
           </nav>
 
           {/* Icons */}
-          {/* <div className="flex items-center space-x-4">
-            <button className="text-gray-600 hover:text-gray-900">
+          <div className="flex items-center space-x-4">
+            {/* <button className="text-gray-600 hover:text-gray-900">
               <MagnifyingGlassIcon className="h-6 w-6" />
             </button>
             <Link to="/cart" className="text-gray-600 hover:text-gray-900">
               <ShoppingCartIcon className="h-6 w-6" />
-            </Link>
+            </Link> */}
             <button 
               className="md:hidden text-gray-600 hover:text-gray-900"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <Bars3Icon className="h-6 w-6" />
             </button>
-          </div> */}
+          </div>
         </div>
 
         {/* Mobile Navigation */}
