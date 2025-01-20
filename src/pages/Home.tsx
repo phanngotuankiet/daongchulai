@@ -118,7 +118,7 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-primary-600 py-16">
+      {/* <section className="bg-primary-600 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -135,7 +135,7 @@ const Home = () => {
             </Link>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };

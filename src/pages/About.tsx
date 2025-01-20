@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const About = () => {
   return (
@@ -117,9 +118,12 @@ const About = () => {
           <p className="text-gray-600 mb-6">
             Để được tư vấn và báo giá chi tiết, vui lòng liên hệ:
           </p>
-          <button className="bg-primary-600 text-white px-8 py-3 rounded-lg hover:bg-primary-700 transition-colors">
+          <Link 
+            to="/contact"
+            className="inline-block bg-primary-600 text-white px-8 py-3 rounded-lg hover:bg-primary-700 transition-colors"
+          >
             Liên hệ ngay
-          </button>
+          </Link>
         </motion.div>
       </div>
     </div>
