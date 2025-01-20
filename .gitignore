@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 
 constants.ts
+package-lock.json
