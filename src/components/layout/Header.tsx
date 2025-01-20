@@ -33,7 +33,7 @@ const Header = () => {
           </nav>
 
           {/* Icons */}
-          <div className="flex items-center space-x-4">
+          {/* <div className="flex items-center space-x-4">
             <button className="text-gray-600 hover:text-gray-900">
               <MagnifyingGlassIcon className="h-6 w-6" />
             </button>
@@ -46,7 +46,7 @@ const Header = () => {
             >
               <Bars3Icon className="h-6 w-6" />
             </button>
-          </div>
+          </div> */}
         </div>
 
         {/* Mobile Navigation */}

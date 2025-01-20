@@ -33,9 +33,12 @@ const ProductCard = ({ id, name, price, image, description }: ProductCardProps) 
               currency: 'VND' 
             }).format(price)}
           </span>
-          <button className="px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700">
+          <Link 
+            to={`/products/${id}`}
+            className="px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700"
+          >
             Xem chi tiết
-          </button>
+          </Link>
         </div>
       </div>
     </div>
