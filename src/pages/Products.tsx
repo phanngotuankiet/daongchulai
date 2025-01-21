@@ -1,15 +1,68 @@
-import { useState } from 'react';
-import ProductList from '../components/products/ProductList';
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import ProductList from "../components/products/ProductList";
+import {
+  LateriteSizesQuery,
+  useLateriteSizesQuery,
+  useLateriteTypesQuery,
+} from "../generated/graphql";
+import { LateriteType } from "../types/LateriteTypes";
 
 const Products = () => {
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [lateriteTypes, setLateriteTypes] = useState<LateriteType[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState(
+    searchParams.get("category") || 0
+  );
 
-  const categories = [
-    { id: 'all', name: 'Tất cả' },
-    { id: 'da-ong-xam', name: 'Đá ong xám' },
-    { id: 'da-ong-vang', name: 'Đá ong vàng' },
-    { id: 'da-ong-den', name: 'Đá ong đen' },
-  ];
+  const { data: lateriteTypesData } = useLateriteTypesQuery({
+    fetchPolicy: "no-cache",
+  });
+
+  const { data: lateriteSizesData, loading: lateriteSizesLoading, refetch: refetchLateriteSizes } =
+    useLateriteSizesQuery({
+      variables: {
+        where: {
+          laterite_type_id: { _eq: Number(selectedCategory) },
+        },
+      },
+      fetchPolicy: "no-cache",
+    });
+
+  useEffect(() => {
+    if (lateriteTypesData) {
+      // option "Tất cả" với kiểu LateriteType
+      const allOption: LateriteType = {
+        id: 0,
+        type: "all",
+        no_pitches_name: "tat-ca-san-pham",
+        origin: null,
+        hardness_level: null,
+        description: "Xem tất cả sản phẩm",
+        created_at: null,
+        updated_at: null,
+      };
+
+      // Thêm option "Tất cả" vào đầu mảng
+      setLateriteTypes([
+        allOption,
+        ...(lateriteTypesData?.laterite_types as LateriteType[]),
+      ]);
+    }
+  }, [lateriteTypesData]);
+
+  useEffect(() => {
+    // searchParams.set("category", selectedCategory.toString());
+    // searchParams.set("name", "");
+    // setSearchParams(searchParams);
+
+    // Gọi refetch để cập nhật data khi selectedCategory thay đổi
+    refetchLateriteSizes({
+      where: {
+        laterite_type_id: { _eq: Number(selectedCategory) },
+      },
+    });
+  }, [selectedCategory, searchParams, setSearchParams, refetchLateriteSizes]);
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -18,7 +71,9 @@ const Products = () => {
         <nav className="text-gray-500 mb-8">
           <ol className="list-none p-0 inline-flex">
             <li className="flex items-center">
-              <a href="/" className="hover:text-gray-700">Trang chủ</a>
+              <a href="/" className="hover:text-gray-700">
+                Trang chủ
+              </a>
               <span className="mx-2">/</span>
             </li>
             <li className="text-gray-700">Sản phẩm</li>
@@ -28,19 +83,32 @@ const Products = () => {
         <div className="lg:grid lg:grid-cols-4 lg:gap-8">
           {/* Sidebar filters */}
           <div className="hidden lg:block">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Danh mục</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Danh mục
+            </h3>
+
             <div className="space-y-4">
-              {categories.map((category) => (
+              {lateriteTypes.map((lateriteType) => (
                 <button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
+                  key={lateriteType.id}
+                  onClick={() => {
+                    setSelectedCategory(lateriteType.id);
+                    searchParams.set("category", lateriteType.id.toString());
+                    searchParams.set(
+                      "name",
+                      lateriteType.no_pitches_name || ""
+                    );
+                    setSearchParams(searchParams);
+                  }}
                   className={`block w-full text-left px-4 py-2 rounded ${
-                    selectedCategory === category.id
-                      ? 'bg-primary-600 text-white'
-                      : 'text-gray-600 hover:bg-gray-100'
+                    selectedCategory === lateriteType.id
+                      ? "bg-primary-600 text-white"
+                      : "text-gray-600 hover:bg-gray-100"
                   }`}
                 >
-                  {category.name}
+                  {lateriteType.type === "all"
+                    ? "Tất cả sản phẩm"
+                    : lateriteType.type}
                 </button>
               ))}
             </div>
@@ -48,7 +116,12 @@ const Products = () => {
 
           {/* Product grid */}
           <div className="lg:col-span-3">
-            <ProductList />
+            <ProductList
+              products={
+                lateriteSizesData?.laterite_sizes as LateriteSizesQuery["laterite_sizes"]
+              }
+              loading={lateriteSizesLoading}
+            />
           </div>
         </div>
       </div>
@@ -56,4 +129,4 @@ const Products = () => {
   );
 };
 
-export default Products; 
+export default Products;

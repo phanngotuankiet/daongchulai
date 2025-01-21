@@ -20,6 +20,19 @@ export type Scalars = {
   timestamp: { input: any; output: any; }
 };
 
+/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
+export type Boolean_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['Boolean']['input']>;
+  _gt?: InputMaybe<Scalars['Boolean']['input']>;
+  _gte?: InputMaybe<Scalars['Boolean']['input']>;
+  _in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['Boolean']['input']>;
+  _lte?: InputMaybe<Scalars['Boolean']['input']>;
+  _neq?: InputMaybe<Scalars['Boolean']['input']>;
+  _nin?: InputMaybe<Array<Scalars['Boolean']['input']>>;
+};
+
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['Int']['input']>;
@@ -857,6 +870,7 @@ export type Laterite_Types = {
   laterite_sizes: Array<Laterite_Sizes>;
   /** An aggregate relationship */
   laterite_sizes_aggregate: Laterite_Sizes_Aggregate;
+  no_pitches_name?: Maybe<Scalars['String']['output']>;
   /** Nguồn gốc xuất xứ của đá (VD: Chu Lai, ...) */
   origin?: Maybe<Scalars['String']['output']>;
   /** Tên loại đá ong (VD: đá ong xám, đá ong vàng, đá ong vàng viên) */
@@ -935,6 +949,7 @@ export type Laterite_Types_Bool_Exp = {
   id?: InputMaybe<Int_Comparison_Exp>;
   laterite_sizes?: InputMaybe<Laterite_Sizes_Bool_Exp>;
   laterite_sizes_aggregate?: InputMaybe<Laterite_Sizes_Aggregate_Bool_Exp>;
+  no_pitches_name?: InputMaybe<String_Comparison_Exp>;
   origin?: InputMaybe<String_Comparison_Exp>;
   type?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamp_Comparison_Exp>;
@@ -965,6 +980,7 @@ export type Laterite_Types_Insert_Input = {
   /** ID tự động tăng, khóa chính của bảng */
   id?: InputMaybe<Scalars['Int']['input']>;
   laterite_sizes?: InputMaybe<Laterite_Sizes_Arr_Rel_Insert_Input>;
+  no_pitches_name?: InputMaybe<Scalars['String']['input']>;
   /** Nguồn gốc xuất xứ của đá (VD: Chu Lai, ...) */
   origin?: InputMaybe<Scalars['String']['input']>;
   /** Tên loại đá ong (VD: đá ong xám, đá ong vàng, đá ong vàng viên) */
@@ -984,6 +1000,7 @@ export type Laterite_Types_Max_Fields = {
   hardness_level?: Maybe<Scalars['float8']['output']>;
   /** ID tự động tăng, khóa chính của bảng */
   id?: Maybe<Scalars['Int']['output']>;
+  no_pitches_name?: Maybe<Scalars['String']['output']>;
   /** Nguồn gốc xuất xứ của đá (VD: Chu Lai, ...) */
   origin?: Maybe<Scalars['String']['output']>;
   /** Tên loại đá ong (VD: đá ong xám, đá ong vàng, đá ong vàng viên) */
@@ -1003,6 +1020,7 @@ export type Laterite_Types_Min_Fields = {
   hardness_level?: Maybe<Scalars['float8']['output']>;
   /** ID tự động tăng, khóa chính của bảng */
   id?: Maybe<Scalars['Int']['output']>;
+  no_pitches_name?: Maybe<Scalars['String']['output']>;
   /** Nguồn gốc xuất xứ của đá (VD: Chu Lai, ...) */
   origin?: Maybe<Scalars['String']['output']>;
   /** Tên loại đá ong (VD: đá ong xám, đá ong vàng, đá ong vàng viên) */
@@ -1041,6 +1059,7 @@ export type Laterite_Types_Order_By = {
   hardness_level?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   laterite_sizes_aggregate?: InputMaybe<Laterite_Sizes_Aggregate_Order_By>;
+  no_pitches_name?: InputMaybe<Order_By>;
   origin?: InputMaybe<Order_By>;
   type?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
@@ -1063,6 +1082,8 @@ export enum Laterite_Types_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  NoPitchesName = 'no_pitches_name',
+  /** column name */
   Origin = 'origin',
   /** column name */
   Type = 'type',
@@ -1080,6 +1101,7 @@ export type Laterite_Types_Set_Input = {
   hardness_level?: InputMaybe<Scalars['float8']['input']>;
   /** ID tự động tăng, khóa chính của bảng */
   id?: InputMaybe<Scalars['Int']['input']>;
+  no_pitches_name?: InputMaybe<Scalars['String']['input']>;
   /** Nguồn gốc xuất xứ của đá (VD: Chu Lai, ...) */
   origin?: InputMaybe<Scalars['String']['input']>;
   /** Tên loại đá ong (VD: đá ong xám, đá ong vàng, đá ong vàng viên) */
@@ -1133,6 +1155,7 @@ export type Laterite_Types_Stream_Cursor_Value_Input = {
   hardness_level?: InputMaybe<Scalars['float8']['input']>;
   /** ID tự động tăng, khóa chính của bảng */
   id?: InputMaybe<Scalars['Int']['input']>;
+  no_pitches_name?: InputMaybe<Scalars['String']['input']>;
   /** Nguồn gốc xuất xứ của đá (VD: Chu Lai, ...) */
   origin?: InputMaybe<Scalars['String']['input']>;
   /** Tên loại đá ong (VD: đá ong xám, đá ong vàng, đá ong vàng viên) */
@@ -1160,6 +1183,8 @@ export enum Laterite_Types_Update_Column {
   HardnessLevel = 'hardness_level',
   /** column name */
   Id = 'id',
+  /** column name */
+  NoPitchesName = 'no_pitches_name',
   /** column name */
   Origin = 'origin',
   /** column name */
@@ -1215,6 +1240,10 @@ export type Mutation_Root = {
   delete_laterite_types?: Maybe<Laterite_Types_Mutation_Response>;
   /** delete single row from the table: "laterite_types" */
   delete_laterite_types_by_pk?: Maybe<Laterite_Types>;
+  /** delete data from the table: "users" */
+  delete_users?: Maybe<Users_Mutation_Response>;
+  /** delete single row from the table: "users" */
+  delete_users_by_pk?: Maybe<Users>;
   /** insert data into the table: "laterite_sizes" */
   insert_laterite_sizes?: Maybe<Laterite_Sizes_Mutation_Response>;
   /** insert a single row into the table: "laterite_sizes" */
@@ -1223,6 +1252,10 @@ export type Mutation_Root = {
   insert_laterite_types?: Maybe<Laterite_Types_Mutation_Response>;
   /** insert a single row into the table: "laterite_types" */
   insert_laterite_types_one?: Maybe<Laterite_Types>;
+  /** insert data into the table: "users" */
+  insert_users?: Maybe<Users_Mutation_Response>;
+  /** insert a single row into the table: "users" */
+  insert_users_one?: Maybe<Users>;
   /** update data of the table: "laterite_sizes" */
   update_laterite_sizes?: Maybe<Laterite_Sizes_Mutation_Response>;
   /** update single row of the table: "laterite_sizes" */
@@ -1235,6 +1268,12 @@ export type Mutation_Root = {
   update_laterite_types_by_pk?: Maybe<Laterite_Types>;
   /** update multiples rows of table: "laterite_types" */
   update_laterite_types_many?: Maybe<Array<Maybe<Laterite_Types_Mutation_Response>>>;
+  /** update data of the table: "users" */
+  update_users?: Maybe<Users_Mutation_Response>;
+  /** update single row of the table: "users" */
+  update_users_by_pk?: Maybe<Users>;
+  /** update multiples rows of table: "users" */
+  update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
 };
 
 
@@ -1258,6 +1297,18 @@ export type Mutation_RootDelete_Laterite_TypesArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Laterite_Types_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_UsersArgs = {
+  where: Users_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Users_By_PkArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -1287,6 +1338,20 @@ export type Mutation_RootInsert_Laterite_TypesArgs = {
 export type Mutation_RootInsert_Laterite_Types_OneArgs = {
   object: Laterite_Types_Insert_Input;
   on_conflict?: InputMaybe<Laterite_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_UsersArgs = {
+  objects: Array<Users_Insert_Input>;
+  on_conflict?: InputMaybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Users_OneArgs = {
+  object: Users_Insert_Input;
+  on_conflict?: InputMaybe<Users_On_Conflict>;
 };
 
 
@@ -1333,6 +1398,28 @@ export type Mutation_RootUpdate_Laterite_Types_ManyArgs = {
   updates: Array<Laterite_Types_Updates>;
 };
 
+
+/** mutation root */
+export type Mutation_RootUpdate_UsersArgs = {
+  _inc?: InputMaybe<Users_Inc_Input>;
+  _set?: InputMaybe<Users_Set_Input>;
+  where: Users_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Users_By_PkArgs = {
+  _inc?: InputMaybe<Users_Inc_Input>;
+  _set?: InputMaybe<Users_Set_Input>;
+  pk_columns: Users_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Users_ManyArgs = {
+  updates: Array<Users_Updates>;
+};
+
 /** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
 export type Numeric_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['numeric']['input']>;
@@ -1376,6 +1463,12 @@ export type Query_Root = {
   laterite_types_aggregate: Laterite_Types_Aggregate;
   /** fetch data from the table: "laterite_types" using primary key columns */
   laterite_types_by_pk?: Maybe<Laterite_Types>;
+  /** fetch data from the table: "users" */
+  users: Array<Users>;
+  /** fetch aggregated fields from the table: "users" */
+  users_aggregate: Users_Aggregate;
+  /** fetch data from the table: "users" using primary key columns */
+  users_by_pk?: Maybe<Users>;
 };
 
 
@@ -1424,6 +1517,29 @@ export type Query_RootLaterite_Types_By_PkArgs = {
   id: Scalars['Int']['input'];
 };
 
+
+export type Query_RootUsersArgs = {
+  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Users_Order_By>>;
+  where?: InputMaybe<Users_Bool_Exp>;
+};
+
+
+export type Query_RootUsers_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Users_Order_By>>;
+  where?: InputMaybe<Users_Bool_Exp>;
+};
+
+
+export type Query_RootUsers_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
 export type Subscription_Root = {
   __typename?: 'subscription_root';
   /** An array relationship */
@@ -1442,6 +1558,14 @@ export type Subscription_Root = {
   laterite_types_by_pk?: Maybe<Laterite_Types>;
   /** fetch data from the table in a streaming manner: "laterite_types" */
   laterite_types_stream: Array<Laterite_Types>;
+  /** fetch data from the table: "users" */
+  users: Array<Users>;
+  /** fetch aggregated fields from the table: "users" */
+  users_aggregate: Users_Aggregate;
+  /** fetch data from the table: "users" using primary key columns */
+  users_by_pk?: Maybe<Users>;
+  /** fetch data from the table in a streaming manner: "users" */
+  users_stream: Array<Users>;
 };
 
 
@@ -1504,6 +1628,36 @@ export type Subscription_RootLaterite_Types_StreamArgs = {
   where?: InputMaybe<Laterite_Types_Bool_Exp>;
 };
 
+
+export type Subscription_RootUsersArgs = {
+  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Users_Order_By>>;
+  where?: InputMaybe<Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootUsers_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Users_Order_By>>;
+  where?: InputMaybe<Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootUsers_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type Subscription_RootUsers_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Users_Stream_Cursor_Input>>;
+  where?: InputMaybe<Users_Bool_Exp>;
+};
+
 /** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
 export type Timestamp_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['timestamp']['input']>;
@@ -1517,15 +1671,386 @@ export type Timestamp_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['timestamp']['input']>>;
 };
 
+/** Bảng quản lý phân quyền người dùng với 2 role cơ bản: admin và anonymous */
+export type Users = {
+  __typename?: 'users';
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  /** Email đăng nhập, chỉ dành cho admin */
+  email?: Maybe<Scalars['String']['output']>;
+  /** ID tự động tăng, khóa chính của bảng */
+  id: Scalars['Int']['output'];
+  /** Trạng thái tài khoản: true - đang hoạt động, false - đã bị khóa */
+  is_active?: Maybe<Scalars['Boolean']['output']>;
+  /** Thời điểm đăng nhập gần nhất */
+  last_login?: Maybe<Scalars['timestamp']['output']>;
+  /** Mật khẩu đã được mã hóa, chỉ dành cho admin */
+  password_hash?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamp']['output']>;
+  /** Tên đăng nhập, chỉ dành cho admin */
+  username?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregated selection of "users" */
+export type Users_Aggregate = {
+  __typename?: 'users_aggregate';
+  aggregate?: Maybe<Users_Aggregate_Fields>;
+  nodes: Array<Users>;
+};
+
+/** aggregate fields of "users" */
+export type Users_Aggregate_Fields = {
+  __typename?: 'users_aggregate_fields';
+  avg?: Maybe<Users_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Users_Max_Fields>;
+  min?: Maybe<Users_Min_Fields>;
+  stddev?: Maybe<Users_Stddev_Fields>;
+  stddev_pop?: Maybe<Users_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Users_Stddev_Samp_Fields>;
+  sum?: Maybe<Users_Sum_Fields>;
+  var_pop?: Maybe<Users_Var_Pop_Fields>;
+  var_samp?: Maybe<Users_Var_Samp_Fields>;
+  variance?: Maybe<Users_Variance_Fields>;
+};
+
+
+/** aggregate fields of "users" */
+export type Users_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Users_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Users_Avg_Fields = {
+  __typename?: 'users_avg_fields';
+  /** ID tự động tăng, khóa chính của bảng */
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
+export type Users_Bool_Exp = {
+  _and?: InputMaybe<Array<Users_Bool_Exp>>;
+  _not?: InputMaybe<Users_Bool_Exp>;
+  _or?: InputMaybe<Array<Users_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  email?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  is_active?: InputMaybe<Boolean_Comparison_Exp>;
+  last_login?: InputMaybe<Timestamp_Comparison_Exp>;
+  password_hash?: InputMaybe<String_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  username?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "users" */
+export enum Users_Constraint {
+  /** unique or primary key constraint on columns "email" */
+  UsersEmailKey = 'users_email_key',
+  /** unique or primary key constraint on columns "id" */
+  UsersPkey = 'users_pkey',
+  /** unique or primary key constraint on columns "username" */
+  UsersUsernameKey = 'users_username_key'
+}
+
+/** input type for incrementing numeric columns in table "users" */
+export type Users_Inc_Input = {
+  /** ID tự động tăng, khóa chính của bảng */
+  id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** input type for inserting data into table "users" */
+export type Users_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  /** Email đăng nhập, chỉ dành cho admin */
+  email?: InputMaybe<Scalars['String']['input']>;
+  /** ID tự động tăng, khóa chính của bảng */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** Trạng thái tài khoản: true - đang hoạt động, false - đã bị khóa */
+  is_active?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Thời điểm đăng nhập gần nhất */
+  last_login?: InputMaybe<Scalars['timestamp']['input']>;
+  /** Mật khẩu đã được mã hóa, chỉ dành cho admin */
+  password_hash?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamp']['input']>;
+  /** Tên đăng nhập, chỉ dành cho admin */
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Users_Max_Fields = {
+  __typename?: 'users_max_fields';
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  /** Email đăng nhập, chỉ dành cho admin */
+  email?: Maybe<Scalars['String']['output']>;
+  /** ID tự động tăng, khóa chính của bảng */
+  id?: Maybe<Scalars['Int']['output']>;
+  /** Thời điểm đăng nhập gần nhất */
+  last_login?: Maybe<Scalars['timestamp']['output']>;
+  /** Mật khẩu đã được mã hóa, chỉ dành cho admin */
+  password_hash?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamp']['output']>;
+  /** Tên đăng nhập, chỉ dành cho admin */
+  username?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Users_Min_Fields = {
+  __typename?: 'users_min_fields';
+  created_at?: Maybe<Scalars['timestamp']['output']>;
+  /** Email đăng nhập, chỉ dành cho admin */
+  email?: Maybe<Scalars['String']['output']>;
+  /** ID tự động tăng, khóa chính của bảng */
+  id?: Maybe<Scalars['Int']['output']>;
+  /** Thời điểm đăng nhập gần nhất */
+  last_login?: Maybe<Scalars['timestamp']['output']>;
+  /** Mật khẩu đã được mã hóa, chỉ dành cho admin */
+  password_hash?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamp']['output']>;
+  /** Tên đăng nhập, chỉ dành cho admin */
+  username?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "users" */
+export type Users_Mutation_Response = {
+  __typename?: 'users_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Users>;
+};
+
+/** on_conflict condition type for table "users" */
+export type Users_On_Conflict = {
+  constraint: Users_Constraint;
+  update_columns?: Array<Users_Update_Column>;
+  where?: InputMaybe<Users_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "users". */
+export type Users_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  email?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  is_active?: InputMaybe<Order_By>;
+  last_login?: InputMaybe<Order_By>;
+  password_hash?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  username?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: users */
+export type Users_Pk_Columns_Input = {
+  /** ID tự động tăng, khóa chính của bảng */
+  id: Scalars['Int']['input'];
+};
+
+/** select columns of table "users" */
+export enum Users_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Email = 'email',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IsActive = 'is_active',
+  /** column name */
+  LastLogin = 'last_login',
+  /** column name */
+  PasswordHash = 'password_hash',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  Username = 'username'
+}
+
+/** input type for updating data in table "users" */
+export type Users_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  /** Email đăng nhập, chỉ dành cho admin */
+  email?: InputMaybe<Scalars['String']['input']>;
+  /** ID tự động tăng, khóa chính của bảng */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** Trạng thái tài khoản: true - đang hoạt động, false - đã bị khóa */
+  is_active?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Thời điểm đăng nhập gần nhất */
+  last_login?: InputMaybe<Scalars['timestamp']['input']>;
+  /** Mật khẩu đã được mã hóa, chỉ dành cho admin */
+  password_hash?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamp']['input']>;
+  /** Tên đăng nhập, chỉ dành cho admin */
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Users_Stddev_Fields = {
+  __typename?: 'users_stddev_fields';
+  /** ID tự động tăng, khóa chính của bảng */
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Users_Stddev_Pop_Fields = {
+  __typename?: 'users_stddev_pop_fields';
+  /** ID tự động tăng, khóa chính của bảng */
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Users_Stddev_Samp_Fields = {
+  __typename?: 'users_stddev_samp_fields';
+  /** ID tự động tăng, khóa chính của bảng */
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "users" */
+export type Users_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Users_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Users_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamp']['input']>;
+  /** Email đăng nhập, chỉ dành cho admin */
+  email?: InputMaybe<Scalars['String']['input']>;
+  /** ID tự động tăng, khóa chính của bảng */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** Trạng thái tài khoản: true - đang hoạt động, false - đã bị khóa */
+  is_active?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Thời điểm đăng nhập gần nhất */
+  last_login?: InputMaybe<Scalars['timestamp']['input']>;
+  /** Mật khẩu đã được mã hóa, chỉ dành cho admin */
+  password_hash?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamp']['input']>;
+  /** Tên đăng nhập, chỉ dành cho admin */
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Users_Sum_Fields = {
+  __typename?: 'users_sum_fields';
+  /** ID tự động tăng, khóa chính của bảng */
+  id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** update columns of table "users" */
+export enum Users_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Email = 'email',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IsActive = 'is_active',
+  /** column name */
+  LastLogin = 'last_login',
+  /** column name */
+  PasswordHash = 'password_hash',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  Username = 'username'
+}
+
+export type Users_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Users_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Users_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Users_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Users_Var_Pop_Fields = {
+  __typename?: 'users_var_pop_fields';
+  /** ID tự động tăng, khóa chính của bảng */
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Users_Var_Samp_Fields = {
+  __typename?: 'users_var_samp_fields';
+  /** ID tự động tăng, khóa chính của bảng */
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Users_Variance_Fields = {
+  __typename?: 'users_variance_fields';
+  /** ID tự động tăng, khóa chính của bảng */
+  id?: Maybe<Scalars['Float']['output']>;
+};
+
+export type LateriteSizesQueryVariables = Exact<{
+  where?: InputMaybe<Laterite_Sizes_Bool_Exp>;
+  order_by?: InputMaybe<Array<Laterite_Sizes_Order_By> | Laterite_Sizes_Order_By>;
+}>;
+
+
+export type LateriteSizesQuery = { __typename?: 'query_root', laterite_sizes: Array<{ __typename?: 'laterite_sizes', id: number, size: string, price: any, color?: string | null, stock_quantity?: number | null, status?: string | null, weight?: any | null, laterite_type_id?: number | null }> };
+
 export type LateriteTypesQueryVariables = Exact<{
   order_by?: InputMaybe<Array<Laterite_Types_Order_By> | Laterite_Types_Order_By>;
   where?: InputMaybe<Laterite_Types_Bool_Exp>;
 }>;
 
 
-export type LateriteTypesQuery = { __typename?: 'query_root', laterite_types: Array<{ __typename?: 'laterite_types', type: string, origin?: string | null, updated_at?: any | null, id: number, hardness_level?: any | null, description?: string | null, created_at?: any | null }> };
+export type LateriteTypesQuery = { __typename?: 'query_root', laterite_types: Array<{ __typename?: 'laterite_types', type: string, origin?: string | null, updated_at?: any | null, id: number, hardness_level?: any | null, description?: string | null, created_at?: any | null, no_pitches_name?: string | null }> };
 
 
+export const LateriteSizesDocument = gql`
+    query LateriteSizes($where: laterite_sizes_bool_exp = {}, $order_by: [laterite_sizes_order_by!] = {}) {
+  laterite_sizes(where: $where, order_by: $order_by) {
+    id
+    size
+    price
+    color
+    stock_quantity
+    status
+    weight
+    laterite_type_id
+  }
+}
+    `;
+
+/**
+ * __useLateriteSizesQuery__
+ *
+ * To run a query within a React component, call `useLateriteSizesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLateriteSizesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLateriteSizesQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *      order_by: // value for 'order_by'
+ *   },
+ * });
+ */
+export function useLateriteSizesQuery(baseOptions?: Apollo.QueryHookOptions<LateriteSizesQuery, LateriteSizesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LateriteSizesQuery, LateriteSizesQueryVariables>(LateriteSizesDocument, options);
+      }
+export function useLateriteSizesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LateriteSizesQuery, LateriteSizesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LateriteSizesQuery, LateriteSizesQueryVariables>(LateriteSizesDocument, options);
+        }
+export function useLateriteSizesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<LateriteSizesQuery, LateriteSizesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<LateriteSizesQuery, LateriteSizesQueryVariables>(LateriteSizesDocument, options);
+        }
+export type LateriteSizesQueryHookResult = ReturnType<typeof useLateriteSizesQuery>;
+export type LateriteSizesLazyQueryHookResult = ReturnType<typeof useLateriteSizesLazyQuery>;
+export type LateriteSizesSuspenseQueryHookResult = ReturnType<typeof useLateriteSizesSuspenseQuery>;
+export type LateriteSizesQueryResult = Apollo.QueryResult<LateriteSizesQuery, LateriteSizesQueryVariables>;
 export const LateriteTypesDocument = gql`
     query LateriteTypes($order_by: [laterite_types_order_by!] = {}, $where: laterite_types_bool_exp = {}) {
   laterite_types(order_by: $order_by, where: $where) {
@@ -1536,6 +2061,7 @@ export const LateriteTypesDocument = gql`
     hardness_level
     description
     created_at
+    no_pitches_name
   }
 }
     `;

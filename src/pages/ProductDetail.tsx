@@ -122,7 +122,7 @@ const ProductDetail = () => {
             <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
             <p className="text-gray-600">{product.description}</p>
             
-            <div className="border-t border-b border-gray-200 py-6">
+            {/* <div className="border-t border-b border-gray-200 py-6">
               <h2 className="text-xl font-semibold mb-4">Kích thước tiêu chuẩn:</h2>
               <div className="space-y-3">
                 {product.sizes.map((size) => (
@@ -142,7 +142,7 @@ const ProductDetail = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
 
             <div className="bg-gray-100 p-4 rounded-lg">
               <p className="text-gray-800 font-medium">

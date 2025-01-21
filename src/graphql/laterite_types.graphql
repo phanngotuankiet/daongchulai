@@ -7,5 +7,6 @@ query LateriteTypes($order_by: [laterite_types_order_by!] = {}, $where: laterite
     hardness_level
     description
     created_at
+    no_pitches_name
   }
 }

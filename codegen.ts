@@ -3,8 +3,8 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const {
-  HASURA_ENDPOINT: endpoint,
-  CODEGEN_HASURA_GRAPHQL_ADMIN_SECRET: secret,
+  VITE_HASURA_ENDPOINT: endpoint,
+  VITE_HASURA_GRAPHQL_ADMIN_SECRET: secret,
 } = process.env;
 
 module.exports = {
