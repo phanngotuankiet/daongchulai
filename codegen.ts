@@ -1,9 +1,11 @@
-import { CONFIG } from "./constants";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const {
   HASURA_ENDPOINT: endpoint,
   CODEGEN_HASURA_GRAPHQL_ADMIN_SECRET: secret,
-} = CONFIG.development;
+} = process.env;
 
 module.exports = {
   overwrite: true,
