@@ -12,7 +12,7 @@ const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [lateriteTypes, setLateriteTypes] = useState<LateriteType[]>([]);
   const [selectedCategory, setSelectedCategory] = useState(
-    searchParams.get("category") || 0
+    searchParams.get("category") ? Number(searchParams.get("category")) : 0
   );
 
   const { data: lateriteTypesData } = useLateriteTypesQuery({
@@ -57,12 +57,18 @@ const Products = () => {
     // setSearchParams(searchParams);
 
     // Gọi refetch để cập nhật data khi selectedCategory thay đổi
-    refetchLateriteSizes({
-      where: {
-        laterite_type_id: { _eq: Number(selectedCategory) },
-      },
-    });
-  }, [selectedCategory, searchParams, setSearchParams, refetchLateriteSizes]);
+    if (selectedCategory !== 0) {
+      refetchLateriteSizes({
+        where: {
+          laterite_type_id: { _eq: Number(selectedCategory) },
+        },
+      });
+    } else {
+      refetchLateriteSizes({
+        where: {}
+      });
+    }
+  }, [selectedCategory, refetchLateriteSizes]);
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -101,7 +107,7 @@ const Products = () => {
                     setSearchParams(searchParams);
                   }}
                   className={`block w-full text-left px-4 py-2 rounded ${
-                    selectedCategory === lateriteType.id
+                    Number(selectedCategory) === lateriteType.id
                       ? "bg-primary-600 text-white"
                       : "text-gray-600 hover:bg-gray-100"
                   }`}

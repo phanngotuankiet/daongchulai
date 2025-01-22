@@ -30,16 +30,16 @@ const ProductCard = ({
         <Skeleton 
           height={192} 
           enableAnimation={true}
-          baseColor="#374151" // gray-700
+          baseColor="#f3f4f6" // gray-100
         />
         <div className="p-4">
-          <Skeleton height={24} width="60%" baseColor="#374151" />
+          <Skeleton height={24} width="60%" baseColor="#f3f4f6" />
           <div className="mt-2">
-            <Skeleton height={20} width="80%" baseColor="#374151" />
+            <Skeleton height={20} width="80%" baseColor="#f3f4f6" />
           </div>
           <div className="mt-3 flex justify-between items-center">
-            <Skeleton height={24} width={120} baseColor="#374151" />
-            <Skeleton height={40} width={100} baseColor="#374151" />
+            <Skeleton height={24} width={120} baseColor="#f3f4f6" />
+            <Skeleton height={40} width={100} baseColor="#f3f4f6" />
           </div>
         </div>
       </div>
