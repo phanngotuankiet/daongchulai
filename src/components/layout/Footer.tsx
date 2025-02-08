@@ -14,7 +14,12 @@ const Footer = () => {
               Chuyên cung cấp đá ong tự nhiên chất lượng cao, góp phần tạo nên những công trình kiến trúc độc đáo và bền vững.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="hover:text-primary-400">
+              <a 
+                href="https://www.facebook.com/atoong.569333" 
+                className="hover:text-primary-400"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <span className="sr-only">Facebook</span>
                 <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
@@ -63,16 +68,16 @@ const Footer = () => {
               <li className="flex items-start">
                 <PhoneIcon className="h-6 w-6 mr-3 flex-shrink-0" />
                 <div>
-                  <p>Hotline:</p>
-                  <a href="tel:0123456789" className="hover:text-white">0123.456.789</a>
+                  {/* <p>Hotline:</p> */}
+                  <a href="tel:0123456789" className="hover:text-white">0913 019 915</a>
                 </div>
               </li>
               <li className="flex items-start">
                 <EnvelopeIcon className="h-6 w-6 mr-3 flex-shrink-0" />
                 <div>
                   <p>Email:</p>
-                  <a href="mailto:contact@daongchulai.com" className="hover:text-white">
-                    contact@daongchulai.com
+                  <a href="mailto:daongvn@gmail.com" className="hover:text-white">
+                    daongvn@gmail.com
                   </a>
                 </div>
               </li>
@@ -114,7 +119,7 @@ const Footer = () => {
             <div className="text-sm">
               <p>&copy; {new Date().getFullYear()} Đá ong Chu Lai. All rights reserved.</p>
             </div>
-            <div className="mt-4 md:mt-0">
+            {/* <div className="mt-4 md:mt-0">
               <ul className="flex space-x-6 text-sm">
                 <li>
                   <a href="#" className="hover:text-white">
@@ -127,7 +132,7 @@ const Footer = () => {
                   </a>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

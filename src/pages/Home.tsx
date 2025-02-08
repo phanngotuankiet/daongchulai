@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
+import heroBg from '../assets/xecontainer.jpg';
 
 const Home = () => {
   return (
@@ -9,7 +10,7 @@ const Home = () => {
       <div className="relative bg-gray-900 h-[600px]">
         <div className="absolute inset-0">
           <img
-            src="/images/hero-bg.jpg"
+            src={heroBg}
             alt="Đá ong background"
             className="w-full h-full object-cover opacity-50"
           />
@@ -182,20 +183,20 @@ const features = [
     )
   },
   {
+    title: 'Tư vấn chuyên nghiệp',
+    description: 'Luôn sẵn sàng hỗ trợ bạn với dịch vụ chất lượng cao',
+    icon: (props: any) => (
+      <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    )
+  },
+  {
     title: 'Giao hàng nhanh',
     description: 'Vận chuyển toàn quốc, đảm bảo tiến độ',
     icon: (props: any) => (
       <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    )
-  },
-  {
-    title: 'Hỗ trợ 24/7',
-    description: 'Luôn sẵn sàng tư vấn và hỗ trợ',
-    icon: (props: any) => (
-      <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     )
   }

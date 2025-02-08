@@ -41,13 +41,13 @@ const About = () => {
             <h2 className="text-2xl font-semibold text-gray-900">Về chúng tôi</h2>
             <p className="text-gray-600">
               Đá ong Chu Lai tự hào là đơn vị tiên phong trong lĩnh vực khai thác và cung cấp đá ong 
-              tự nhiên tại khu vực miền Trung. Với hơn 10 năm kinh nghiệm, chúng tôi cam kết mang đến 
+              tự nhiên tại khu vực miền Trung. Với {new Date().getFullYear() - 2008} năm kinh nghiệm (từ 2008), chúng tôi cam kết mang đến 
               những sản phẩm đá ong chất lượng cao, đáp ứng mọi nhu cầu xây dựng và trang trí.
             </p>
-            <p className="text-gray-600">
-              Mỏ đá của chúng tôi được khai thác tại Chu Lai, nơi có trữ lượng đá ong dồi dào với 
+            {/* <p className="text-gray-600">
+              Đá ong được khai thác tại Chu Lai, nơi có trữ lượng đá ong dồi dào với 
               chất lượng được đánh giá cao trong ngành xây dựng.
-            </p>
+            </p> */}
           </motion.div>
 
           {/* Ưu điểm sản phẩm */}
@@ -72,7 +72,7 @@ const About = () => {
               </li>
               <li className="flex items-start">
                 <span className="text-primary-600 mr-2">•</span>
-                <span>Giá thành hợp lý, cạnh tranh</span>
+                <span>Giá thành hợp lý</span>
               </li>
             </ul>
           </motion.div>
@@ -87,21 +87,16 @@ const About = () => {
           <h2 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
             Cam kết của chúng tôi
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="text-center">
-              <div className="text-primary-600 text-4xl font-bold mb-4">100%</div>
-              <h3 className="text-lg font-semibold mb-2">Đá tự nhiên</h3>
-              <p className="text-gray-600">Không pha trộn, không nhân tạo</p>
+              <div className="text-primary-600 text-4xl font-bold mb-4">{new Date().getFullYear() - 2008} năm</div>
+              <h3 className="text-lg font-semibold mb-2">Kinh nghiệm sản xuất</h3>
+              <p className="text-gray-600">Sản xuất đá ong từ năm 2008</p>
             </div>
             <div className="text-center">
-              <div className="text-primary-600 text-4xl font-bold mb-4">10+</div>
-              <h3 className="text-lg font-semibold mb-2">Năm kinh nghiệm</h3>
-              <p className="text-gray-600">Uy tín trong ngành</p>
-            </div>
-            <div className="text-center">
-              <div className="text-primary-600 text-4xl font-bold mb-4">24/7</div>
-              <h3 className="text-lg font-semibold mb-2">Hỗ trợ khách hàng</h3>
-              <p className="text-gray-600">Luôn sẵn sàng phục vụ</p>
+              <div className="text-primary-600 text-4xl font-bold mb-4">Đổi mới</div>
+              <h3 className="text-lg font-semibold mb-2">Chất lượng hàng đầu</h3>
+              <p className="text-gray-600">Luôn cam kết mang lại trải nghiệm tốt nhất</p>
             </div>
           </div>
         </motion.div>
