@@ -6,13 +6,17 @@ const About = () => {
     <div className="bg-gray-50 min-h-screen py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
-        <nav className="text-gray-500 mb-8">
+        <nav className="text-gray-500 mb-8" itemScope itemType="https://schema.org/BreadcrumbList">
           <ol className="list-none p-0 inline-flex">
-            <li className="flex items-center">
-              <a href="/" className="hover:text-gray-700">Trang chủ</a>
+            <li className="flex items-center" itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+              <a href="/" className="hover:text-gray-700" itemProp="item"><span itemProp="name">Trang chủ</span></a>
+              <meta itemProp="position" content="1" />
               <span className="mx-2">/</span>
             </li>
-            <li className="text-gray-700">Giới thiệu</li>
+            <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+              <span itemProp="name">Giới thiệu</span>
+              <meta itemProp="position" content="2" />
+            </li>
           </ol>
         </nav>
 
@@ -26,7 +30,7 @@ const About = () => {
             Đá ong Chu Lai - Đá của ngôi nhà Việt
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Chuyên cung cấp đá ong tự nhiên chất lượng cao, góp phần tạo nên những công trình kiến trúc độc đáo và bền vững.
+            Chuyên cung cấp đá ong tự nhiên, góp phần tạo nên những công trình kiến trúc độc đáo, bền vững.
           </p>
         </motion.div>
 
@@ -40,9 +44,8 @@ const About = () => {
           >
             <h2 className="text-2xl font-semibold text-gray-900">Về chúng tôi</h2>
             <p className="text-gray-600">
-              Đá ong Chu Lai tự hào là đơn vị tiên phong trong lĩnh vực khai thác và cung cấp đá ong 
-              tự nhiên tại khu vực miền Trung. Với {new Date().getFullYear() - 2008} năm kinh nghiệm (từ 2008), chúng tôi cam kết mang đến 
-              những sản phẩm đá ong chất lượng cao, đáp ứng mọi nhu cầu xây dựng và trang trí.
+              Đá ong Chu Lai là đơn vị khai thác và sản xuất đá ong tự nhiên tại khu vực miền Trung. Với {new Date().getFullYear() - 2008} năm kinh nghiệm (từ 2008), chúng tôi cam kết mang đến 
+              những sản phẩm đá ong chất lượng cao, đáp ứng mọi nhu cầu xây dựng và trang trí. Liên hệ Dũng ngay để được tư vấn: 0913 019 915.
             </p>
             {/* <p className="text-gray-600">
               Đá ong được khai thác tại Chu Lai, nơi có trữ lượng đá ong dồi dào với 
@@ -70,10 +73,10 @@ const About = () => {
                 <span className="text-primary-600 mr-2">•</span>
                 <span>Dễ dàng thi công, lắp đặt</span>
               </li>
-              <li className="flex items-start">
+              {/* <li className="flex items-start">
                 <span className="text-primary-600 mr-2">•</span>
                 <span>Giá thành hợp lý</span>
-              </li>
+              </li> */}
             </ul>
           </motion.div>
         </div>
@@ -91,12 +94,12 @@ const About = () => {
             <div className="text-center">
               <div className="text-primary-600 text-4xl font-bold mb-4">{new Date().getFullYear() - 2008} năm</div>
               <h3 className="text-lg font-semibold mb-2">Kinh nghiệm sản xuất</h3>
-              <p className="text-gray-600">Sản xuất đá ong từ năm 2008</p>
+              <p className="text-gray-600">Tâm huyết từ năm 2008</p>
             </div>
             <div className="text-center">
               <div className="text-primary-600 text-4xl font-bold mb-4">Đổi mới</div>
-              <h3 className="text-lg font-semibold mb-2">Chất lượng hàng đầu</h3>
-              <p className="text-gray-600">Luôn cam kết mang lại trải nghiệm tốt nhất</p>
+              <h3 className="text-lg font-semibold mb-2">Đảm bảo chất lượng</h3>
+              <p className="text-gray-600">Luôn cam kết mang lại giá trị xứng đáng</p>
             </div>
           </div>
         </motion.div>
@@ -111,7 +114,7 @@ const About = () => {
             Liên hệ với chúng tôi
           </h2>
           <p className="text-gray-600 mb-6">
-            Để được tư vấn và báo giá chi tiết, vui lòng liên hệ:
+            Để được tư vấn và báo giá chi tiết cho từng kích thước, công trình, vui lòng:
           </p>
           <Link 
             to="/contact"

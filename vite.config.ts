@@ -5,5 +5,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   // base: '/daongchulai/', // Thay 'daongchulai' bằng tên repository của bạn
+  publicDir: 'public',
   base: '/', // Thay đổi từ '/daongchulai/' thành '/' khi dùng custom domain
 })

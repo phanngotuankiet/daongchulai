@@ -1,0 +1,73 @@
+{
+  "categories": [
+    {
+      "id": "cat-1",
+      "name": "Đá ong cắt lát",
+      "sizes": [
+        {
+          "id": "1",
+          "name": "20 x 40 x 2",
+          "unit": "cm",
+          "price": 40000,
+          "image": [
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/20x40.jpg",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/20x40x2_ver2.jpg",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/20x40x2_ver3.jpg",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/20x40x2_ver4.jpg",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/20x40x2_ver5.jpg"
+          ],
+          "description": "mô tả Đá ong 20 x 40 x 2",
+          "weight": 10
+        },
+        {
+          "id": "2",
+          "name": "10 x 20 x 2",
+          "unit": "cm",
+          "price": 15000,
+          "image": [
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/10x20x2.jpg",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/10x20x2.jpg",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/10x20x2.jpg",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/10x20x2.jpg"
+          ],
+          "description": "mô tả Đá ong 10 x 20 x 2",
+          "weight": 10
+        },
+        {
+          "id": "3",
+          "name": "15 x 30 x 2",
+          "unit": "cm",
+          "price": 30000,
+          "image": [
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/15x30x2.jpg",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/15x30x2.jpg",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/15x30x2.jpg",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/15x30x2.jpg"
+          ],
+          "description": "mô tả Đá ong 15 x 30 x 2",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "id": "cat-2",
+      "name": "Đá ong cắt viên",
+      "sizes": [
+        {
+          "id": "4",
+          "name": "Đá ong viên",
+          "unit": "cm",
+          "price": 40000,
+          "image": [
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/daongvien.jpg",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/20x40x13_ver1.jpg",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/daongvien.jpg",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/daongvien.jpg"
+          ],
+          "description": "mô tả Đá ong 20 x 40 x 13",
+          "weight": 10
+        }
+      ]
+    }
+  ]
+}

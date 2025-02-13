@@ -1,34 +1,44 @@
-import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 interface ProductCardProps {
   id: string;
   size: string;
   price: number;
-  color: string;
   weight: number;
+  image: string[];
   loading: boolean;
+  setIsProductDetailPopUpOpenID: (id: string) => void;
 }
 
 const ProductCard = ({
   id,
   size,
-  price,
-  color,
+  price: _price,
   weight,
+  image,
   loading,
+  setIsProductDetailPopUpOpenID,
 }: ProductCardProps) => {
   const [searchParams] = useSearchParams();
   const name = searchParams.get("name") || "";
-  const vien_hoac_lat: "viên" | "lát" = name.includes("vien") ? "viên" : name.includes("lat") ? "lát" : "viên";
-  
+  const vien_hoac_lat: "viên" | "lát" = name.includes("vien")
+    ? "viên"
+    : name.includes("lat")
+    ? "lát"
+    : "viên";
+
+  const handleClick = () => {
+    setIsProductDetailPopUpOpenID(id);
+  };
+
+  // skeleton
   if (loading) {
     return (
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <Skeleton 
-          height={192} 
+        <Skeleton
+          height={192}
           enableAnimation={true}
           baseColor="#f3f4f6" // gray-100
         />
@@ -48,36 +58,46 @@ const ProductCard = ({
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      <Link to={`/products/${id}`}>
+      <div
+        // to={`/products/${id}`}
+        onClick={handleClick}
+      >
         <img
-          src=""
+          src={image[0]}
           alt={size}
           className="w-full h-48 object-cover hover:opacity-75 transition-opacity"
         />
-      </Link>
+      </div>
       <div className="p-4">
-        <Link
-          to={`/products/${id}`}
+        <div
+          // to={`/products/${id}`}
+          onClick={handleClick}
           className="text-lg font-semibold text-gray-800 hover:text-primary-600"
         >
           Kích thước {size} (cm)
-        </Link>
+        </div>
         <p className="mt-2 text-sm text-gray-600 line-clamp-2">
-          Màu {color} - {weight} kg/{vien_hoac_lat}
+          {weight} kg/{vien_hoac_lat}
         </p>
         <div className="mt-3 flex justify-between items-center">
-          <span className="text-lg font-bold text-primary-600">
-            {new Intl.NumberFormat("vi-VN", {
+          <span className="text-lg font-bold text-amber-800">
+            {/* {new Intl.NumberFormat("vi-VN", {
               style: "currency",
               currency: "VND",
-            }).format(price)}
+            }).format(price)} */}
           </span>
-          <Link
+          {/* <Link
             to={`/products/${id}`}
-            className="px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700"
+            className="px-4 py-2 bg-amber-800 text-amber-200 rounded hover:bg-amber-900"
           >
             Xem chi tiết
-          </Link>
+          </Link> */}
+          <button
+            onClick={handleClick}
+            className="px-4 py-2 bg-amber-800 text-amber-200 rounded hover:bg-amber-900"
+          >
+            Xem chi tiết
+          </button>
         </div>
       </div>
     </div>

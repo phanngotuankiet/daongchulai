@@ -24,7 +24,7 @@ const Home = () => {
               className="text-center"
             >
               <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-                Đá ong Chu Lai
+                Đá ong tự nhiên Chu Lai - Chuyên gia đá ong xây dựng
               </h1>
               <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto">
                 Chất lượng tạo nên thương hiệu - Uy tín làm nên giá trị
@@ -52,7 +52,7 @@ const Home = () => {
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Sản phẩm nổi bật</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Đá ong xây dựng nổi bật</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Khám phá các sản phẩm đá ong chất lượng cao của chúng tôi
             </p>
@@ -69,7 +69,7 @@ const Home = () => {
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-64 object-cover"
                 />
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
@@ -94,7 +94,7 @@ const Home = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Tại sao chọn chúng tôi?</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Với kinh nghiệm nhiều năm trong ngành, chúng tôi tự hào mang đến những sản phẩm và dịch vụ tốt nhất
+              Với kinh nghiệm nhiều năm trong ngành, chúng tôi tự hào mang đến những sản phẩm đá ong chất lượng với sự phục vụ tận tâm
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -145,28 +145,28 @@ const Home = () => {
 const featuredProducts = [
   {
     id: '1',
-    name: 'Đá ong xám cao cấp',
-    description: 'Đá ong xám tự nhiên, độ cứng cao, phù hợp làm tường rào, ốp tường.',
-    image: '/images/da-ong-xam.jpg'
+    name: 'Đá ong cắt lát',
+    description: 'Đá ong cắt xẻ lát dày 2cm, phù hợp ốp tường, trang trí.',
+    image: 'https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/daongcatlat.jpg'
   },
   {
     id: '2',
-    name: 'Đá ong vàng đặc biệt',
-    description: 'Đá ong vàng cao cấp, màu sắc đẹp, thích hợp trang trí nội thất.',
-    image: '/images/da-ong-vang.jpg'
+    name: 'Đá ong xẻ nguyên khối',
+    description: 'Đá ong nguyên khối với kích cỡ có sẵn hoặc cắt theo yêu cầu, phù hợp cho xây tường.',
+    image: 'https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/daongcatvien.jpg'
   },
   {
     id: '3',
-    name: 'Đá ong đen nguyên khối',
-    description: 'Đá ong đen tự nhiên, độ bền cao, phù hợp làm móng và tường.',
-    image: '/images/da-ong-den.jpg'
+    name: 'Đá ong xẻ theo kích thước yêu cầu',
+    description: 'Đá xẻ theo yêu cầu, dùng để làm các công trình đặc biệt như giếng nước,...',
+    image: 'https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/gieng.jpg'
   }
 ];
 
 const features = [
   {
-    title: 'Chất lượng cao',
-    description: 'Đá ong tự nhiên 100%, không pha trộn',
+    title: 'Đá ong tự nhiên',
+    description: 'Chất lượng cao, đẹp mắt',
     icon: (props: any) => (
       <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -175,7 +175,7 @@ const features = [
   },
   {
     title: 'Giá cả hợp lý',
-    description: 'Cam kết giá tốt nhất thị trường',
+    description: 'Giá cạnh tranh trên thị trường',
     icon: (props: any) => (
       <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -183,8 +183,8 @@ const features = [
     )
   },
   {
-    title: 'Tư vấn chuyên nghiệp',
-    description: 'Luôn sẵn sàng hỗ trợ bạn với dịch vụ chất lượng cao',
+    title: 'Tư vấn tận tình',
+    description: 'Luôn sẵn sàng hỗ trợ bạn hết mình',
     icon: (props: any) => (
       <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

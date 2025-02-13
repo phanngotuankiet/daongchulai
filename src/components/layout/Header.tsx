@@ -26,6 +26,9 @@ const Header = () => {
             <Link to="/products" className="text-gray-600 hover:text-gray-900">
               Sản phẩm
             </Link>
+            <Link to="/mau-cong-trinh-da-ong" className="text-gray-600 hover:text-gray-900">
+              Mẫu công trình
+            </Link>
             <Link to="/about" className="text-gray-600 hover:text-gray-900">
               Giới thiệu
             </Link>
@@ -68,6 +71,12 @@ const Header = () => {
                 className="block px-3 py-2 text-gray-600 hover:text-gray-900"
               >
                 Sản phẩm
+              </Link>
+              <Link
+                to="/mau-cong-trinh-da-ong"
+                className="block px-3 py-2 text-gray-600 hover:text-gray-900"
+              >
+                Mẫu công trình
               </Link>
               <Link
                 to="/about"

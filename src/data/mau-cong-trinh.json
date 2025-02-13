@@ -1,0 +1,58 @@
+{
+  "categories": [
+    {
+      "id": "cat-1",
+      "name": "Tường rào",
+      "description": "Tường rào đá ong vừa đảm bảo an ninh vừa tạo nét đẹp truyền thống cho công trình",
+      "projects": [
+        {
+          "id": "1",
+          "name": "Tường rào biệt thự",
+          "location": "Quảng Nam",
+          "description": "Tường rào đá ong kết hợp với trụ bê tông, tạo nét đẹp vừa hiện đại vừa mang đậm bản sắc truyền thống",
+          "images": [
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/daongcatlat.jpg#Hình ảnh đá ong cắt lát 20x40x2cm",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/tuongrao2.jpg#Mẫu tường rào đá ong biệt thự tại Quảng Nam"
+          ],
+          "stoneType": "Đá ong cắt viên 20x40x13"
+        }
+      ]
+    },
+    {
+      "id": "cat-2",
+      "name": "Ốp tường",
+      "description": "Ốp tường đá ong tạo điểm nhấn độc đáo cho không gian sống",
+      "projects": [
+        {
+          "id": "2",
+          "name": "Ốp tường phòng khách",
+          "location": "Đà Nẵng",
+          "description": "Ốp tường đá ong tạo điểm nhấn trang trí, mang đến không gian ấm cúng và gần gũi với thiên nhiên",
+          "images": [
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/daongdantuong.jpg",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/optuong.jpg"
+          ],
+          "stoneType": "Đá ong cắt lát 20x40x2"
+        }
+      ]
+    },
+    {
+      "id": "cat-3",
+      "name": "Tiểu cảnh sân vườn",
+      "description": "Tiểu cảnh đá ong tạo nét độc đáo cho không gian sân vườn",
+      "projects": [
+        {
+          "id": "3",
+          "name": "Nhà cửa",
+          "location": "Quảng Nam",
+          "description": "Nhà cửa được xây dựng từ đá ong, tạo nét đẹp truyền thống cho công trình",
+          "images": [
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/congtrinhfrontside.jpg",
+            "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/congtrinhwall.jpg"
+          ],
+          "stoneType": "Đá ong tự nhiên nguyên khối"
+        }
+      ]
+    }
+  ]
+} 

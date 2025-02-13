@@ -1,74 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import ProductList from "../components/products/ProductList";
-import {
-  LateriteSizesQuery,
-  useLateriteSizesQuery,
-  useLateriteTypesQuery,
-} from "../generated/graphql";
-import { LateriteType } from "../types/LateriteTypes";
+import ProductList, { IProduct } from "../components/products/ProductList";
+import kichThuoc from "../data/kich-thuoc.json";
 
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [lateriteTypes, setLateriteTypes] = useState<LateriteType[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState(
-    searchParams.get("category") ? Number(searchParams.get("category")) : 0
+  // const [productsShown, setProductsShown] = useState(kichThuoc.categories);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    searchParams.get("category") ? searchParams.get("category") : null
   );
 
-  const { data: lateriteTypesData } = useLateriteTypesQuery({
-    fetchPolicy: "no-cache",
-  });
-
-  const { data: lateriteSizesData, loading: lateriteSizesLoading, refetch: refetchLateriteSizes } =
-    useLateriteSizesQuery({
-      variables: {
-        where: {
-          laterite_type_id: { _eq: Number(selectedCategory) },
-        },
-      },
-      fetchPolicy: "no-cache",
-    });
-
-  useEffect(() => {
-    if (lateriteTypesData) {
-      // option "Tất cả" với kiểu LateriteType
-      const allOption: LateriteType = {
-        id: 0,
-        type: "all",
-        no_pitches_name: "tat-ca-san-pham",
-        origin: null,
-        hardness_level: null,
-        description: "Xem tất cả sản phẩm",
-        created_at: null,
-        updated_at: null,
-      };
-
-      // Thêm option "Tất cả" vào đầu mảng
-      setLateriteTypes([
-        allOption,
-        ...(lateriteTypesData?.laterite_types as LateriteType[]),
-      ]);
-    }
-  }, [lateriteTypesData]);
-
-  useEffect(() => {
-    // searchParams.set("category", selectedCategory.toString());
-    // searchParams.set("name", "");
-    // setSearchParams(searchParams);
-
-    // Gọi refetch để cập nhật data khi selectedCategory thay đổi
-    if (selectedCategory !== 0) {
-      refetchLateriteSizes({
-        where: {
-          laterite_type_id: { _eq: Number(selectedCategory) },
-        },
-      });
-    } else {
-      refetchLateriteSizes({
-        where: {}
-      });
-    }
-  }, [selectedCategory, refetchLateriteSizes]);
+  // Get all products
+  const allProducts = kichThuoc.categories.reduce(
+    (acc: IProduct[], category) => {
+      return [...acc, ...category.sizes];
+    },
+    []
+  );
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -94,27 +42,37 @@ const Products = () => {
             </h3>
 
             <div className="space-y-4">
-              {lateriteTypes.map((lateriteType) => (
+              <button
+                onClick={() => {
+                  setSelectedCategory(null);
+                  searchParams.delete("category");
+                  searchParams.delete("name");
+                  setSearchParams(searchParams);
+                }}
+                className={`block w-full text-left px-4 py-2 rounded ${
+                  selectedCategory === null
+                    ? "text-amber-200 bg-amber-800"
+                    : "text-gray-600 hover:bg-gray-100"
+                }`}
+              >
+                Tất cả sản phẩm
+              </button>
+              {kichThuoc.categories.map((category) => (
                 <button
-                  key={lateriteType.id}
+                  key={category.id}
                   onClick={() => {
-                    setSelectedCategory(lateriteType.id);
-                    searchParams.set("category", lateriteType.id.toString());
-                    searchParams.set(
-                      "name",
-                      lateriteType.no_pitches_name || ""
-                    );
+                    setSelectedCategory(category.id);
+                    searchParams.set("category", category.id.toString());
+                    searchParams.set("name", category.name || "");
                     setSearchParams(searchParams);
                   }}
                   className={`block w-full text-left px-4 py-2 rounded ${
-                    Number(selectedCategory) === lateriteType.id
-                      ? "bg-primary-600 text-white"
+                    selectedCategory === category.id
+                      ? "text-amber-200 bg-amber-800"
                       : "text-gray-600 hover:bg-gray-100"
                   }`}
                 >
-                  {lateriteType.type === "all"
-                    ? "Tất cả sản phẩm"
-                    : lateriteType.type}
+                  {category.name}
                 </button>
               ))}
             </div>
@@ -124,9 +82,13 @@ const Products = () => {
           <div className="lg:col-span-3">
             <ProductList
               products={
-                lateriteSizesData?.laterite_sizes as LateriteSizesQuery["laterite_sizes"]
+                // lọc có điều kiện bằng id nếu giá trị của selectedCategory có tồn tại, nếu không thì lấy tất cả
+                selectedCategory
+                  ? kichThuoc.categories.find(
+                      (category) => category.id === selectedCategory
+                    )?.sizes
+                  : allProducts
               }
-              loading={lateriteSizesLoading}
             />
           </div>
         </div>

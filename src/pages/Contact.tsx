@@ -28,7 +28,7 @@ const Contact = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl font-extrabold text-blue-800 mb-4">
+          <h1 className="text-5xl font-extrabold text-primary-600 mb-4">
             Chúng tôi luôn sẵn sàng hỗ trợ bạn
           </h1>
           <p className="text-lg text-gray-700 max-w-2xl mx-auto">
@@ -46,14 +46,14 @@ const Contact = () => {
             className="space-y-8"
           >
             <div className="bg-white rounded-lg shadow-lg p-8">
-              <h2 className="text-3xl font-bold text-blue-800 mb-4">
+              <h2 className="text-3xl font-bold text-primary-600 mb-4">
                 Thông tin liên hệ
               </h2>
               <div className="space-y-4">
                 <div className="flex items-start">
-                  <PhoneIcon className="h-6 w-6 text-blue-600 mt-1" />
+                  <PhoneIcon className="h-6 w-6 text-primary-500 mt-1" />
                   <div className="ml-4">
-                    <h3 className="text-lg font-medium text-gray-800">
+                    <h3 className="text-lg font-medium text-primary-700">
                       Điện thoại
                     </h3>
                     <p className="text-gray-600">0982 535 517</p>
@@ -61,23 +61,23 @@ const Contact = () => {
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <EnvelopeIcon className="h-6 w-6 text-blue-600 mt-1" />
+                  <EnvelopeIcon className="h-6 w-6 text-primary-500 mt-1" />
                   <div className="ml-4">
-                    <h3 className="text-lg font-medium text-gray-800">Email</h3>
+                    <h3 className="text-lg font-medium text-primary-700">Email</h3>
                     <p className="text-gray-600">daongvn@gmail.com</p>
                     {/* <p className="text-gray-600">sales@daongchulai.com</p> */}
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <MapPinIcon className="h-6 w-6 text-blue-600 mt-1" />
+                  <MapPinIcon className="h-6 w-6 text-primary-500 mt-1" />
                   <div className="ml-4">
-                    <h3 className="text-lg font-medium text-gray-800">
+                    <h3 className="text-lg font-medium text-primary-700">
                       Địa chỉ
                     </h3>
                     <p className="text-gray-600">
-                      Khu công nghiệp Chu Lai,
+                      Khu kinh tế mở Chu Lai,
                       <br />
-                      Núi Thành, Quảng Nam
+                      huyện Núi Thành, tỉnh Quảng Nam
                     </p>
                   </div>
                 </div>
