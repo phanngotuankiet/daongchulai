@@ -1,7 +1,7 @@
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { ChevronRightIcon } from '@heroicons/react/24/outline';
-import heroBg from '../assets/xecontainer.jpg';
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import heroBg from "../assets/xecontainer.jpg";
 
 const Home = () => {
   return (
@@ -52,7 +52,9 @@ const Home = () => {
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Đá ong xây dựng nổi bật</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Đá ong xây dựng nổi bật
+            </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Khám phá các sản phẩm đá ong chất lượng cao của chúng tôi
             </p>
@@ -75,7 +77,7 @@ const Home = () => {
                   <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
                   <p className="text-gray-600 mb-4">{product.description}</p>
                   <Link
-                    to={`/products/${product.id}`}
+                    to={`/products`}
                     className="text-primary-600 font-medium hover:text-primary-700 flex items-center"
                   >
                     Xem chi tiết
@@ -92,9 +94,12 @@ const Home = () => {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Tại sao chọn chúng tôi?</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Tại sao chọn chúng tôi?
+            </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Với kinh nghiệm nhiều năm trong ngành, chúng tôi tự hào mang đến những sản phẩm đá ong chất lượng với sự phục vụ tận tâm
+              Với kinh nghiệm nhiều năm trong ngành, chúng tôi tự hào mang đến
+              những sản phẩm đá ong chất lượng với sự phục vụ tận tâm
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -137,6 +142,29 @@ const Home = () => {
           </div>
         </div>
       </section> */}
+
+      {/* Thêm section địa chỉ cụ thể */}
+      <div className="bg-white py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">
+            Kho đá trực tiếp tại Quảng Nam
+          </h3>
+          <p className="text-gray-600 mb-2">
+            Địa chỉ: Khu kinh tế mở Chu Lai, Núi Thành, Quảng Nam
+          </p>
+          <div className="mt-4">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3835.738441211325!2d108.70627827790669!3d15.389022125480055!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3169c9260e3ea69d%3A0x8b0c5566b14c220d!2zQ8ahIHPhu58gc-G6o24geHXhuqV0IMSQw6Egb25nIHThu7Egbmhpw6puIETFqW5nIENodSBMYWk!5e0!3m2!1svi!2s!4v1628756782343!5m2!1svi!2s&z=15"
+              width="100%"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -144,62 +172,87 @@ const Home = () => {
 // Sample data
 const featuredProducts = [
   {
-    id: '1',
-    name: 'Đá ong cắt lát',
-    description: 'Đá ong cắt xẻ lát dày 2cm, phù hợp ốp tường, trang trí.',
-    image: 'https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/daongcatlat.jpg'
+    id: "1",
+    name: "Đá ong cắt lát",
+    description: "Đá ong cắt xẻ lát dày 2cm, phù hợp ốp tường, trang trí.",
+    image:
+      "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/daongcatlat.jpg",
   },
   {
-    id: '2',
-    name: 'Đá ong xẻ nguyên khối',
-    description: 'Đá ong nguyên khối với kích cỡ có sẵn hoặc cắt theo yêu cầu, phù hợp cho xây tường.',
-    image: 'https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/daongcatvien.jpg'
+    id: "2",
+    name: "Đá ong xẻ nguyên khối",
+    description:
+      "Đá ong nguyên khối với kích cỡ có sẵn hoặc cắt theo yêu cầu, phù hợp cho xây tường.",
+    image:
+      "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/daongcatvien.jpg",
   },
   {
-    id: '3',
-    name: 'Đá ong xẻ theo kích thước yêu cầu',
-    description: 'Đá xẻ theo yêu cầu, dùng để làm các công trình đặc biệt như giếng nước,...',
-    image: 'https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/gieng.jpg'
-  }
+    id: "3",
+    name: "Đá ong xẻ theo kích thước yêu cầu",
+    description:
+      "Đá xẻ theo yêu cầu, dùng để làm các công trình đặc biệt như giếng nước,...",
+    image:
+      "https://raw.githubusercontent.com/phanngotuankiet/daongchulai/main/src/assets/gieng.jpg",
+  },
 ];
 
 const features = [
   {
-    title: 'Đá ong tự nhiên',
-    description: 'Chất lượng cao, đẹp mắt',
+    title: "Đá ong tự nhiên",
+    description: "Chất lượng cao, đẹp mắt",
     icon: (props: any) => (
       <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M5 13l4 4L19 7"
+        />
       </svg>
-    )
+    ),
   },
   {
-    title: 'Giá cả hợp lý',
-    description: 'Giá cạnh tranh trên thị trường',
+    title: "Giá cả hợp lý",
+    description: "Giá cạnh tranh trên thị trường",
     icon: (props: any) => (
       <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
       </svg>
-    )
+    ),
   },
   {
-    title: 'Tư vấn tận tình',
-    description: 'Luôn sẵn sàng hỗ trợ bạn hết mình',
+    title: "Tư vấn tận tình",
+    description: "Luôn sẵn sàng hỗ trợ bạn hết mình",
     icon: (props: any) => (
       <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
       </svg>
-    )
+    ),
   },
   {
-    title: 'Giao hàng nhanh',
-    description: 'Vận chuyển toàn quốc, đảm bảo tiến độ',
+    title: "Giao hàng nhanh",
+    description: "Vận chuyển toàn quốc, đảm bảo tiến độ",
     icon: (props: any) => (
       <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M13 10V3L4 14h7v7l9-11h-7z"
+        />
       </svg>
-    )
-  }
+    ),
+  },
 ];
 
-export default Home; 
+export default Home;

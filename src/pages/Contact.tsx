@@ -86,10 +86,6 @@ const Contact = () => {
           </motion.div>
         </div>
 
-        {/* Removed Contact Form and Map Section */}
-        {/*
-        The original Contact Form section and Map Section have been removed.
-        */}
       </div>
     </div>
   );
