@@ -27,10 +27,10 @@ const About = () => {
           className="text-center mb-16"
         >
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Đá ong Chu Lai - Đá của ngôi nhà Việt
+            Đá ong xẻ quy cách - Đá ong Chu Lai
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Chuyên cung cấp đá ong tự nhiên, góp phần tạo nên những công trình kiến trúc độc đáo, bền vững.
+            Chuyên cung cấp và thi công đá ong tự nhiên chất lượng cao, góp phần tạo nên những công trình kiến trúc độc đáo, bền vững theo thời gian.
           </p>
         </motion.div>
 
@@ -42,15 +42,10 @@ const About = () => {
             animate={{ opacity: 1, x: 0 }}
             className="space-y-6"
           >
-            <h2 className="text-2xl font-semibold text-gray-900">Về chúng tôi</h2>
+            <h2 className="text-2xl font-semibold text-gray-900">Đá ong - Lựa chọn số 1 cho công trình nhà cổ</h2>
             <p className="text-gray-600">
-              Đá ong Chu Lai là đơn vị khai thác và sản xuất đá ong tự nhiên tại khu vực miền Trung. Với {new Date().getFullYear() - 2008} năm kinh nghiệm (từ 2008), chúng tôi cam kết mang đến 
-              những sản phẩm đá ong chất lượng cao, đáp ứng mọi nhu cầu xây dựng và trang trí. Liên hệ Dũng ngay để được tư vấn: 0913 019 915.
+              Với {new Date().getFullYear() - 2008} năm kinh nghiệm (từ 2008), chúng tôi tự hào là đơn vị hàng đầu trong lĩnh vực khai thác và cung cấp đá ong tự nhiên tại Chu Lai. Đá ong không chỉ đẹp sau khi hoàn thiện mà còn đẹp theo thời gian, tạo nên vẻ cổ kính độc đáo cho các công trình nhà thờ họ, nhà cổ và các công trình kiến trúc truyền thống.
             </p>
-            {/* <p className="text-gray-600">
-              Đá ong được khai thác tại Chu Lai, nơi có trữ lượng đá ong dồi dào với 
-              chất lượng được đánh giá cao trong ngành xây dựng.
-            </p> */}
           </motion.div>
 
           {/* Ưu điểm sản phẩm */}
@@ -59,27 +54,53 @@ const About = () => {
             animate={{ opacity: 1, x: 0 }}
             className="space-y-6"
           >
-            <h2 className="text-2xl font-semibold text-gray-900">Ưu điểm sản phẩm</h2>
+            <h2 className="text-2xl font-semibold text-gray-900">Ưu điểm vượt trội</h2>
             <ul className="space-y-4 text-gray-600">
               <li className="flex items-start">
                 <span className="text-primary-600 mr-2">•</span>
-                <span>Độ bền cao, chịu được mọi điều kiện thời tiết</span>
+                <span>Độ bền cực cao, tuổi thọ từ 50-100 năm</span>
               </li>
               <li className="flex items-start">
                 <span className="text-primary-600 mr-2">•</span>
-                <span>Màu sắc tự nhiên, đẹp mắt</span>
+                <span>Vật liệu quý hiếm, tạo điểm nhấn độc đáo</span>
               </li>
               <li className="flex items-start">
                 <span className="text-primary-600 mr-2">•</span>
-                <span>Dễ dàng thi công, lắp đặt</span>
+                <span>Đa dạng kích thước, phù hợp mọi công trình</span>
               </li>
-              {/* <li className="flex items-start">
+              <li className="flex items-start">
                 <span className="text-primary-600 mr-2">•</span>
-                <span>Giá thành hợp lý</span>
-              </li> */}
+                <span>Thi công chuyên nghiệp, tư vấn tận tâm</span>
+              </li>
             </ul>
           </motion.div>
         </div>
+
+        <motion.div className="mb-16">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+            Ứng dụng đá ong trong kiến trúc
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Không gian trong nhà</h3>
+              <p className="text-gray-600">
+                Sử dụng làm điểm nhấn trang trí, ốp tường phòng khách, trang trí góc đọc sách...
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Không gian ngoài trời</h3>
+              <p className="text-gray-600">
+                Xây dựng tường rào, cổng, tiểu cảnh sân vườn, lối đi...
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Công trình truyền thống</h3>
+              <p className="text-gray-600">
+                Nhà thờ họ, đình chùa, nhà cổ truyền thống...
+              </p>
+            </div>
+          </div>
+        </motion.div>
 
         {/* Cam kết */}
         <motion.div 
@@ -105,7 +126,7 @@ const About = () => {
         </motion.div>
 
         {/* Liên hệ */}
-        <motion.div 
+        {/* <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
@@ -122,8 +143,28 @@ const About = () => {
           >
             Liên hệ ngay
           </Link>
-        </motion.div>
+        </motion.div> */}
       </div>
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          "mainEntity": {
+            "@type": "Organization",
+            "name": "Đá ong Chu Lai",
+            "description": "Chuyên cung cấp và thi công đá ong tự nhiên chất lượng cao tại Chu Lai, Quảng Nam",
+            "url": "https://daong.vn",
+            "telephone": "0913019915",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Núi Thành",
+              "addressRegion": "Quảng Nam",
+              "addressCountry": "VN"
+            },
+            "foundingDate": "2008"
+          }
+        })}
+      </script>
     </div>
   );
 };
