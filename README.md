@@ -1,50 +1,94 @@
-# React + TypeScript + Vite
+# Đá Ong Tự Nhiên Chu Lai - Website Thương Mại
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Website thương mại chuyên cung cấp và thi công đá ong tự nhiên Chu Lai chất lượng cao tại Quảng Nam.
 
-Currently, two official plugins are available:
+## 🚀 Cách chạy dự án
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Yêu cầu hệ thống
+- Node.js (phiên bản 16 trở lên)
+- npm hoặc yarn
 
-## Expanding the ESLint configuration
+### Cài đặt và chạy
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. **Cài đặt dependencies:**
+   ```bash
+   npm install
+   ```
 
-- Configure the top-level `parserOptions` property like this:
+2. **Chạy ứng dụng trong chế độ development:**
+   ```bash
+   npm run dev
+   ```
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+3. **Truy cập ứng dụng:**
+   - Mở trình duyệt và truy cập: `http://localhost:5173`
+   - Server sẽ tự động reload khi có thay đổi code
+
+### Các lệnh khác
+
+- **Build cho production:**
+  ```bash
+  npm run build
+  ```
+
+- **Preview build:**
+  ```bash
+  npm run preview
+  ```
+
+- **Chạy linter:**
+  ```bash
+  npm run lint
+  ```
+
+- **Generate GraphQL types:**
+  ```bash
+  npm run generate
+  ```
+
+## 🛠️ Công nghệ sử dụng
+
+- **Frontend:** React 18 + TypeScript
+- **Build tool:** Vite
+- **Styling:** Tailwind CSS
+- **State management:** Apollo Client (GraphQL)
+- **Routing:** React Router DOM
+- **UI Components:** Heroicons, Framer Motion
+- **Maps:** Google Maps API
+- **Image gallery:** Swiper, Yet Another React Lightbox
+
+## 📁 Cấu trúc dự án
+
+```
+src/
+├── components/          # Các component React
+│   ├── common/         # Component chung
+│   ├── layout/         # Layout components
+│   ├── products/       # Component sản phẩm
+│   └── seo/           # SEO components
+├── pages/              # Các trang chính
+├── hooks/              # Custom hooks
+├── data/               # Dữ liệu JSON
+├── graphql/            # GraphQL queries
+├── generated/          # Generated GraphQL types
+└── types/              # TypeScript type definitions
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🌟 Tính năng chính
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- Trang chủ với thông tin sản phẩm đá ong
+- Danh sách sản phẩm và dự án thi công
+- Chi tiết sản phẩm với popup modal
+- Thông tin liên hệ và bản đồ Google Maps
+- Responsive design cho mobile và desktop
+- SEO optimization
+- Loading states và animations
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+---
+
+## 📞 Liên hệ
+
+- **Điện thoại:** 0913019915
+- **Địa chỉ:** Chu Lai, Quảng Nam
+- **Website:** Đá Ong Tự Nhiên Chu Lai
+
