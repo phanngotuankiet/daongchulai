@@ -1,0 +1,199 @@
+# Admin Authentication - Using direct database queries for now
+# Note: Authentication will be handled by Hasura's built-in auth or custom auth
+
+# Admin Dashboard Stats
+query AdminStats {
+  users_aggregate {
+    aggregate {
+      count
+    }
+  }
+  products_aggregate {
+    aggregate {
+      count
+    }
+  }
+  posts_aggregate {
+    aggregate {
+      count
+    }
+  }
+  categories_aggregate {
+    aggregate {
+      count
+    }
+  }
+}
+
+# Admin Users Management
+query AdminUsers {
+  users {
+    id
+    username
+    role
+    created_at
+  }
+}
+
+mutation AdminCreateUser($username: String!, $password: String!, $role: String!) {
+  insert_users_one(object: { username: $username, password: $password, role: $role }) {
+    id
+    username
+    role
+  }
+}
+
+mutation AdminUpdateUser($id: Int!, $username: String, $role: String) {
+  update_users_by_pk(pk_columns: { id: $id }, _set: { username: $username, role: $role }) {
+    id
+    username
+    role
+  }
+}
+
+mutation AdminDeleteUser($id: Int!) {
+  delete_users_by_pk(id: $id) {
+    id
+  }
+}
+
+# Admin Products Management
+query AdminProducts {
+  products {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    image_url
+    status
+    created_at
+    user {
+      username
+    }
+    category {
+      name
+    }
+  }
+}
+
+mutation AdminCreateProduct($name: String!, $slug: String!, $description: String!, $price: numeric!, $stock: Int!, $image_url: String!, $category_id: Int!, $user_id: Int!, $status: String!) {
+  insert_products_one(object: { name: $name, slug: $slug, description: $description, price: $price, stock: $stock, image_url: $image_url, category_id: $category_id, user_id: $user_id, status: $status }) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    image_url
+    status
+  }
+}
+
+mutation AdminUpdateProduct($id: Int!, $name: String, $slug: String, $description: String, $price: numeric, $stock: Int, $image_url: String, $category_id: Int, $status: String) {
+  update_products_by_pk(pk_columns: { id: $id }, _set: { name: $name, slug: $slug, description: $description, price: $price, stock: $stock, image_url: $image_url, category_id: $category_id, status: $status }) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    image_url
+    status
+  }
+}
+
+mutation AdminDeleteProduct($id: Int!) {
+  delete_products_by_pk(id: $id) {
+    id
+  }
+}
+
+# Admin Posts Management
+query AdminPosts {
+  posts {
+    id
+    title
+    body
+    status
+    created_at
+    user {
+      username
+    }
+  }
+}
+
+mutation AdminCreatePost($title: String!, $body: String!, $user_id: Int!, $status: String!) {
+  insert_posts_one(object: { title: $title, body: $body, user_id: $user_id, status: $status }) {
+    id
+    title
+    body
+    status
+  }
+}
+
+mutation AdminUpdatePost($id: Int!, $title: String, $body: String, $status: String) {
+  update_posts_by_pk(pk_columns: { id: $id }, _set: { title: $title, body: $body, status: $status }) {
+    id
+    title
+    body
+    status
+  }
+}
+
+mutation AdminDeletePost($id: Int!) {
+  delete_posts_by_pk(id: $id) {
+    id
+  }
+}
+
+# Admin Categories Management
+query AdminCategories {
+  categories {
+    id
+    name
+    type
+    created_at
+  }
+}
+
+mutation AdminCreateCategory($name: String!, $type: String!) {
+  insert_categories_one(object: { name: $name, type: $type }) {
+    id
+    name
+    type
+  }
+}
+
+mutation AdminUpdateCategory($id: Int!, $name: String, $type: String) {
+  update_categories_by_pk(pk_columns: { id: $id }, _set: { name: $name, type: $type }) {
+    id
+    name
+    type
+  }
+}
+
+mutation AdminDeleteCategory($id: Int!) {
+  delete_categories_by_pk(id: $id) {
+    id
+  }
+}
+
+# Change Password using Hasura Action (proper backend hashing)
+mutation AdminChangePassword($user_id: Int!, $current_password: String, $new_password: String!) {
+  change_password(user_id: $user_id, current_password: $current_password, new_password: $new_password) {
+    message
+    user_id
+    username
+  }
+}
+
+# Get User Info for Password Validation
+query AdminGetUser($id: Int!) {
+  users_by_pk(id: $id) {
+    id
+    username
+    password
+  }
+}

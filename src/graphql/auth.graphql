@@ -1,0 +1,8 @@
+mutation Login($loginInput: LoginInput!) {
+  login(loginInput: $loginInput)
+}
+
+mutation Register($registerInput: RegisterInput!) {
+  register(registerInput: $registerInput)
+}
+

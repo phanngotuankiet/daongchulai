@@ -1,0 +1,159 @@
+query LateriteSizes($where: LateriteSizeWhereInput = {}) {
+  lateriteSizes {
+    id
+    size
+    price
+    color
+    stock_quantity
+    status
+    weight
+    laterite_type_id
+    lateriteType {
+      id
+      type
+      origin
+      description
+      hardness_level
+    }
+    created_at
+    updated_at
+  }
+}
+
+query LateriteSize($id: Int!) {
+  lateriteSize(id: $id) {
+    id
+    size
+    price
+    color
+    stock_quantity
+    status
+    weight
+    laterite_type_id
+    lateriteType {
+      id
+      type
+      origin
+      description
+      hardness_level
+    }
+    created_at
+    updated_at
+  }
+}
+
+query LateriteSizesByType($lateriteTypeId: Int!) {
+  lateriteSizesByType(lateriteTypeId: $lateriteTypeId) {
+    id
+    size
+    price
+    color
+    stock_quantity
+    status
+    weight
+    laterite_type_id
+    lateriteType {
+      id
+      type
+      origin
+      description
+      hardness_level
+    }
+    created_at
+    updated_at
+  }
+}
+
+query LateriteSizesByStatus($status: String!) {
+  lateriteSizesByStatus(status: $status) {
+    id
+    size
+    price
+    color
+    stock_quantity
+    status
+    weight
+    laterite_type_id
+    lateriteType {
+      id
+      type
+      origin
+      description
+      hardness_level
+    }
+    created_at
+    updated_at
+  }
+}
+
+query LateriteSizesByPriceRange($minPrice: Float!, $maxPrice: Float!) {
+  lateriteSizesByPriceRange(minPrice: $minPrice, maxPrice: $maxPrice) {
+    id
+    size
+    price
+    color
+    stock_quantity
+    status
+    weight
+    laterite_type_id
+    lateriteType {
+      id
+      type
+      origin
+      description
+      hardness_level
+    }
+    created_at
+    updated_at
+  }
+}
+
+mutation CreateLateriteSize($createLateriteSizeInput: CreateLateriteSizeInput!) {
+  createLateriteSize(createLateriteSizeInput: $createLateriteSizeInput) {
+    id
+    size
+    price
+    color
+    stock_quantity
+    status
+    weight
+    laterite_type_id
+    lateriteType {
+      id
+      type
+      origin
+    }
+  }
+}
+
+mutation UpdateLateriteSize($id: Int!, $updateLateriteSizeInput: UpdateLateriteSizeInput!) {
+  updateLateriteSize(id: $id, updateLateriteSizeInput: $updateLateriteSizeInput) {
+    id
+    size
+    price
+    color
+    stock_quantity
+    status
+    weight
+    laterite_type_id
+    lateriteType {
+      id
+      type
+      origin
+    }
+  }
+}
+
+mutation RemoveLateriteSize($id: Int!) {
+  removeLateriteSize(id: $id)
+}
+
+mutation UpdateStockQuantity($id: Int!, $quantity: Int!) {
+  updateStockQuantity(id: $id, quantity: $quantity) {
+    id
+    size
+    price
+    stock_quantity
+  }
+}
+

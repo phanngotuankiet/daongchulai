@@ -1,0 +1,74 @@
+query Categories($where: categories_bool_exp = {}) {
+  categories(where: $where) {
+    id
+    name
+    type
+    created_at
+    products {
+      id
+      name
+      slug
+      price
+      stock
+      status
+    }
+  }
+}
+
+query Category($id: Int!) {
+  categories_by_pk(id: $id) {
+    id
+    name
+    type
+    created_at
+    products {
+      id
+      name
+      slug
+      price
+      stock
+      status
+    }
+  }
+}
+
+query CategoriesByType($type: String!) {
+  categories(where: { type: { _eq: $type } }) {
+    id
+    name
+    type
+    created_at
+    products {
+      id
+      name
+      slug
+      price
+      stock
+      status
+    }
+  }
+}
+
+mutation CreateCategory($object: categories_insert_input!) {
+  insert_categories_one(object: $object) {
+    id
+    name
+    type
+    created_at
+  }
+}
+
+mutation UpdateCategory($id: Int!, $set: categories_set_input!) {
+  update_categories_by_pk(pk_columns: { id: $id }, _set: $set) {
+    id
+    name
+    type
+    created_at
+  }
+}
+
+mutation DeleteCategory($id: Int!) {
+  delete_categories_by_pk(id: $id) {
+    id
+  }
+}

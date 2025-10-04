@@ -1,0 +1,91 @@
+query Posts($where: posts_bool_exp = {}) {
+  posts(where: $where) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+  }
+}
+
+query Post($id: Int!) {
+  posts_by_pk(id: $id) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+  }
+}
+
+query PostsByStatus($status: String!) {
+  posts(where: { status: { _eq: $status } }) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+  }
+}
+
+query PostsByUser($userId: Int!) {
+  posts(where: { user_id: { _eq: $userId } }) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+  }
+}
+
+mutation CreatePost($object: posts_insert_input!) {
+  insert_posts_one(object: $object) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+  }
+}
+
+mutation UpdatePost($id: Int!, $set: posts_set_input!) {
+  update_posts_by_pk(pk_columns: { id: $id }, _set: $set) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+  }
+}
+
+mutation DeletePost($id: Int!) {
+  delete_posts_by_pk(id: $id) {
+    id
+  }
+}

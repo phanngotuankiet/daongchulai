@@ -1,0 +1,201 @@
+query Products($where: products_bool_exp = {}) {
+  products(where: $where) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    image_url
+    category_id
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+    category {
+      id
+      name
+      type
+    }
+  }
+}
+
+query Product($id: Int!) {
+  products_by_pk(id: $id) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    image_url
+    category_id
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+    category {
+      id
+      name
+      type
+    }
+  }
+}
+
+query ProductBySlug($slug: String!) {
+  products(where: { slug: { _eq: $slug } }) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    image_url
+    category_id
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+    category {
+      id
+      name
+      type
+    }
+  }
+}
+
+query ProductsByStatus($status: String!) {
+  products(where: { status: { _eq: $status } }) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    image_url
+    category_id
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+    category {
+      id
+      name
+      type
+    }
+  }
+}
+
+query ProductsByCategory($categoryId: Int!) {
+  products(where: { category_id: { _eq: $categoryId } }) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    image_url
+    category_id
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+    category {
+      id
+      name
+      type
+    }
+  }
+}
+
+query ProductsByUser($userId: Int!) {
+  products(where: { user_id: { _eq: $userId } }) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    image_url
+    category_id
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+    category {
+      id
+      name
+      type
+    }
+  }
+}
+
+mutation CreateProduct($object: products_insert_input!) {
+  insert_products_one(object: $object) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    image_url
+    category_id
+    user_id
+    status
+    created_at
+  }
+}
+
+mutation UpdateProduct($id: Int!, $set: products_set_input!) {
+  update_products_by_pk(pk_columns: { id: $id }, _set: $set) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    image_url
+    category_id
+    user_id
+    status
+    created_at
+  }
+}
+
+mutation DeleteProduct($id: Int!) {
+  delete_products_by_pk(id: $id) {
+    id
+  }
+}
+
+mutation UpdateStock($id: Int!, $stock: Int!) {
+  update_products_by_pk(pk_columns: { id: $id }, _set: { stock: $stock }) {
+    id
+    name
+    stock
+  }
+}

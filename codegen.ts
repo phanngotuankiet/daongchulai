@@ -1,22 +1,13 @@
-import * as dotenv from "dotenv";
-
-dotenv.config();
-
-const {
-  VITE_HASURA_ENDPOINT: endpoint,
-  VITE_HASURA_GRAPHQL_ADMIN_SECRET: secret,
-} = process.env;
-
 module.exports = {
   overwrite: true,
   schema: {
-    [endpoint || ""]: {
+    "http://localhost:8080/v1/graphql": {
       headers: {
-        "x-hasura-admin-secret": secret,
+        "x-hasura-admin-secret": "adminsecret123",
       },
     },
   },
-  documents: "src/**/*.graphql",
+  documents: "src/graphql/admin/*.graphql",
   generates: {
     "src/generated/graphql.ts": {
       plugins: ["typescript", "typescript-operations", "typescript-react-apollo"],

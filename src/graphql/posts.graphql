@@ -1,0 +1,89 @@
+query Posts {
+  posts {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+  }
+}
+
+query Post($id: Int!) {
+  post(id: $id) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+  }
+}
+
+query PostsByStatus($status: String!) {
+  postsByStatus(status: $status) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+  }
+}
+
+query PostsByUser($userId: Int!) {
+  postsByUser(userId: $userId) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+  }
+}
+
+mutation CreatePost($createPostInput: CreatePostInput!) {
+  createPost(createPostInput: $createPostInput) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+  }
+}
+
+mutation UpdatePost($id: Int!, $updatePostInput: UpdatePostInput!) {
+  updatePost(id: $id, updatePostInput: $updatePostInput) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+  }
+}
+
+mutation RemovePost($id: Int!) {
+  removePost(id: $id)
+}

@@ -1,0 +1,37 @@
+query Users($where: users_bool_exp = {}) {
+  users(where: $where) {
+    id
+    username
+    role
+    created_at
+    posts {
+      id
+      title
+      status
+    }
+    products {
+      id
+      name
+      status
+    }
+  }
+}
+
+query User($id: Int!) {
+  users_by_pk(id: $id) {
+    id
+    username
+    role
+    created_at
+    posts {
+      id
+      title
+      status
+    }
+    products {
+      id
+      name
+      status
+    }
+  }
+}

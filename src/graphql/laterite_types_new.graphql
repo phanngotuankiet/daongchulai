@@ -1,0 +1,118 @@
+query LateriteTypes {
+  lateriteTypes {
+    id
+    type
+    origin
+    no_pitches_name
+    description
+    hardness_level
+    created_at
+    updated_at
+    lateriteSizes {
+      id
+      size
+      price
+      color
+      stock_quantity
+      status
+      weight
+    }
+  }
+}
+
+query LateriteType($id: Int!) {
+  lateriteType(id: $id) {
+    id
+    type
+    origin
+    no_pitches_name
+    description
+    hardness_level
+    created_at
+    updated_at
+    lateriteSizes {
+      id
+      size
+      price
+      color
+      stock_quantity
+      status
+      weight
+    }
+  }
+}
+
+query LateriteTypesByType($type: String!) {
+  lateriteTypesByType(type: $type) {
+    id
+    type
+    origin
+    no_pitches_name
+    description
+    hardness_level
+    created_at
+    updated_at
+    lateriteSizes {
+      id
+      size
+      price
+      color
+      stock_quantity
+      status
+      weight
+    }
+  }
+}
+
+query LateriteTypesByOrigin($origin: String!) {
+  lateriteTypesByOrigin(origin: $origin) {
+    id
+    type
+    origin
+    no_pitches_name
+    description
+    hardness_level
+    created_at
+    updated_at
+    lateriteSizes {
+      id
+      size
+      price
+      color
+      stock_quantity
+      status
+      weight
+    }
+  }
+}
+
+mutation CreateLateriteType($createLateriteTypeInput: CreateLateriteTypeInput!) {
+  createLateriteType(createLateriteTypeInput: $createLateriteTypeInput) {
+    id
+    type
+    origin
+    no_pitches_name
+    description
+    hardness_level
+    created_at
+    updated_at
+  }
+}
+
+mutation UpdateLateriteType($id: Int!, $updateLateriteTypeInput: UpdateLateriteTypeInput!) {
+  updateLateriteType(id: $id, updateLateriteTypeInput: $updateLateriteTypeInput) {
+    id
+    type
+    origin
+    no_pitches_name
+    description
+    hardness_level
+    created_at
+    updated_at
+  }
+}
+
+mutation RemoveLateriteType($id: Int!) {
+  removeLateriteType(id: $id)
+}
+

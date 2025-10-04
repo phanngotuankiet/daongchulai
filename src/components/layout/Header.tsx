@@ -35,6 +35,9 @@ const Header = () => {
             <Link to="/contact" className="text-gray-600 hover:text-gray-900">
               Liên hệ
             </Link>
+            <Link to="/admin/login" className="text-blue-600 hover:text-blue-800 font-medium">
+              Admin
+            </Link>
           </nav>
 
           {/* Icons */}
@@ -89,6 +92,12 @@ const Header = () => {
                 className="block px-3 py-2 text-gray-600 hover:text-gray-900"
               >
                 Liên hệ
+              </Link>
+              <Link
+                to="/admin/login"
+                className="block px-3 py-2 text-blue-600 hover:text-blue-800 font-medium"
+              >
+                Admin
               </Link>
             </div>
           </div>
