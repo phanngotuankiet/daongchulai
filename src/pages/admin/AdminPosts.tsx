@@ -9,11 +9,17 @@ import {
 import { 
   PlusIcon, 
   PencilIcon, 
-  TrashIcon
+  TrashIcon,
+  EyeIcon
 } from '@heroicons/react/24/outline';
+import RichTextEditor from '../../components/admin/RichTextEditor';
+import RichTextDisplay from '../../components/admin/RichTextDisplay';
+import PostPreviewModal from '../../components/admin/PostPreviewModal';
 
 const AdminPosts: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
+  const [previewPost, setPreviewPost] = useState<any>(null);
   const [editingPost, setEditingPost] = useState<any>(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -81,6 +87,11 @@ const AdminPosts: React.FC = () => {
         console.error('Error deleting post:', error);
       }
     }
+  };
+
+  const handlePreview = (post: any) => {
+    setPreviewPost(post);
+    setShowPreviewModal(true);
   };
 
   const openModal = () => {
@@ -156,8 +167,11 @@ const AdminPosts: React.FC = () => {
                           <div className="text-sm font-medium text-gray-900">
                             {post.title}
                           </div>
-                          <div className="text-sm text-gray-500 max-w-xs truncate">
-                            {post.body}
+                          <div className="text-sm text-gray-500 max-w-xs">
+                            <RichTextDisplay 
+                              content={post.body} 
+                              className="line-clamp-3"
+                            />
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -178,14 +192,23 @@ const AdminPosts: React.FC = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <div className="flex space-x-2">
                             <button
+                              onClick={() => handlePreview(post)}
+                              className="text-green-600 hover:text-green-900"
+                              title="Xem trước"
+                            >
+                              <EyeIcon className="h-4 w-4" />
+                            </button>
+                            <button
                               onClick={() => handleEdit(post)}
                               className="text-blue-600 hover:text-blue-900"
+                              title="Sửa"
                             >
                               <PencilIcon className="h-4 w-4" />
                             </button>
                             <button
                               onClick={() => handleDelete(post.id)}
                               className="text-red-600 hover:text-red-900"
+                              title="Xóa"
                             >
                               <TrashIcon className="h-4 w-4" />
                             </button>
@@ -223,14 +246,12 @@ const AdminPosts: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Nội dung</label>
-                  <textarea
-                    required
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Nội dung</label>
+                  <RichTextEditor
                     value={formData.body}
-                    onChange={(e) => setFormData({ ...formData, body: e.target.value })}
-                    rows={10}
-                    className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
+                    onChange={(value) => setFormData({ ...formData, body: value })}
                     placeholder="Nhập nội dung bài viết..."
+                    height={400}
                   />
                 </div>
 
@@ -266,6 +287,13 @@ const AdminPosts: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Preview Modal */}
+      <PostPreviewModal
+        isOpen={showPreviewModal}
+        onClose={() => setShowPreviewModal(false)}
+        post={previewPost}
+      />
     </div>
   );
 };

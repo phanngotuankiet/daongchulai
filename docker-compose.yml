@@ -1,0 +1,22 @@
+# Frontend Docker Compose - chỉ chạy Frontend service
+# 3000 cho frontend
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      VITE_HASURA_URL: http://localhost:8080
+      VITE_HASURA_ADMIN_SECRET: adminsecret123
+    command: >
+      sh -c "
+        echo '🌐 Starting frontend server...' &&
+        npm run dev -- --host 0.0.0.0
+      "
