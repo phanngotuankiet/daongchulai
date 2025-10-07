@@ -96,6 +96,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   placeholder = "Nhập nội dung bài viết...",
   height = 300
 }) => {
+  // Store quill instance reference
+  const quillRef = React.useRef<ReactQuill>(null);
+
   const modules = useMemo(() => ({
     toolbar: {
       container: [
@@ -116,13 +119,26 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       handlers: {
         image: () => {
           ImageUpload().then((result: any) => {
-            const quill = (window as any).quill;
+            const quill = quillRef.current?.getEditor();
             if (quill && result) {
               const range = quill.getSelection();
-              quill.insertEmbed(range.index, 'image', {
-                url: result,
-                alt: 'Uploaded image'
-              });
+              if (range) {
+                // Insert image at current cursor position
+                quill.insertEmbed(range.index, 'image', {
+                  url: result,
+                  alt: 'Uploaded image'
+                });
+                // Move cursor after the image
+                quill.setSelection(range.index + 1);
+              } else {
+                // If no selection, insert at the end
+                const length = quill.getLength();
+                quill.insertEmbed(length - 1, 'image', {
+                  url: result,
+                  alt: 'Uploaded image'
+                });
+                quill.setSelection(length);
+              }
             }
           }).catch((error) => {
             console.error('Image upload failed:', error);
@@ -150,6 +166,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   return (
     <div className="rich-text-editor">
       <ReactQuill
+        ref={quillRef}
         theme="snow"
         value={value}
         onChange={onChange}
