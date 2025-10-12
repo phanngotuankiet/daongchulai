@@ -17,6 +17,20 @@ export type Scalars = {
   Float: { input: number; output: number; }
   numeric: { input: any; output: any; }
   timestamp: { input: any; output: any; }
+  timestamptz: { input: any; output: any; }
+};
+
+/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
+export type Boolean_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['Boolean']['input']>;
+  _gt?: InputMaybe<Scalars['Boolean']['input']>;
+  _gte?: InputMaybe<Scalars['Boolean']['input']>;
+  _in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['Boolean']['input']>;
+  _lte?: InputMaybe<Scalars['Boolean']['input']>;
+  _neq?: InputMaybe<Scalars['Boolean']['input']>;
+  _nin?: InputMaybe<Array<Scalars['Boolean']['input']>>;
 };
 
 export type ChangePasswordOutput = {
@@ -81,8 +95,32 @@ export type Categories = {
   id: Scalars['Int']['output'];
   /** Category name */
   name: Scalars['String']['output'];
+  /** An array relationship */
+  products: Array<Products>;
+  /** An aggregate relationship */
+  products_aggregate: Products_Aggregate;
   /** Category type: post or product */
   type: Scalars['String']['output'];
+};
+
+
+/** Categories for posts and products */
+export type CategoriesProductsArgs = {
+  distinct_on?: InputMaybe<Array<Products_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Products_Order_By>>;
+  where?: InputMaybe<Products_Bool_Exp>;
+};
+
+
+/** Categories for posts and products */
+export type CategoriesProducts_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Products_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Products_Order_By>>;
+  where?: InputMaybe<Products_Bool_Exp>;
 };
 
 /** aggregated selection of "categories" */
@@ -130,6 +168,8 @@ export type Categories_Bool_Exp = {
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  products?: InputMaybe<Products_Bool_Exp>;
+  products_aggregate?: InputMaybe<Products_Aggregate_Bool_Exp>;
   type?: InputMaybe<String_Comparison_Exp>;
 };
 
@@ -153,6 +193,7 @@ export type Categories_Insert_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   /** Category name */
   name?: InputMaybe<Scalars['String']['input']>;
+  products?: InputMaybe<Products_Arr_Rel_Insert_Input>;
   /** Category type: post or product */
   type?: InputMaybe<Scalars['String']['input']>;
 };
@@ -211,6 +252,7 @@ export type Categories_Order_By = {
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  products_aggregate?: InputMaybe<Products_Aggregate_Order_By>;
   type?: InputMaybe<Order_By>;
 };
 
@@ -354,6 +396,10 @@ export type Mutation_Root = {
   delete_posts?: Maybe<Posts_Mutation_Response>;
   /** delete single row from the table: "posts" */
   delete_posts_by_pk?: Maybe<Posts>;
+  /** delete data from the table: "product_images" */
+  delete_product_images?: Maybe<Product_Images_Mutation_Response>;
+  /** delete single row from the table: "product_images" */
+  delete_product_images_by_pk?: Maybe<Product_Images>;
   /** delete data from the table: "products" */
   delete_products?: Maybe<Products_Mutation_Response>;
   /** delete single row from the table: "products" */
@@ -370,6 +416,10 @@ export type Mutation_Root = {
   insert_posts?: Maybe<Posts_Mutation_Response>;
   /** insert a single row into the table: "posts" */
   insert_posts_one?: Maybe<Posts>;
+  /** insert data into the table: "product_images" */
+  insert_product_images?: Maybe<Product_Images_Mutation_Response>;
+  /** insert a single row into the table: "product_images" */
+  insert_product_images_one?: Maybe<Product_Images>;
   /** insert data into the table: "products" */
   insert_products?: Maybe<Products_Mutation_Response>;
   /** insert a single row into the table: "products" */
@@ -390,6 +440,12 @@ export type Mutation_Root = {
   update_posts_by_pk?: Maybe<Posts>;
   /** update multiples rows of table: "posts" */
   update_posts_many?: Maybe<Array<Maybe<Posts_Mutation_Response>>>;
+  /** update data of the table: "product_images" */
+  update_product_images?: Maybe<Product_Images_Mutation_Response>;
+  /** update single row of the table: "product_images" */
+  update_product_images_by_pk?: Maybe<Product_Images>;
+  /** update multiples rows of table: "product_images" */
+  update_product_images_many?: Maybe<Array<Maybe<Product_Images_Mutation_Response>>>;
   /** update data of the table: "products" */
   update_products?: Maybe<Products_Mutation_Response>;
   /** update single row of the table: "products" */
@@ -433,6 +489,18 @@ export type Mutation_RootDelete_PostsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Posts_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Product_ImagesArgs = {
+  where: Product_Images_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Product_Images_By_PkArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -486,6 +554,20 @@ export type Mutation_RootInsert_PostsArgs = {
 export type Mutation_RootInsert_Posts_OneArgs = {
   object: Posts_Insert_Input;
   on_conflict?: InputMaybe<Posts_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Product_ImagesArgs = {
+  objects: Array<Product_Images_Insert_Input>;
+  on_conflict?: InputMaybe<Product_Images_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Product_Images_OneArgs = {
+  object: Product_Images_Insert_Input;
+  on_conflict?: InputMaybe<Product_Images_On_Conflict>;
 };
 
 
@@ -558,6 +640,28 @@ export type Mutation_RootUpdate_Posts_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Posts_ManyArgs = {
   updates: Array<Posts_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Product_ImagesArgs = {
+  _inc?: InputMaybe<Product_Images_Inc_Input>;
+  _set?: InputMaybe<Product_Images_Set_Input>;
+  where: Product_Images_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Product_Images_By_PkArgs = {
+  _inc?: InputMaybe<Product_Images_Inc_Input>;
+  _set?: InputMaybe<Product_Images_Set_Input>;
+  pk_columns: Product_Images_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Product_Images_ManyArgs = {
+  updates: Array<Product_Images_Updates>;
 };
 
 
@@ -659,6 +763,17 @@ export type Posts_Aggregate = {
   nodes: Array<Posts>;
 };
 
+export type Posts_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Posts_Aggregate_Bool_Exp_Count>;
+};
+
+export type Posts_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Posts_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Posts_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "posts" */
 export type Posts_Aggregate_Fields = {
   __typename?: 'posts_aggregate_fields';
@@ -682,6 +797,28 @@ export type Posts_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** order by aggregate values of table "posts" */
+export type Posts_Aggregate_Order_By = {
+  avg?: InputMaybe<Posts_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Posts_Max_Order_By>;
+  min?: InputMaybe<Posts_Min_Order_By>;
+  stddev?: InputMaybe<Posts_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Posts_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Posts_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Posts_Sum_Order_By>;
+  var_pop?: InputMaybe<Posts_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Posts_Var_Samp_Order_By>;
+  variance?: InputMaybe<Posts_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "posts" */
+export type Posts_Arr_Rel_Insert_Input = {
+  data: Array<Posts_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Posts_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type Posts_Avg_Fields = {
   __typename?: 'posts_avg_fields';
@@ -689,6 +826,14 @@ export type Posts_Avg_Fields = {
   id?: Maybe<Scalars['Float']['output']>;
   /** Reference to users table */
   user_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "posts" */
+export type Posts_Avg_Order_By = {
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "posts". All fields are combined with a logical 'AND'. */
@@ -753,6 +898,22 @@ export type Posts_Max_Fields = {
   user_id?: Maybe<Scalars['Int']['output']>;
 };
 
+/** order by max() on columns of table "posts" */
+export type Posts_Max_Order_By = {
+  /** Post content */
+  body?: InputMaybe<Order_By>;
+  /** Creation timestamp */
+  created_at?: InputMaybe<Order_By>;
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Post status: draft or published */
+  status?: InputMaybe<Order_By>;
+  /** Post title */
+  title?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Posts_Min_Fields = {
   __typename?: 'posts_min_fields';
@@ -768,6 +929,22 @@ export type Posts_Min_Fields = {
   title?: Maybe<Scalars['String']['output']>;
   /** Reference to users table */
   user_id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by min() on columns of table "posts" */
+export type Posts_Min_Order_By = {
+  /** Post content */
+  body?: InputMaybe<Order_By>;
+  /** Creation timestamp */
+  created_at?: InputMaybe<Order_By>;
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Post status: draft or published */
+  status?: InputMaybe<Order_By>;
+  /** Post title */
+  title?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "posts" */
@@ -844,6 +1021,14 @@ export type Posts_Stddev_Fields = {
   user_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev() on columns of table "posts" */
+export type Posts_Stddev_Order_By = {
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_pop on columns */
 export type Posts_Stddev_Pop_Fields = {
   __typename?: 'posts_stddev_pop_fields';
@@ -853,6 +1038,14 @@ export type Posts_Stddev_Pop_Fields = {
   user_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev_pop() on columns of table "posts" */
+export type Posts_Stddev_Pop_Order_By = {
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_samp on columns */
 export type Posts_Stddev_Samp_Fields = {
   __typename?: 'posts_stddev_samp_fields';
@@ -860,6 +1053,14 @@ export type Posts_Stddev_Samp_Fields = {
   id?: Maybe<Scalars['Float']['output']>;
   /** Reference to users table */
   user_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "posts" */
+export type Posts_Stddev_Samp_Order_By = {
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "posts" */
@@ -893,6 +1094,14 @@ export type Posts_Sum_Fields = {
   id?: Maybe<Scalars['Int']['output']>;
   /** Reference to users table */
   user_id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by sum() on columns of table "posts" */
+export type Posts_Sum_Order_By = {
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "posts" */
@@ -929,6 +1138,14 @@ export type Posts_Var_Pop_Fields = {
   user_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_pop() on columns of table "posts" */
+export type Posts_Var_Pop_Order_By = {
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate var_samp on columns */
 export type Posts_Var_Samp_Fields = {
   __typename?: 'posts_var_samp_fields';
@@ -938,6 +1155,14 @@ export type Posts_Var_Samp_Fields = {
   user_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_samp() on columns of table "posts" */
+export type Posts_Var_Samp_Order_By = {
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate variance on columns */
 export type Posts_Variance_Fields = {
   __typename?: 'posts_variance_fields';
@@ -945,6 +1170,443 @@ export type Posts_Variance_Fields = {
   id?: Maybe<Scalars['Float']['output']>;
   /** Reference to users table */
   user_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "posts" */
+export type Posts_Variance_Order_By = {
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** columns and relationships of "product_images" */
+export type Product_Images = {
+  __typename?: 'product_images';
+  alt_text?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id: Scalars['Int']['output'];
+  image_url: Scalars['String']['output'];
+  is_primary?: Maybe<Scalars['Boolean']['output']>;
+  /** An object relationship */
+  product: Products;
+  product_id: Scalars['Int']['output'];
+  sort_order?: Maybe<Scalars['Int']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregated selection of "product_images" */
+export type Product_Images_Aggregate = {
+  __typename?: 'product_images_aggregate';
+  aggregate?: Maybe<Product_Images_Aggregate_Fields>;
+  nodes: Array<Product_Images>;
+};
+
+export type Product_Images_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Product_Images_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Product_Images_Aggregate_Bool_Exp_Bool_Or>;
+  count?: InputMaybe<Product_Images_Aggregate_Bool_Exp_Count>;
+};
+
+export type Product_Images_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Product_Images_Select_Column_Product_Images_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Product_Images_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Product_Images_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Product_Images_Select_Column_Product_Images_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Product_Images_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Product_Images_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Product_Images_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Product_Images_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "product_images" */
+export type Product_Images_Aggregate_Fields = {
+  __typename?: 'product_images_aggregate_fields';
+  avg?: Maybe<Product_Images_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Product_Images_Max_Fields>;
+  min?: Maybe<Product_Images_Min_Fields>;
+  stddev?: Maybe<Product_Images_Stddev_Fields>;
+  stddev_pop?: Maybe<Product_Images_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Product_Images_Stddev_Samp_Fields>;
+  sum?: Maybe<Product_Images_Sum_Fields>;
+  var_pop?: Maybe<Product_Images_Var_Pop_Fields>;
+  var_samp?: Maybe<Product_Images_Var_Samp_Fields>;
+  variance?: Maybe<Product_Images_Variance_Fields>;
+};
+
+
+/** aggregate fields of "product_images" */
+export type Product_Images_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Product_Images_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "product_images" */
+export type Product_Images_Aggregate_Order_By = {
+  avg?: InputMaybe<Product_Images_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Product_Images_Max_Order_By>;
+  min?: InputMaybe<Product_Images_Min_Order_By>;
+  stddev?: InputMaybe<Product_Images_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Product_Images_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Product_Images_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Product_Images_Sum_Order_By>;
+  var_pop?: InputMaybe<Product_Images_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Product_Images_Var_Samp_Order_By>;
+  variance?: InputMaybe<Product_Images_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "product_images" */
+export type Product_Images_Arr_Rel_Insert_Input = {
+  data: Array<Product_Images_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Product_Images_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Product_Images_Avg_Fields = {
+  __typename?: 'product_images_avg_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+  product_id?: Maybe<Scalars['Float']['output']>;
+  sort_order?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "product_images" */
+export type Product_Images_Avg_Order_By = {
+  id?: InputMaybe<Order_By>;
+  product_id?: InputMaybe<Order_By>;
+  sort_order?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "product_images". All fields are combined with a logical 'AND'. */
+export type Product_Images_Bool_Exp = {
+  _and?: InputMaybe<Array<Product_Images_Bool_Exp>>;
+  _not?: InputMaybe<Product_Images_Bool_Exp>;
+  _or?: InputMaybe<Array<Product_Images_Bool_Exp>>;
+  alt_text?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  image_url?: InputMaybe<String_Comparison_Exp>;
+  is_primary?: InputMaybe<Boolean_Comparison_Exp>;
+  product?: InputMaybe<Products_Bool_Exp>;
+  product_id?: InputMaybe<Int_Comparison_Exp>;
+  sort_order?: InputMaybe<Int_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "product_images" */
+export enum Product_Images_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  ProductImagesPkey = 'product_images_pkey'
+}
+
+/** input type for incrementing numeric columns in table "product_images" */
+export type Product_Images_Inc_Input = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+  product_id?: InputMaybe<Scalars['Int']['input']>;
+  sort_order?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** input type for inserting data into table "product_images" */
+export type Product_Images_Insert_Input = {
+  alt_text?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  image_url?: InputMaybe<Scalars['String']['input']>;
+  is_primary?: InputMaybe<Scalars['Boolean']['input']>;
+  product?: InputMaybe<Products_Obj_Rel_Insert_Input>;
+  product_id?: InputMaybe<Scalars['Int']['input']>;
+  sort_order?: InputMaybe<Scalars['Int']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate max on columns */
+export type Product_Images_Max_Fields = {
+  __typename?: 'product_images_max_fields';
+  alt_text?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  image_url?: Maybe<Scalars['String']['output']>;
+  product_id?: Maybe<Scalars['Int']['output']>;
+  sort_order?: Maybe<Scalars['Int']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** order by max() on columns of table "product_images" */
+export type Product_Images_Max_Order_By = {
+  alt_text?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  image_url?: InputMaybe<Order_By>;
+  product_id?: InputMaybe<Order_By>;
+  sort_order?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Product_Images_Min_Fields = {
+  __typename?: 'product_images_min_fields';
+  alt_text?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  image_url?: Maybe<Scalars['String']['output']>;
+  product_id?: Maybe<Scalars['Int']['output']>;
+  sort_order?: Maybe<Scalars['Int']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** order by min() on columns of table "product_images" */
+export type Product_Images_Min_Order_By = {
+  alt_text?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  image_url?: InputMaybe<Order_By>;
+  product_id?: InputMaybe<Order_By>;
+  sort_order?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "product_images" */
+export type Product_Images_Mutation_Response = {
+  __typename?: 'product_images_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Product_Images>;
+};
+
+/** on_conflict condition type for table "product_images" */
+export type Product_Images_On_Conflict = {
+  constraint: Product_Images_Constraint;
+  update_columns?: Array<Product_Images_Update_Column>;
+  where?: InputMaybe<Product_Images_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "product_images". */
+export type Product_Images_Order_By = {
+  alt_text?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  image_url?: InputMaybe<Order_By>;
+  is_primary?: InputMaybe<Order_By>;
+  product?: InputMaybe<Products_Order_By>;
+  product_id?: InputMaybe<Order_By>;
+  sort_order?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: product_images */
+export type Product_Images_Pk_Columns_Input = {
+  id: Scalars['Int']['input'];
+};
+
+/** select columns of table "product_images" */
+export enum Product_Images_Select_Column {
+  /** column name */
+  AltText = 'alt_text',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ImageUrl = 'image_url',
+  /** column name */
+  IsPrimary = 'is_primary',
+  /** column name */
+  ProductId = 'product_id',
+  /** column name */
+  SortOrder = 'sort_order',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** select "product_images_aggregate_bool_exp_bool_and_arguments_columns" columns of table "product_images" */
+export enum Product_Images_Select_Column_Product_Images_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  IsPrimary = 'is_primary'
+}
+
+/** select "product_images_aggregate_bool_exp_bool_or_arguments_columns" columns of table "product_images" */
+export enum Product_Images_Select_Column_Product_Images_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  IsPrimary = 'is_primary'
+}
+
+/** input type for updating data in table "product_images" */
+export type Product_Images_Set_Input = {
+  alt_text?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  image_url?: InputMaybe<Scalars['String']['input']>;
+  is_primary?: InputMaybe<Scalars['Boolean']['input']>;
+  product_id?: InputMaybe<Scalars['Int']['input']>;
+  sort_order?: InputMaybe<Scalars['Int']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Product_Images_Stddev_Fields = {
+  __typename?: 'product_images_stddev_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+  product_id?: Maybe<Scalars['Float']['output']>;
+  sort_order?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev() on columns of table "product_images" */
+export type Product_Images_Stddev_Order_By = {
+  id?: InputMaybe<Order_By>;
+  product_id?: InputMaybe<Order_By>;
+  sort_order?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Product_Images_Stddev_Pop_Fields = {
+  __typename?: 'product_images_stddev_pop_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+  product_id?: Maybe<Scalars['Float']['output']>;
+  sort_order?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "product_images" */
+export type Product_Images_Stddev_Pop_Order_By = {
+  id?: InputMaybe<Order_By>;
+  product_id?: InputMaybe<Order_By>;
+  sort_order?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Product_Images_Stddev_Samp_Fields = {
+  __typename?: 'product_images_stddev_samp_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+  product_id?: Maybe<Scalars['Float']['output']>;
+  sort_order?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "product_images" */
+export type Product_Images_Stddev_Samp_Order_By = {
+  id?: InputMaybe<Order_By>;
+  product_id?: InputMaybe<Order_By>;
+  sort_order?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "product_images" */
+export type Product_Images_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Product_Images_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Product_Images_Stream_Cursor_Value_Input = {
+  alt_text?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  image_url?: InputMaybe<Scalars['String']['input']>;
+  is_primary?: InputMaybe<Scalars['Boolean']['input']>;
+  product_id?: InputMaybe<Scalars['Int']['input']>;
+  sort_order?: InputMaybe<Scalars['Int']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Product_Images_Sum_Fields = {
+  __typename?: 'product_images_sum_fields';
+  id?: Maybe<Scalars['Int']['output']>;
+  product_id?: Maybe<Scalars['Int']['output']>;
+  sort_order?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by sum() on columns of table "product_images" */
+export type Product_Images_Sum_Order_By = {
+  id?: InputMaybe<Order_By>;
+  product_id?: InputMaybe<Order_By>;
+  sort_order?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "product_images" */
+export enum Product_Images_Update_Column {
+  /** column name */
+  AltText = 'alt_text',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ImageUrl = 'image_url',
+  /** column name */
+  IsPrimary = 'is_primary',
+  /** column name */
+  ProductId = 'product_id',
+  /** column name */
+  SortOrder = 'sort_order',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+export type Product_Images_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Product_Images_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Product_Images_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Product_Images_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Product_Images_Var_Pop_Fields = {
+  __typename?: 'product_images_var_pop_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+  product_id?: Maybe<Scalars['Float']['output']>;
+  sort_order?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "product_images" */
+export type Product_Images_Var_Pop_Order_By = {
+  id?: InputMaybe<Order_By>;
+  product_id?: InputMaybe<Order_By>;
+  sort_order?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Product_Images_Var_Samp_Fields = {
+  __typename?: 'product_images_var_samp_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+  product_id?: Maybe<Scalars['Float']['output']>;
+  sort_order?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "product_images" */
+export type Product_Images_Var_Samp_Order_By = {
+  id?: InputMaybe<Order_By>;
+  product_id?: InputMaybe<Order_By>;
+  sort_order?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Product_Images_Variance_Fields = {
+  __typename?: 'product_images_variance_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+  product_id?: Maybe<Scalars['Float']['output']>;
+  sort_order?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "product_images" */
+export type Product_Images_Variance_Order_By = {
+  id?: InputMaybe<Order_By>;
+  product_id?: InputMaybe<Order_By>;
+  sort_order?: InputMaybe<Order_By>;
 };
 
 /** Products table for e-commerce */
@@ -960,8 +1622,10 @@ export type Products = {
   description?: Maybe<Scalars['String']['output']>;
   /** Primary key */
   id: Scalars['Int']['output'];
-  /** Product image URL */
-  image_url?: Maybe<Scalars['String']['output']>;
+  /** An array relationship */
+  images: Array<Product_Images>;
+  /** An aggregate relationship */
+  images_aggregate: Product_Images_Aggregate;
   /** Product name */
   name: Scalars['String']['output'];
   /** Product price */
@@ -978,11 +1642,42 @@ export type Products = {
   user_id: Scalars['Int']['output'];
 };
 
+
+/** Products table for e-commerce */
+export type ProductsImagesArgs = {
+  distinct_on?: InputMaybe<Array<Product_Images_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Product_Images_Order_By>>;
+  where?: InputMaybe<Product_Images_Bool_Exp>;
+};
+
+
+/** Products table for e-commerce */
+export type ProductsImages_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Product_Images_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Product_Images_Order_By>>;
+  where?: InputMaybe<Product_Images_Bool_Exp>;
+};
+
 /** aggregated selection of "products" */
 export type Products_Aggregate = {
   __typename?: 'products_aggregate';
   aggregate?: Maybe<Products_Aggregate_Fields>;
   nodes: Array<Products>;
+};
+
+export type Products_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Products_Aggregate_Bool_Exp_Count>;
+};
+
+export type Products_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Products_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Products_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "products" */
@@ -1008,6 +1703,28 @@ export type Products_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** order by aggregate values of table "products" */
+export type Products_Aggregate_Order_By = {
+  avg?: InputMaybe<Products_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Products_Max_Order_By>;
+  min?: InputMaybe<Products_Min_Order_By>;
+  stddev?: InputMaybe<Products_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Products_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Products_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Products_Sum_Order_By>;
+  var_pop?: InputMaybe<Products_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Products_Var_Samp_Order_By>;
+  variance?: InputMaybe<Products_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "products" */
+export type Products_Arr_Rel_Insert_Input = {
+  data: Array<Products_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Products_On_Conflict>;
+};
+
 /** aggregate avg on columns */
 export type Products_Avg_Fields = {
   __typename?: 'products_avg_fields';
@@ -1023,6 +1740,20 @@ export type Products_Avg_Fields = {
   user_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by avg() on columns of table "products" */
+export type Products_Avg_Order_By = {
+  /** Reference to categories table */
+  category_id?: InputMaybe<Order_By>;
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Product price */
+  price?: InputMaybe<Order_By>;
+  /** Stock quantity */
+  stock?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** Boolean expression to filter rows from the table "products". All fields are combined with a logical 'AND'. */
 export type Products_Bool_Exp = {
   _and?: InputMaybe<Array<Products_Bool_Exp>>;
@@ -1033,7 +1764,8 @@ export type Products_Bool_Exp = {
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
   description?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
-  image_url?: InputMaybe<String_Comparison_Exp>;
+  images?: InputMaybe<Product_Images_Bool_Exp>;
+  images_aggregate?: InputMaybe<Product_Images_Aggregate_Bool_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   price?: InputMaybe<Numeric_Comparison_Exp>;
   slug?: InputMaybe<String_Comparison_Exp>;
@@ -1076,8 +1808,7 @@ export type Products_Insert_Input = {
   description?: InputMaybe<Scalars['String']['input']>;
   /** Primary key */
   id?: InputMaybe<Scalars['Int']['input']>;
-  /** Product image URL */
-  image_url?: InputMaybe<Scalars['String']['input']>;
+  images?: InputMaybe<Product_Images_Arr_Rel_Insert_Input>;
   /** Product name */
   name?: InputMaybe<Scalars['String']['input']>;
   /** Product price */
@@ -1104,8 +1835,6 @@ export type Products_Max_Fields = {
   description?: Maybe<Scalars['String']['output']>;
   /** Primary key */
   id?: Maybe<Scalars['Int']['output']>;
-  /** Product image URL */
-  image_url?: Maybe<Scalars['String']['output']>;
   /** Product name */
   name?: Maybe<Scalars['String']['output']>;
   /** Product price */
@@ -1118,6 +1847,30 @@ export type Products_Max_Fields = {
   stock?: Maybe<Scalars['Int']['output']>;
   /** Reference to users table */
   user_id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by max() on columns of table "products" */
+export type Products_Max_Order_By = {
+  /** Reference to categories table */
+  category_id?: InputMaybe<Order_By>;
+  /** Creation timestamp */
+  created_at?: InputMaybe<Order_By>;
+  /** Product description */
+  description?: InputMaybe<Order_By>;
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Product name */
+  name?: InputMaybe<Order_By>;
+  /** Product price */
+  price?: InputMaybe<Order_By>;
+  /** Unique URL slug */
+  slug?: InputMaybe<Order_By>;
+  /** Product status: active or inactive */
+  status?: InputMaybe<Order_By>;
+  /** Stock quantity */
+  stock?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -1131,8 +1884,6 @@ export type Products_Min_Fields = {
   description?: Maybe<Scalars['String']['output']>;
   /** Primary key */
   id?: Maybe<Scalars['Int']['output']>;
-  /** Product image URL */
-  image_url?: Maybe<Scalars['String']['output']>;
   /** Product name */
   name?: Maybe<Scalars['String']['output']>;
   /** Product price */
@@ -1147,6 +1898,30 @@ export type Products_Min_Fields = {
   user_id?: Maybe<Scalars['Int']['output']>;
 };
 
+/** order by min() on columns of table "products" */
+export type Products_Min_Order_By = {
+  /** Reference to categories table */
+  category_id?: InputMaybe<Order_By>;
+  /** Creation timestamp */
+  created_at?: InputMaybe<Order_By>;
+  /** Product description */
+  description?: InputMaybe<Order_By>;
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Product name */
+  name?: InputMaybe<Order_By>;
+  /** Product price */
+  price?: InputMaybe<Order_By>;
+  /** Unique URL slug */
+  slug?: InputMaybe<Order_By>;
+  /** Product status: active or inactive */
+  status?: InputMaybe<Order_By>;
+  /** Stock quantity */
+  stock?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** response of any mutation on the table "products" */
 export type Products_Mutation_Response = {
   __typename?: 'products_mutation_response';
@@ -1154,6 +1929,13 @@ export type Products_Mutation_Response = {
   affected_rows: Scalars['Int']['output'];
   /** data from the rows affected by the mutation */
   returning: Array<Products>;
+};
+
+/** input type for inserting object relation for remote table "products" */
+export type Products_Obj_Rel_Insert_Input = {
+  data: Products_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Products_On_Conflict>;
 };
 
 /** on_conflict condition type for table "products" */
@@ -1170,7 +1952,7 @@ export type Products_Order_By = {
   created_at?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  image_url?: InputMaybe<Order_By>;
+  images_aggregate?: InputMaybe<Product_Images_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
   price?: InputMaybe<Order_By>;
   slug?: InputMaybe<Order_By>;
@@ -1197,8 +1979,6 @@ export enum Products_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
-  ImageUrl = 'image_url',
-  /** column name */
   Name = 'name',
   /** column name */
   Price = 'price',
@@ -1222,8 +2002,6 @@ export type Products_Set_Input = {
   description?: InputMaybe<Scalars['String']['input']>;
   /** Primary key */
   id?: InputMaybe<Scalars['Int']['input']>;
-  /** Product image URL */
-  image_url?: InputMaybe<Scalars['String']['input']>;
   /** Product name */
   name?: InputMaybe<Scalars['String']['input']>;
   /** Product price */
@@ -1253,6 +2031,20 @@ export type Products_Stddev_Fields = {
   user_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev() on columns of table "products" */
+export type Products_Stddev_Order_By = {
+  /** Reference to categories table */
+  category_id?: InputMaybe<Order_By>;
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Product price */
+  price?: InputMaybe<Order_By>;
+  /** Stock quantity */
+  stock?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_pop on columns */
 export type Products_Stddev_Pop_Fields = {
   __typename?: 'products_stddev_pop_fields';
@@ -1268,6 +2060,20 @@ export type Products_Stddev_Pop_Fields = {
   user_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev_pop() on columns of table "products" */
+export type Products_Stddev_Pop_Order_By = {
+  /** Reference to categories table */
+  category_id?: InputMaybe<Order_By>;
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Product price */
+  price?: InputMaybe<Order_By>;
+  /** Stock quantity */
+  stock?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_samp on columns */
 export type Products_Stddev_Samp_Fields = {
   __typename?: 'products_stddev_samp_fields';
@@ -1281,6 +2087,20 @@ export type Products_Stddev_Samp_Fields = {
   stock?: Maybe<Scalars['Float']['output']>;
   /** Reference to users table */
   user_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "products" */
+export type Products_Stddev_Samp_Order_By = {
+  /** Reference to categories table */
+  category_id?: InputMaybe<Order_By>;
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Product price */
+  price?: InputMaybe<Order_By>;
+  /** Stock quantity */
+  stock?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "products" */
@@ -1301,8 +2121,6 @@ export type Products_Stream_Cursor_Value_Input = {
   description?: InputMaybe<Scalars['String']['input']>;
   /** Primary key */
   id?: InputMaybe<Scalars['Int']['input']>;
-  /** Product image URL */
-  image_url?: InputMaybe<Scalars['String']['input']>;
   /** Product name */
   name?: InputMaybe<Scalars['String']['input']>;
   /** Product price */
@@ -1332,6 +2150,20 @@ export type Products_Sum_Fields = {
   user_id?: Maybe<Scalars['Int']['output']>;
 };
 
+/** order by sum() on columns of table "products" */
+export type Products_Sum_Order_By = {
+  /** Reference to categories table */
+  category_id?: InputMaybe<Order_By>;
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Product price */
+  price?: InputMaybe<Order_By>;
+  /** Stock quantity */
+  stock?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** update columns of table "products" */
 export enum Products_Update_Column {
   /** column name */
@@ -1342,8 +2174,6 @@ export enum Products_Update_Column {
   Description = 'description',
   /** column name */
   Id = 'id',
-  /** column name */
-  ImageUrl = 'image_url',
   /** column name */
   Name = 'name',
   /** column name */
@@ -1382,6 +2212,20 @@ export type Products_Var_Pop_Fields = {
   user_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_pop() on columns of table "products" */
+export type Products_Var_Pop_Order_By = {
+  /** Reference to categories table */
+  category_id?: InputMaybe<Order_By>;
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Product price */
+  price?: InputMaybe<Order_By>;
+  /** Stock quantity */
+  stock?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
+};
+
 /** aggregate var_samp on columns */
 export type Products_Var_Samp_Fields = {
   __typename?: 'products_var_samp_fields';
@@ -1395,6 +2239,20 @@ export type Products_Var_Samp_Fields = {
   stock?: Maybe<Scalars['Float']['output']>;
   /** Reference to users table */
   user_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "products" */
+export type Products_Var_Samp_Order_By = {
+  /** Reference to categories table */
+  category_id?: InputMaybe<Order_By>;
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Product price */
+  price?: InputMaybe<Order_By>;
+  /** Stock quantity */
+  stock?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
@@ -1412,6 +2270,20 @@ export type Products_Variance_Fields = {
   user_id?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by variance() on columns of table "products" */
+export type Products_Variance_Order_By = {
+  /** Reference to categories table */
+  category_id?: InputMaybe<Order_By>;
+  /** Primary key */
+  id?: InputMaybe<Order_By>;
+  /** Product price */
+  price?: InputMaybe<Order_By>;
+  /** Stock quantity */
+  stock?: InputMaybe<Order_By>;
+  /** Reference to users table */
+  user_id?: InputMaybe<Order_By>;
+};
+
 export type Query_Root = {
   __typename?: 'query_root';
   /** fetch data from the table: "categories" */
@@ -1420,15 +2292,21 @@ export type Query_Root = {
   categories_aggregate: Categories_Aggregate;
   /** fetch data from the table: "categories" using primary key columns */
   categories_by_pk?: Maybe<Categories>;
-  /** fetch data from the table: "posts" */
+  /** An array relationship */
   posts: Array<Posts>;
-  /** fetch aggregated fields from the table: "posts" */
+  /** An aggregate relationship */
   posts_aggregate: Posts_Aggregate;
   /** fetch data from the table: "posts" using primary key columns */
   posts_by_pk?: Maybe<Posts>;
-  /** fetch data from the table: "products" */
+  /** fetch data from the table: "product_images" */
+  product_images: Array<Product_Images>;
+  /** fetch aggregated fields from the table: "product_images" */
+  product_images_aggregate: Product_Images_Aggregate;
+  /** fetch data from the table: "product_images" using primary key columns */
+  product_images_by_pk?: Maybe<Product_Images>;
+  /** An array relationship */
   products: Array<Products>;
-  /** fetch aggregated fields from the table: "products" */
+  /** An aggregate relationship */
   products_aggregate: Products_Aggregate;
   /** fetch data from the table: "products" using primary key columns */
   products_by_pk?: Maybe<Products>;
@@ -1483,6 +2361,29 @@ export type Query_RootPosts_AggregateArgs = {
 
 
 export type Query_RootPosts_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type Query_RootProduct_ImagesArgs = {
+  distinct_on?: InputMaybe<Array<Product_Images_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Product_Images_Order_By>>;
+  where?: InputMaybe<Product_Images_Bool_Exp>;
+};
+
+
+export type Query_RootProduct_Images_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Product_Images_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Product_Images_Order_By>>;
+  where?: InputMaybe<Product_Images_Bool_Exp>;
+};
+
+
+export type Query_RootProduct_Images_By_PkArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -1542,17 +2443,25 @@ export type Subscription_Root = {
   categories_by_pk?: Maybe<Categories>;
   /** fetch data from the table in a streaming manner: "categories" */
   categories_stream: Array<Categories>;
-  /** fetch data from the table: "posts" */
+  /** An array relationship */
   posts: Array<Posts>;
-  /** fetch aggregated fields from the table: "posts" */
+  /** An aggregate relationship */
   posts_aggregate: Posts_Aggregate;
   /** fetch data from the table: "posts" using primary key columns */
   posts_by_pk?: Maybe<Posts>;
   /** fetch data from the table in a streaming manner: "posts" */
   posts_stream: Array<Posts>;
-  /** fetch data from the table: "products" */
+  /** fetch data from the table: "product_images" */
+  product_images: Array<Product_Images>;
+  /** fetch aggregated fields from the table: "product_images" */
+  product_images_aggregate: Product_Images_Aggregate;
+  /** fetch data from the table: "product_images" using primary key columns */
+  product_images_by_pk?: Maybe<Product_Images>;
+  /** fetch data from the table in a streaming manner: "product_images" */
+  product_images_stream: Array<Product_Images>;
+  /** An array relationship */
   products: Array<Products>;
-  /** fetch aggregated fields from the table: "products" */
+  /** An aggregate relationship */
   products_aggregate: Products_Aggregate;
   /** fetch data from the table: "products" using primary key columns */
   products_by_pk?: Maybe<Products>;
@@ -1629,6 +2538,36 @@ export type Subscription_RootPosts_StreamArgs = {
 };
 
 
+export type Subscription_RootProduct_ImagesArgs = {
+  distinct_on?: InputMaybe<Array<Product_Images_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Product_Images_Order_By>>;
+  where?: InputMaybe<Product_Images_Bool_Exp>;
+};
+
+
+export type Subscription_RootProduct_Images_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Product_Images_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Product_Images_Order_By>>;
+  where?: InputMaybe<Product_Images_Bool_Exp>;
+};
+
+
+export type Subscription_RootProduct_Images_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type Subscription_RootProduct_Images_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Product_Images_Stream_Cursor_Input>>;
+  where?: InputMaybe<Product_Images_Bool_Exp>;
+};
+
+
 export type Subscription_RootProductsArgs = {
   distinct_on?: InputMaybe<Array<Products_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1701,6 +2640,19 @@ export type Timestamp_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['timestamp']['input']>>;
 };
 
+/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
+export type Timestamptz_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['timestamptz']['input']>;
+  _gt?: InputMaybe<Scalars['timestamptz']['input']>;
+  _gte?: InputMaybe<Scalars['timestamptz']['input']>;
+  _in?: InputMaybe<Array<Scalars['timestamptz']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['timestamptz']['input']>;
+  _lte?: InputMaybe<Scalars['timestamptz']['input']>;
+  _neq?: InputMaybe<Scalars['timestamptz']['input']>;
+  _nin?: InputMaybe<Array<Scalars['timestamptz']['input']>>;
+};
+
 /** Users table for admin system */
 export type Users = {
   __typename?: 'users';
@@ -1710,10 +2662,58 @@ export type Users = {
   id: Scalars['Int']['output'];
   /** Hashed password */
   password: Scalars['String']['output'];
+  /** An array relationship */
+  posts: Array<Posts>;
+  /** An aggregate relationship */
+  posts_aggregate: Posts_Aggregate;
+  /** An array relationship */
+  products: Array<Products>;
+  /** An aggregate relationship */
+  products_aggregate: Products_Aggregate;
   /** User role: admin or user */
   role?: Maybe<Scalars['String']['output']>;
   /** Unique username for login */
   username: Scalars['String']['output'];
+};
+
+
+/** Users table for admin system */
+export type UsersPostsArgs = {
+  distinct_on?: InputMaybe<Array<Posts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Posts_Order_By>>;
+  where?: InputMaybe<Posts_Bool_Exp>;
+};
+
+
+/** Users table for admin system */
+export type UsersPosts_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Posts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Posts_Order_By>>;
+  where?: InputMaybe<Posts_Bool_Exp>;
+};
+
+
+/** Users table for admin system */
+export type UsersProductsArgs = {
+  distinct_on?: InputMaybe<Array<Products_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Products_Order_By>>;
+  where?: InputMaybe<Products_Bool_Exp>;
+};
+
+
+/** Users table for admin system */
+export type UsersProducts_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Products_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Products_Order_By>>;
+  where?: InputMaybe<Products_Bool_Exp>;
 };
 
 /** aggregated selection of "users" */
@@ -1761,6 +2761,10 @@ export type Users_Bool_Exp = {
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
   password?: InputMaybe<String_Comparison_Exp>;
+  posts?: InputMaybe<Posts_Bool_Exp>;
+  posts_aggregate?: InputMaybe<Posts_Aggregate_Bool_Exp>;
+  products?: InputMaybe<Products_Bool_Exp>;
+  products_aggregate?: InputMaybe<Products_Aggregate_Bool_Exp>;
   role?: InputMaybe<String_Comparison_Exp>;
   username?: InputMaybe<String_Comparison_Exp>;
 };
@@ -1787,6 +2791,8 @@ export type Users_Insert_Input = {
   id?: InputMaybe<Scalars['Int']['input']>;
   /** Hashed password */
   password?: InputMaybe<Scalars['String']['input']>;
+  posts?: InputMaybe<Posts_Arr_Rel_Insert_Input>;
+  products?: InputMaybe<Products_Arr_Rel_Insert_Input>;
   /** User role: admin or user */
   role?: InputMaybe<Scalars['String']['input']>;
   /** Unique username for login */
@@ -1851,6 +2857,8 @@ export type Users_Order_By = {
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   password?: InputMaybe<Order_By>;
+  posts_aggregate?: InputMaybe<Posts_Aggregate_Order_By>;
+  products_aggregate?: InputMaybe<Products_Aggregate_Order_By>;
   role?: InputMaybe<Order_By>;
   username?: InputMaybe<Order_By>;
 };
@@ -2021,7 +3029,7 @@ export type AdminDeleteUserMutation = { __typename?: 'mutation_root', delete_use
 export type AdminProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AdminProductsQuery = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, image_url?: string | null, status?: string | null, created_at?: any | null, user: { __typename?: 'users', username: string }, category?: { __typename?: 'categories', name: string } | null }> };
+export type AdminProductsQuery = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null, created_at?: any | null, user: { __typename?: 'users', username: string }, category?: { __typename?: 'categories', name: string } | null, images: Array<{ __typename?: 'product_images', id: number, image_url: string, is_primary?: boolean | null }> }> };
 
 export type AdminCreateProductMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -2029,14 +3037,13 @@ export type AdminCreateProductMutationVariables = Exact<{
   description: Scalars['String']['input'];
   price: Scalars['numeric']['input'];
   stock: Scalars['Int']['input'];
-  image_url: Scalars['String']['input'];
   category_id: Scalars['Int']['input'];
   user_id: Scalars['Int']['input'];
   status: Scalars['String']['input'];
 }>;
 
 
-export type AdminCreateProductMutation = { __typename?: 'mutation_root', insert_products_one?: { __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, image_url?: string | null, status?: string | null } | null };
+export type AdminCreateProductMutation = { __typename?: 'mutation_root', insert_products_one?: { __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null } | null };
 
 export type AdminUpdateProductMutationVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -2045,13 +3052,12 @@ export type AdminUpdateProductMutationVariables = Exact<{
   description?: InputMaybe<Scalars['String']['input']>;
   price?: InputMaybe<Scalars['numeric']['input']>;
   stock?: InputMaybe<Scalars['Int']['input']>;
-  image_url?: InputMaybe<Scalars['String']['input']>;
   category_id?: InputMaybe<Scalars['Int']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type AdminUpdateProductMutation = { __typename?: 'mutation_root', update_products_by_pk?: { __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, image_url?: string | null, status?: string | null } | null };
+export type AdminUpdateProductMutation = { __typename?: 'mutation_root', update_products_by_pk?: { __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null } | null };
 
 export type AdminDeleteProductMutationVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -2136,6 +3142,54 @@ export type AdminGetUserQueryVariables = Exact<{
 
 
 export type AdminGetUserQuery = { __typename?: 'query_root', users_by_pk?: { __typename?: 'users', id: number, username: string, password: string } | null };
+
+export type GetProductWithImagesQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type GetProductWithImagesQuery = { __typename?: 'query_root', products_by_pk?: { __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null, created_at?: any | null, category?: { __typename?: 'categories', id: number, name: string } | null, user: { __typename?: 'users', id: number, username: string }, images: Array<{ __typename?: 'product_images', id: number, alt_text?: string | null, sort_order?: number | null, is_primary?: boolean | null }> } | null };
+
+export type GetProductsWithImagesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetProductsWithImagesQuery = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null, created_at?: any | null, category?: { __typename?: 'categories', id: number, name: string } | null, user: { __typename?: 'users', id: number, username: string }, images: Array<{ __typename?: 'product_images', id: number, image_url: string, alt_text?: string | null, sort_order?: number | null, is_primary?: boolean | null }> }> };
+
+export type GetProductWithImagesForEditQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type GetProductWithImagesForEditQuery = { __typename?: 'query_root', products_by_pk?: { __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null, created_at?: any | null, category?: { __typename?: 'categories', id: number, name: string } | null, user: { __typename?: 'users', id: number, username: string }, images: Array<{ __typename?: 'product_images', id: number, image_url: string, alt_text?: string | null, sort_order?: number | null, is_primary?: boolean | null }> } | null };
+
+export type InsertProductImageMutationVariables = Exact<{
+  object: Product_Images_Insert_Input;
+}>;
+
+
+export type InsertProductImageMutation = { __typename?: 'mutation_root', insert_product_images_one?: { __typename?: 'product_images', id: number, product_id: number, image_url: string, alt_text?: string | null, sort_order?: number | null, is_primary?: boolean | null } | null };
+
+export type UpdateProductImageMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+  updates: Product_Images_Set_Input;
+}>;
+
+
+export type UpdateProductImageMutation = { __typename?: 'mutation_root', update_product_images_by_pk?: { __typename?: 'product_images', id: number, product_id: number, image_url: string, alt_text?: string | null, sort_order?: number | null, is_primary?: boolean | null } | null };
+
+export type DeleteProductImageMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type DeleteProductImageMutation = { __typename?: 'mutation_root', delete_product_images_by_pk?: { __typename?: 'product_images', id: number, product_id: number } | null };
+
+export type DeleteProductImagesMutationVariables = Exact<{
+  product_id: Scalars['Int']['input'];
+}>;
+
+
+export type DeleteProductImagesMutation = { __typename?: 'mutation_root', delete_product_images?: { __typename?: 'product_images_mutation_response', affected_rows: number } | null };
 
 
 export const AdminStatsDocument = gql`
@@ -2357,7 +3411,6 @@ export const AdminProductsDocument = gql`
     description
     price
     stock
-    image_url
     status
     created_at
     user {
@@ -2365,6 +3418,11 @@ export const AdminProductsDocument = gql`
     }
     category {
       name
+    }
+    images(order_by: {is_primary: desc, sort_order: asc}, limit: 1) {
+      id
+      image_url
+      is_primary
     }
   }
 }
@@ -2402,9 +3460,9 @@ export type AdminProductsLazyQueryHookResult = ReturnType<typeof useAdminProduct
 export type AdminProductsSuspenseQueryHookResult = ReturnType<typeof useAdminProductsSuspenseQuery>;
 export type AdminProductsQueryResult = Apollo.QueryResult<AdminProductsQuery, AdminProductsQueryVariables>;
 export const AdminCreateProductDocument = gql`
-    mutation AdminCreateProduct($name: String!, $slug: String!, $description: String!, $price: numeric!, $stock: Int!, $image_url: String!, $category_id: Int!, $user_id: Int!, $status: String!) {
+    mutation AdminCreateProduct($name: String!, $slug: String!, $description: String!, $price: numeric!, $stock: Int!, $category_id: Int!, $user_id: Int!, $status: String!) {
   insert_products_one(
-    object: {name: $name, slug: $slug, description: $description, price: $price, stock: $stock, image_url: $image_url, category_id: $category_id, user_id: $user_id, status: $status}
+    object: {name: $name, slug: $slug, description: $description, price: $price, stock: $stock, category_id: $category_id, user_id: $user_id, status: $status}
   ) {
     id
     name
@@ -2412,7 +3470,6 @@ export const AdminCreateProductDocument = gql`
     description
     price
     stock
-    image_url
     status
   }
 }
@@ -2437,7 +3494,6 @@ export type AdminCreateProductMutationFn = Apollo.MutationFunction<AdminCreatePr
  *      description: // value for 'description'
  *      price: // value for 'price'
  *      stock: // value for 'stock'
- *      image_url: // value for 'image_url'
  *      category_id: // value for 'category_id'
  *      user_id: // value for 'user_id'
  *      status: // value for 'status'
@@ -2452,10 +3508,10 @@ export type AdminCreateProductMutationHookResult = ReturnType<typeof useAdminCre
 export type AdminCreateProductMutationResult = Apollo.MutationResult<AdminCreateProductMutation>;
 export type AdminCreateProductMutationOptions = Apollo.BaseMutationOptions<AdminCreateProductMutation, AdminCreateProductMutationVariables>;
 export const AdminUpdateProductDocument = gql`
-    mutation AdminUpdateProduct($id: Int!, $name: String, $slug: String, $description: String, $price: numeric, $stock: Int, $image_url: String, $category_id: Int, $status: String) {
+    mutation AdminUpdateProduct($id: Int!, $name: String, $slug: String, $description: String, $price: numeric, $stock: Int, $category_id: Int, $status: String) {
   update_products_by_pk(
     pk_columns: {id: $id}
-    _set: {name: $name, slug: $slug, description: $description, price: $price, stock: $stock, image_url: $image_url, category_id: $category_id, status: $status}
+    _set: {name: $name, slug: $slug, description: $description, price: $price, stock: $stock, category_id: $category_id, status: $status}
   ) {
     id
     name
@@ -2463,7 +3519,6 @@ export const AdminUpdateProductDocument = gql`
     description
     price
     stock
-    image_url
     status
   }
 }
@@ -2489,7 +3544,6 @@ export type AdminUpdateProductMutationFn = Apollo.MutationFunction<AdminUpdatePr
  *      description: // value for 'description'
  *      price: // value for 'price'
  *      stock: // value for 'stock'
- *      image_url: // value for 'image_url'
  *      category_id: // value for 'category_id'
  *      status: // value for 'status'
  *   },
@@ -2928,3 +3982,331 @@ export type AdminGetUserQueryHookResult = ReturnType<typeof useAdminGetUserQuery
 export type AdminGetUserLazyQueryHookResult = ReturnType<typeof useAdminGetUserLazyQuery>;
 export type AdminGetUserSuspenseQueryHookResult = ReturnType<typeof useAdminGetUserSuspenseQuery>;
 export type AdminGetUserQueryResult = Apollo.QueryResult<AdminGetUserQuery, AdminGetUserQueryVariables>;
+export const GetProductWithImagesDocument = gql`
+    query GetProductWithImages($id: Int!) {
+  products_by_pk(id: $id) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    status
+    created_at
+    category {
+      id
+      name
+    }
+    user {
+      id
+      username
+    }
+    images(order_by: {sort_order: asc}) {
+      id
+      alt_text
+      sort_order
+      is_primary
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetProductWithImagesQuery__
+ *
+ * To run a query within a React component, call `useGetProductWithImagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductWithImagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProductWithImagesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetProductWithImagesQuery(baseOptions: Apollo.QueryHookOptions<GetProductWithImagesQuery, GetProductWithImagesQueryVariables> & ({ variables: GetProductWithImagesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProductWithImagesQuery, GetProductWithImagesQueryVariables>(GetProductWithImagesDocument, options);
+      }
+export function useGetProductWithImagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductWithImagesQuery, GetProductWithImagesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProductWithImagesQuery, GetProductWithImagesQueryVariables>(GetProductWithImagesDocument, options);
+        }
+export function useGetProductWithImagesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetProductWithImagesQuery, GetProductWithImagesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetProductWithImagesQuery, GetProductWithImagesQueryVariables>(GetProductWithImagesDocument, options);
+        }
+export type GetProductWithImagesQueryHookResult = ReturnType<typeof useGetProductWithImagesQuery>;
+export type GetProductWithImagesLazyQueryHookResult = ReturnType<typeof useGetProductWithImagesLazyQuery>;
+export type GetProductWithImagesSuspenseQueryHookResult = ReturnType<typeof useGetProductWithImagesSuspenseQuery>;
+export type GetProductWithImagesQueryResult = Apollo.QueryResult<GetProductWithImagesQuery, GetProductWithImagesQueryVariables>;
+export const GetProductsWithImagesDocument = gql`
+    query GetProductsWithImages {
+  products(order_by: {created_at: desc}) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    status
+    created_at
+    category {
+      id
+      name
+    }
+    user {
+      id
+      username
+    }
+    images(order_by: {sort_order: asc}) {
+      id
+      image_url
+      alt_text
+      sort_order
+      is_primary
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetProductsWithImagesQuery__
+ *
+ * To run a query within a React component, call `useGetProductsWithImagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductsWithImagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProductsWithImagesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetProductsWithImagesQuery(baseOptions?: Apollo.QueryHookOptions<GetProductsWithImagesQuery, GetProductsWithImagesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProductsWithImagesQuery, GetProductsWithImagesQueryVariables>(GetProductsWithImagesDocument, options);
+      }
+export function useGetProductsWithImagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductsWithImagesQuery, GetProductsWithImagesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProductsWithImagesQuery, GetProductsWithImagesQueryVariables>(GetProductsWithImagesDocument, options);
+        }
+export function useGetProductsWithImagesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetProductsWithImagesQuery, GetProductsWithImagesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetProductsWithImagesQuery, GetProductsWithImagesQueryVariables>(GetProductsWithImagesDocument, options);
+        }
+export type GetProductsWithImagesQueryHookResult = ReturnType<typeof useGetProductsWithImagesQuery>;
+export type GetProductsWithImagesLazyQueryHookResult = ReturnType<typeof useGetProductsWithImagesLazyQuery>;
+export type GetProductsWithImagesSuspenseQueryHookResult = ReturnType<typeof useGetProductsWithImagesSuspenseQuery>;
+export type GetProductsWithImagesQueryResult = Apollo.QueryResult<GetProductsWithImagesQuery, GetProductsWithImagesQueryVariables>;
+export const GetProductWithImagesForEditDocument = gql`
+    query GetProductWithImagesForEdit($id: Int!) {
+  products_by_pk(id: $id) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    status
+    created_at
+    category {
+      id
+      name
+    }
+    user {
+      id
+      username
+    }
+    images(order_by: {sort_order: asc}) {
+      id
+      image_url
+      alt_text
+      sort_order
+      is_primary
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetProductWithImagesForEditQuery__
+ *
+ * To run a query within a React component, call `useGetProductWithImagesForEditQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductWithImagesForEditQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProductWithImagesForEditQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetProductWithImagesForEditQuery(baseOptions: Apollo.QueryHookOptions<GetProductWithImagesForEditQuery, GetProductWithImagesForEditQueryVariables> & ({ variables: GetProductWithImagesForEditQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProductWithImagesForEditQuery, GetProductWithImagesForEditQueryVariables>(GetProductWithImagesForEditDocument, options);
+      }
+export function useGetProductWithImagesForEditLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductWithImagesForEditQuery, GetProductWithImagesForEditQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProductWithImagesForEditQuery, GetProductWithImagesForEditQueryVariables>(GetProductWithImagesForEditDocument, options);
+        }
+export function useGetProductWithImagesForEditSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetProductWithImagesForEditQuery, GetProductWithImagesForEditQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetProductWithImagesForEditQuery, GetProductWithImagesForEditQueryVariables>(GetProductWithImagesForEditDocument, options);
+        }
+export type GetProductWithImagesForEditQueryHookResult = ReturnType<typeof useGetProductWithImagesForEditQuery>;
+export type GetProductWithImagesForEditLazyQueryHookResult = ReturnType<typeof useGetProductWithImagesForEditLazyQuery>;
+export type GetProductWithImagesForEditSuspenseQueryHookResult = ReturnType<typeof useGetProductWithImagesForEditSuspenseQuery>;
+export type GetProductWithImagesForEditQueryResult = Apollo.QueryResult<GetProductWithImagesForEditQuery, GetProductWithImagesForEditQueryVariables>;
+export const InsertProductImageDocument = gql`
+    mutation InsertProductImage($object: product_images_insert_input!) {
+  insert_product_images_one(object: $object) {
+    id
+    product_id
+    image_url
+    alt_text
+    sort_order
+    is_primary
+  }
+}
+    `;
+export type InsertProductImageMutationFn = Apollo.MutationFunction<InsertProductImageMutation, InsertProductImageMutationVariables>;
+
+/**
+ * __useInsertProductImageMutation__
+ *
+ * To run a mutation, you first call `useInsertProductImageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertProductImageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertProductImageMutation, { data, loading, error }] = useInsertProductImageMutation({
+ *   variables: {
+ *      object: // value for 'object'
+ *   },
+ * });
+ */
+export function useInsertProductImageMutation(baseOptions?: Apollo.MutationHookOptions<InsertProductImageMutation, InsertProductImageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertProductImageMutation, InsertProductImageMutationVariables>(InsertProductImageDocument, options);
+      }
+export type InsertProductImageMutationHookResult = ReturnType<typeof useInsertProductImageMutation>;
+export type InsertProductImageMutationResult = Apollo.MutationResult<InsertProductImageMutation>;
+export type InsertProductImageMutationOptions = Apollo.BaseMutationOptions<InsertProductImageMutation, InsertProductImageMutationVariables>;
+export const UpdateProductImageDocument = gql`
+    mutation UpdateProductImage($id: Int!, $updates: product_images_set_input!) {
+  update_product_images_by_pk(pk_columns: {id: $id}, _set: $updates) {
+    id
+    product_id
+    image_url
+    alt_text
+    sort_order
+    is_primary
+  }
+}
+    `;
+export type UpdateProductImageMutationFn = Apollo.MutationFunction<UpdateProductImageMutation, UpdateProductImageMutationVariables>;
+
+/**
+ * __useUpdateProductImageMutation__
+ *
+ * To run a mutation, you first call `useUpdateProductImageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProductImageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProductImageMutation, { data, loading, error }] = useUpdateProductImageMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      updates: // value for 'updates'
+ *   },
+ * });
+ */
+export function useUpdateProductImageMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProductImageMutation, UpdateProductImageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateProductImageMutation, UpdateProductImageMutationVariables>(UpdateProductImageDocument, options);
+      }
+export type UpdateProductImageMutationHookResult = ReturnType<typeof useUpdateProductImageMutation>;
+export type UpdateProductImageMutationResult = Apollo.MutationResult<UpdateProductImageMutation>;
+export type UpdateProductImageMutationOptions = Apollo.BaseMutationOptions<UpdateProductImageMutation, UpdateProductImageMutationVariables>;
+export const DeleteProductImageDocument = gql`
+    mutation DeleteProductImage($id: Int!) {
+  delete_product_images_by_pk(id: $id) {
+    id
+    product_id
+  }
+}
+    `;
+export type DeleteProductImageMutationFn = Apollo.MutationFunction<DeleteProductImageMutation, DeleteProductImageMutationVariables>;
+
+/**
+ * __useDeleteProductImageMutation__
+ *
+ * To run a mutation, you first call `useDeleteProductImageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteProductImageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteProductImageMutation, { data, loading, error }] = useDeleteProductImageMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteProductImageMutation(baseOptions?: Apollo.MutationHookOptions<DeleteProductImageMutation, DeleteProductImageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteProductImageMutation, DeleteProductImageMutationVariables>(DeleteProductImageDocument, options);
+      }
+export type DeleteProductImageMutationHookResult = ReturnType<typeof useDeleteProductImageMutation>;
+export type DeleteProductImageMutationResult = Apollo.MutationResult<DeleteProductImageMutation>;
+export type DeleteProductImageMutationOptions = Apollo.BaseMutationOptions<DeleteProductImageMutation, DeleteProductImageMutationVariables>;
+export const DeleteProductImagesDocument = gql`
+    mutation DeleteProductImages($product_id: Int!) {
+  delete_product_images(where: {product_id: {_eq: $product_id}}) {
+    affected_rows
+  }
+}
+    `;
+export type DeleteProductImagesMutationFn = Apollo.MutationFunction<DeleteProductImagesMutation, DeleteProductImagesMutationVariables>;
+
+/**
+ * __useDeleteProductImagesMutation__
+ *
+ * To run a mutation, you first call `useDeleteProductImagesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteProductImagesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteProductImagesMutation, { data, loading, error }] = useDeleteProductImagesMutation({
+ *   variables: {
+ *      product_id: // value for 'product_id'
+ *   },
+ * });
+ */
+export function useDeleteProductImagesMutation(baseOptions?: Apollo.MutationHookOptions<DeleteProductImagesMutation, DeleteProductImagesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteProductImagesMutation, DeleteProductImagesMutationVariables>(DeleteProductImagesDocument, options);
+      }
+export type DeleteProductImagesMutationHookResult = ReturnType<typeof useDeleteProductImagesMutation>;
+export type DeleteProductImagesMutationResult = Apollo.MutationResult<DeleteProductImagesMutation>;
+export type DeleteProductImagesMutationOptions = Apollo.BaseMutationOptions<DeleteProductImagesMutation, DeleteProductImagesMutationVariables>;

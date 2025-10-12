@@ -66,7 +66,6 @@ query AdminProducts {
     description
     price
     stock
-    image_url
     status
     created_at
     user {
@@ -75,31 +74,34 @@ query AdminProducts {
     category {
       name
     }
+    images(order_by: {is_primary: desc, sort_order: asc}, limit: 1) {
+      id
+      image_url
+      is_primary
+    }
   }
 }
 
-mutation AdminCreateProduct($name: String!, $slug: String!, $description: String!, $price: numeric!, $stock: Int!, $image_url: String!, $category_id: Int!, $user_id: Int!, $status: String!) {
-  insert_products_one(object: { name: $name, slug: $slug, description: $description, price: $price, stock: $stock, image_url: $image_url, category_id: $category_id, user_id: $user_id, status: $status }) {
+mutation AdminCreateProduct($name: String!, $slug: String!, $description: String!, $price: numeric!, $stock: Int!, $category_id: Int!, $user_id: Int!, $status: String!) {
+  insert_products_one(object: { name: $name, slug: $slug, description: $description, price: $price, stock: $stock, category_id: $category_id, user_id: $user_id, status: $status }) {
     id
     name
     slug
     description
     price
     stock
-    image_url
     status
   }
 }
 
-mutation AdminUpdateProduct($id: Int!, $name: String, $slug: String, $description: String, $price: numeric, $stock: Int, $image_url: String, $category_id: Int, $status: String) {
-  update_products_by_pk(pk_columns: { id: $id }, _set: { name: $name, slug: $slug, description: $description, price: $price, stock: $stock, image_url: $image_url, category_id: $category_id, status: $status }) {
+mutation AdminUpdateProduct($id: Int!, $name: String, $slug: String, $description: String, $price: numeric, $stock: Int, $category_id: Int, $status: String) {
+  update_products_by_pk(pk_columns: { id: $id }, _set: { name: $name, slug: $slug, description: $description, price: $price, stock: $stock, category_id: $category_id, status: $status }) {
     id
     name
     slug
     description
     price
     stock
-    image_url
     status
   }
 }

@@ -1,0 +1,96 @@
+# Get products with images
+query GetProductsWithImages {
+  products(order_by: { created_at: desc }) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    status
+    created_at
+    category {
+      id
+      name
+    }
+    user {
+      id
+      username
+    }
+    images(order_by: { sort_order: asc }) {
+      id
+      image_url
+      alt_text
+      sort_order
+      is_primary
+    }
+  }
+}
+
+# Get single product with images
+query GetProductWithImagesForEdit($id: Int!) {
+  products_by_pk(id: $id) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    status
+    created_at
+    category {
+      id
+      name
+    }
+    user {
+      id
+      username
+    }
+    images(order_by: { sort_order: asc }) {
+      id
+      image_url
+      alt_text
+      sort_order
+      is_primary
+    }
+  }
+}
+
+# Insert product image
+mutation InsertProductImage($object: product_images_insert_input!) {
+  insert_product_images_one(object: $object) {
+    id
+    product_id
+    image_url
+    alt_text
+    sort_order
+    is_primary
+  }
+}
+
+# Update product image
+mutation UpdateProductImage($id: Int!, $updates: product_images_set_input!) {
+  update_product_images_by_pk(pk_columns: { id: $id }, _set: $updates) {
+    id
+    product_id
+    image_url
+    alt_text
+    sort_order
+    is_primary
+  }
+}
+
+# Delete product image
+mutation DeleteProductImage($id: Int!) {
+  delete_product_images_by_pk(id: $id) {
+    id
+    product_id
+  }
+}
+
+# Delete all images for a product
+mutation DeleteProductImages($product_id: Int!) {
+  delete_product_images(where: { product_id: { _eq: $product_id } }) {
+    affected_rows
+  }
+}

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { 
-  AdminProductsDocument, 
-  AdminCreateProductDocument, 
-  AdminUpdateProductDocument, 
+import {
+  AdminProductsDocument,
+  AdminCreateProductDocument,
+  AdminUpdateProductDocument,
   AdminDeleteProductDocument,
-  AdminCategoriesDocument
+  AdminCategoriesDocument,
+  GetProductWithImagesDocument,
+  GetProductWithImagesForEditDocument
 } from '../../generated/graphql';
 import { 
   PlusIcon, 
@@ -13,6 +15,7 @@ import {
   TrashIcon,
   EyeIcon
 } from '@heroicons/react/24/outline';
+import ProductImageUpload from '../../components/admin/ProductImageUpload';
 
 const AdminProducts: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
@@ -23,13 +26,21 @@ const AdminProducts: React.FC = () => {
     description: '',
     price: '',
     stock: '',
-    image_url: '',
     category_id: '',
     status: 'active'
   });
 
   const { data: productsData, loading: productsLoading, refetch: refetchProducts } = useQuery(AdminProductsDocument);
   const { data: categoriesData, loading: categoriesLoading } = useQuery(AdminCategoriesDocument);
+  
+  // Query for product with images when editing
+  const { data: productWithImagesData, refetch: refetchProductWithImages } = useQuery(
+    GetProductWithImagesForEditDocument,
+    {
+      variables: { id: editingProduct?.id },
+      skip: !editingProduct?.id
+    }
+  );
   
   const [createProduct] = useMutation(AdminCreateProductDocument);
   const [updateProduct] = useMutation(AdminUpdateProductDocument);
@@ -54,25 +65,47 @@ const AdminProducts: React.FC = () => {
             ...productData
           }
         });
+        
+        // Stay in edit mode after update
+        refetchProducts();
       } else {
-        await createProduct({
+        const result = await createProduct({
           variables: productData
         });
+        
+        // After creating, switch to edit mode to allow image upload
+        if (result.data?.insert_products_one?.id) {
+          const newProduct = {
+            id: result.data.insert_products_one.id,
+            name: formData.name,
+            slug: formData.slug,
+            description: formData.description,
+            price: parseFloat(formData.price),
+            stock: parseInt(formData.stock),
+            category_id: parseInt(formData.category_id),
+            status: formData.status,
+            category: categoriesData?.categories?.find((cat: any) => cat.id === parseInt(formData.category_id))
+          };
+          
+          setEditingProduct(newProduct);
+          // Don't close modal, stay in edit mode
+          refetchProducts();
+        } else {
+          // If creation failed, close modal
+          setShowModal(false);
+          setEditingProduct(null);
+          setFormData({
+            name: '',
+            slug: '',
+            description: '',
+            price: '',
+            stock: '',
+            category_id: '',
+            status: 'active'
+          });
+          refetchProducts();
+        }
       }
-
-      setShowModal(false);
-      setEditingProduct(null);
-      setFormData({
-        name: '',
-        slug: '',
-        description: '',
-        price: '',
-        stock: '',
-        image_url: '',
-        category_id: '',
-        status: 'active'
-      });
-      refetchProducts();
     } catch (error) {
       console.error('Error saving product:', error);
     }
@@ -86,7 +119,6 @@ const AdminProducts: React.FC = () => {
       description: product.description,
       price: product.price.toString(),
       stock: product.stock.toString(),
-      image_url: product.image_url,
       category_id: product.category?.id?.toString() || '',
       status: product.status
     });
@@ -112,7 +144,6 @@ const AdminProducts: React.FC = () => {
       description: '',
       price: '',
       stock: '',
-      image_url: '',
       category_id: '',
       status: 'active'
     });
@@ -179,14 +210,14 @@ const AdminProducts: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {productsData?.products?.map((product) => (
+                    {productsData?.products?.map((product: any) => (
                       <tr key={product.id}>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="flex-shrink-0 h-10 w-10">
                               <img
                                 className="h-10 w-10 rounded-full object-cover"
-                                src={product.image_url}
+                                src={product.images?.[0]?.image_url || 'https://via.placeholder.com/40'}
                                 alt={product.name}
                               />
                             </div>
@@ -310,15 +341,23 @@ const AdminProducts: React.FC = () => {
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">URL hình ảnh</label>
-                  <input
-                    type="url"
-                    required
-                    value={formData.image_url}
-                    onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                    className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
-                  />
+                {/* Product Images Upload - Show for both create and edit */}
+                <div className="border-t pt-4">
+                  {editingProduct ? (
+                    <ProductImageUpload
+                      productId={editingProduct.id}
+                      images={productWithImagesData?.products_by_pk?.images || []}
+                      onImagesChange={() => {
+                        // Refetch product data to get updated images
+                        refetchProductWithImages();
+                        refetchProducts();
+                      }}
+                    />
+                  ) : (
+                    <div className="text-center py-8 text-gray-500">
+                      <p>Lưu sản phẩm trước để có thể upload ảnh.</p>
+                    </div>
+                  )}
                 </div>
 
                 <div>
@@ -330,7 +369,7 @@ const AdminProducts: React.FC = () => {
                     className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
                   >
                     <option value="">Chọn category</option>
-                    {categoriesData?.categories?.filter(cat => cat.type === 'product').map((category) => (
+                    {categoriesData?.categories?.filter((cat: any) => cat.type === 'product').map((category: any) => (
                       <option key={category.id} value={category.id}>
                         {category.name}
                       </option>
@@ -353,7 +392,19 @@ const AdminProducts: React.FC = () => {
                 <div className="flex justify-end space-x-3 pt-4">
                   <button
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => {
+                      setShowModal(false);
+                      setEditingProduct(null);
+                      setFormData({
+                        name: '',
+                        slug: '',
+                        description: '',
+                        price: '',
+                        stock: '',
+                        category_id: '',
+                        status: 'active'
+                      });
+                    }}
                     className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
                   >
                     Hủy
@@ -364,6 +415,27 @@ const AdminProducts: React.FC = () => {
                   >
                     {editingProduct ? 'Cập nhật' : 'Thêm mới'}
                   </button>
+                  {editingProduct && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowModal(false);
+                        setEditingProduct(null);
+                        setFormData({
+                          name: '',
+                          slug: '',
+                          description: '',
+                          price: '',
+                          stock: '',
+                          category_id: '',
+                          status: 'active'
+                        });
+                      }}
+                      className="px-4 py-2 bg-green-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-green-700"
+                    >
+                      Hoàn thành
+                    </button>
+                  )}
                 </div>
               </form>
             </div>

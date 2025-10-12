@@ -1,0 +1,27 @@
+# Get single product with images for editing
+query GetProductWithImages($id: Int!) {
+  products_by_pk(id: $id) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    status
+    created_at
+    category {
+      id
+      name
+    }
+    user {
+      id
+      username
+    }
+    images(order_by: { sort_order: asc }) {
+      id
+      alt_text
+      sort_order
+      is_primary
+    }
+  }
+}

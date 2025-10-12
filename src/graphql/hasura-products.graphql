@@ -6,7 +6,6 @@ query Products($where: products_bool_exp = {}) {
     description
     price
     stock
-    image_url
     category_id
     user_id
     status
@@ -32,7 +31,6 @@ query Product($id: Int!) {
     description
     price
     stock
-    image_url
     category_id
     user_id
     status
@@ -58,7 +56,6 @@ query ProductBySlug($slug: String!) {
     description
     price
     stock
-    image_url
     category_id
     user_id
     status
@@ -84,7 +81,6 @@ query ProductsByStatus($status: String!) {
     description
     price
     stock
-    image_url
     category_id
     user_id
     status
@@ -110,7 +106,6 @@ query ProductsByCategory($categoryId: Int!) {
     description
     price
     stock
-    image_url
     category_id
     user_id
     status
@@ -136,7 +131,6 @@ query ProductsByUser($userId: Int!) {
     description
     price
     stock
-    image_url
     category_id
     user_id
     status
@@ -162,7 +156,6 @@ mutation CreateProduct($object: products_insert_input!) {
     description
     price
     stock
-    image_url
     category_id
     user_id
     status
@@ -178,7 +171,6 @@ mutation UpdateProduct($id: Int!, $set: products_set_input!) {
     description
     price
     stock
-    image_url
     category_id
     user_id
     status
