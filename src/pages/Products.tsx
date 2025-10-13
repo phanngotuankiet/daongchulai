@@ -1,22 +1,40 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
 import ProductList, { IProduct } from "../components/products/ProductList";
-import kichThuoc from "../data/kich-thuoc.json";
+import { GetProductsDocument, GetProductsByCategoryDocument, GetCategoriesDocument } from "../generated/graphql";
 
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  // const [productsShown, setProductsShown] = useState(kichThuoc.categories);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     searchParams.get("category") ? searchParams.get("category") : null
   );
 
-  // Get all products
-  const allProducts = kichThuoc.categories.reduce(
-    (acc: IProduct[], category) => {
-      return [...acc, ...category.sizes];
-    },
-    []
+  // Fetch categories
+  const { data: categoriesData, loading: categoriesLoading } = useQuery(GetCategoriesDocument, {
+    variables: { type: "product" }
+  });
+
+  // Fetch products based on selected category
+  const { data: productsData, loading: productsLoading } = useQuery(
+    selectedCategory ? GetProductsByCategoryDocument : GetProductsDocument,
+    {
+      variables: selectedCategory 
+        ? { categoryId: parseInt(selectedCategory) }
+        : { status: "active" }
+    }
   );
+
+  // Transform GraphQL data to match ProductList interface
+  const transformedProducts: IProduct[] = productsData?.products?.map((product: any) => ({
+    id: product.id.toString(),
+    name: product.name,
+    unit: "viên", // Default unit
+    price: product.price,
+    image: product.images?.length > 0 ? [product.images[0].image_url] : ["/placeholder-image.jpg"],
+    description: product.description || "",
+    weight: 0 // Default weight
+  })) || [];
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -57,39 +75,40 @@ const Products = () => {
               >
                 Tất cả sản phẩm
               </button>
-              {kichThuoc.categories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={() => {
-                    setSelectedCategory(category.id);
-                    searchParams.set("category", category.id.toString());
-                    searchParams.set("name", category.name || "");
-                    setSearchParams(searchParams);
-                  }}
-                  className={`block w-full text-left px-4 py-2 rounded ${
-                    selectedCategory === category.id
-                      ? "text-amber-200 bg-amber-800"
-                      : "text-gray-600 hover:bg-gray-100"
-                  }`}
-                >
-                  {category.name}
-                </button>
-              ))}
+              {categoriesLoading ? (
+                <div className="text-gray-500">Đang tải...</div>
+              ) : (
+                categoriesData?.categories?.map((category: any) => (
+                  <button
+                    key={category.id}
+                    onClick={() => {
+                      setSelectedCategory(category.id.toString());
+                      searchParams.set("category", category.id.toString());
+                      searchParams.set("name", category.name || "");
+                      setSearchParams(searchParams);
+                    }}
+                    className={`block w-full text-left px-4 py-2 rounded ${
+                      selectedCategory === category.id.toString()
+                        ? "text-amber-200 bg-amber-800"
+                        : "text-gray-600 hover:bg-gray-100"
+                    }`}
+                  >
+                    {category.name}
+                  </button>
+                ))
+              )}
             </div>
           </div>
 
           {/* Product grid */}
           <div className="lg:col-span-3">
-            <ProductList
-              products={
-                // lọc có điều kiện bằng id nếu giá trị của selectedCategory có tồn tại, nếu không thì lấy tất cả
-                selectedCategory
-                  ? kichThuoc.categories.find(
-                      (category) => category.id === selectedCategory
-                    )?.sizes
-                  : allProducts
-              }
-            />
+            {productsLoading ? (
+              <div className="text-center py-8">
+                <div className="text-gray-500">Đang tải sản phẩm...</div>
+              </div>
+            ) : (
+              <ProductList products={transformedProducts} />
+            )}
           </div>
         </div>
       </div>

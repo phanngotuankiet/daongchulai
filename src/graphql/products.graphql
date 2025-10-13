@@ -1,199 +1,61 @@
-query Products {
-  products {
+query GetProducts($status: String = "active") {
+  products(where: { status: { _eq: $status } }, order_by: { created_at: desc }) {
     id
     name
     slug
     description
     price
     stock
-    image_url
-    category_id
-    user_id
     status
     created_at
-    user {
-      id
-      username
-      role
-    }
     category {
       id
       name
       type
     }
+    product_images(order_by: { is_primary: desc, sort_order: asc }, limit: 1) {
+      id
+      image_url
+      alt_text
+      is_primary
+    }
   }
 }
 
-query Product($id: Int!) {
-  product(id: $id) {
+query GetProductsByCategory($categoryId: Int!, $status: String = "active") {
+  products(
+    where: { 
+      category_id: { _eq: $categoryId }
+      status: { _eq: $status }
+    }
+    order_by: { created_at: desc }
+  ) {
     id
     name
     slug
     description
     price
     stock
-    image_url
-    category_id
-    user_id
     status
     created_at
-    user {
-      id
-      username
-      role
-    }
     category {
       id
       name
       type
     }
-  }
-}
-
-query ProductBySlug($slug: String!) {
-  productBySlug(slug: $slug) {
-    id
-    name
-    slug
-    description
-    price
-    stock
-    image_url
-    category_id
-    user_id
-    status
-    created_at
-    user {
+    product_images(order_by: { is_primary: desc, sort_order: asc }, limit: 1) {
       id
-      username
-      role
-    }
-    category {
-      id
-      name
-      type
+      image_url
+      alt_text
+      is_primary
     }
   }
 }
 
-query ProductsByStatus($status: String!) {
-  productsByStatus(status: $status) {
+query GetCategories($type: String = "product") {
+  categories(where: { type: { _eq: $type } }, order_by: { name: asc }) {
     id
     name
-    slug
-    description
-    price
-    stock
-    image_url
-    category_id
-    user_id
-    status
-    created_at
-    user {
-      id
-      username
-      role
-    }
-    category {
-      id
-      name
-      type
-    }
-  }
-}
-
-query ProductsByCategory($categoryId: Int!) {
-  productsByCategory(categoryId: $categoryId) {
-    id
-    name
-    slug
-    description
-    price
-    stock
-    image_url
-    category_id
-    user_id
-    status
-    created_at
-    user {
-      id
-      username
-      role
-    }
-    category {
-      id
-      name
-      type
-    }
-  }
-}
-
-query ProductsByUser($userId: Int!) {
-  productsByUser(userId: $userId) {
-    id
-    name
-    slug
-    description
-    price
-    stock
-    image_url
-    category_id
-    user_id
-    status
-    created_at
-    user {
-      id
-      username
-      role
-    }
-    category {
-      id
-      name
-      type
-    }
-  }
-}
-
-mutation CreateProduct($createProductInput: CreateProductInput!) {
-  createProduct(createProductInput: $createProductInput) {
-    id
-    name
-    slug
-    description
-    price
-    stock
-    image_url
-    category_id
-    user_id
-    status
-    created_at
-  }
-}
-
-mutation UpdateProduct($id: Int!, $updateProductInput: UpdateProductInput!) {
-  updateProduct(id: $id, updateProductInput: $updateProductInput) {
-    id
-    name
-    slug
-    description
-    price
-    stock
-    image_url
-    category_id
-    user_id
-    status
-    created_at
-  }
-}
-
-mutation RemoveProduct($id: Int!) {
-  removeProduct(id: $id)
-}
-
-mutation UpdateStock($id: Int!, $stock: Int!) {
-  updateStock(id: $id, stock: $stock) {
-    id
-    name
-    stock
+    type
   }
 }

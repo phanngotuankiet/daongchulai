@@ -17,7 +17,7 @@ query GetProductWithImages($id: Int!) {
       id
       username
     }
-    images(order_by: { sort_order: asc }) {
+    product_images(order_by: { sort_order: asc }) {
       id
       alt_text
       sort_order

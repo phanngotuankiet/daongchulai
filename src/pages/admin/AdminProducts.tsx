@@ -20,6 +20,8 @@ import ProductImageUpload from '../../components/admin/ProductImageUpload';
 const AdminProducts: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState<any>(null);
+  const [showSuccessNotification, setShowSuccessNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     slug: '',
@@ -55,7 +57,7 @@ const AdminProducts: React.FC = () => {
         price: parseFloat(formData.price),
         stock: parseInt(formData.stock),
         category_id: parseInt(formData.category_id),
-        user_id: 1 // Admin user ID
+        user_id: 5 // Admin user ID (actual ID in database)
       };
 
       if (editingProduct) {
@@ -65,6 +67,11 @@ const AdminProducts: React.FC = () => {
             ...productData
           }
         });
+        
+        // Show success notification
+        setNotificationMessage('Cập nhật sản phẩm thành công!');
+        setShowSuccessNotification(true);
+        setTimeout(() => setShowSuccessNotification(false), 3000);
         
         // Stay in edit mode after update
         refetchProducts();
@@ -88,6 +95,12 @@ const AdminProducts: React.FC = () => {
           };
           
           setEditingProduct(newProduct);
+          
+          // Show success notification
+          setNotificationMessage('Thêm sản phẩm thành công! Bạn có thể upload ảnh ngay bây giờ.');
+          setShowSuccessNotification(true);
+          setTimeout(() => setShowSuccessNotification(false), 3000);
+          
           // Don't close modal, stay in edit mode
           refetchProducts();
         } else {
@@ -217,7 +230,7 @@ const AdminProducts: React.FC = () => {
                             <div className="flex-shrink-0 h-10 w-10">
                               <img
                                 className="h-10 w-10 rounded-full object-cover"
-                                src={product.images?.[0]?.image_url || 'https://via.placeholder.com/40'}
+                                src={product.product_images?.[0]?.image_url || 'https://via.placeholder.com/40'}
                                 alt={product.name}
                               />
                             </div>
@@ -346,7 +359,7 @@ const AdminProducts: React.FC = () => {
                   {editingProduct ? (
                     <ProductImageUpload
                       productId={editingProduct.id}
-                      images={productWithImagesData?.products_by_pk?.images || []}
+                      images={productWithImagesData?.products_by_pk?.product_images || []}
                       onImagesChange={() => {
                         // Refetch product data to get updated images
                         refetchProductWithImages();
@@ -440,6 +453,24 @@ const AdminProducts: React.FC = () => {
               </form>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Success Notification */}
+      {showSuccessNotification && (
+        <div className="fixed top-4 right-4 z-50 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2">
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+          </svg>
+          <span>{notificationMessage}</span>
+          <button
+            onClick={() => setShowSuccessNotification(false)}
+            className="ml-2 text-white hover:text-gray-200"
+          >
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          </button>
         </div>
       )}
     </div>

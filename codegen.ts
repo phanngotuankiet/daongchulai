@@ -7,7 +7,7 @@ module.exports = {
       },
     },
   },
-  documents: "src/graphql/admin/*.graphql",
+  documents: "src/graphql/**/*.graphql",
   generates: {
     "src/generated/graphql.ts": {
       plugins: ["typescript", "typescript-operations", "typescript-react-apollo"],

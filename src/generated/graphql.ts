@@ -33,13 +33,6 @@ export type Boolean_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['Boolean']['input']>>;
 };
 
-export type ChangePasswordOutput = {
-  __typename?: 'ChangePasswordOutput';
-  message: Scalars['String']['output'];
-  user_id: Scalars['Int']['output'];
-  username: Scalars['String']['output'];
-};
-
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['Int']['input']>;
@@ -387,7 +380,6 @@ export enum Cursor_Ordering {
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
-  change_password?: Maybe<ChangePasswordOutput>;
   /** delete data from the table: "categories" */
   delete_categories?: Maybe<Categories_Mutation_Response>;
   /** delete single row from the table: "categories" */
@@ -458,14 +450,6 @@ export type Mutation_Root = {
   update_users_by_pk?: Maybe<Users>;
   /** update multiples rows of table: "users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
-};
-
-
-/** mutation root */
-export type Mutation_RootChange_PasswordArgs = {
-  current_password?: InputMaybe<Scalars['String']['input']>;
-  new_password: Scalars['String']['input'];
-  user_id: Scalars['Int']['input'];
 };
 
 
@@ -1622,14 +1606,14 @@ export type Products = {
   description?: Maybe<Scalars['String']['output']>;
   /** Primary key */
   id: Scalars['Int']['output'];
-  /** An array relationship */
-  images: Array<Product_Images>;
-  /** An aggregate relationship */
-  images_aggregate: Product_Images_Aggregate;
   /** Product name */
   name: Scalars['String']['output'];
   /** Product price */
   price: Scalars['numeric']['output'];
+  /** An array relationship */
+  product_images: Array<Product_Images>;
+  /** An aggregate relationship */
+  product_images_aggregate: Product_Images_Aggregate;
   /** Unique URL slug */
   slug: Scalars['String']['output'];
   /** Product status: active or inactive */
@@ -1644,7 +1628,7 @@ export type Products = {
 
 
 /** Products table for e-commerce */
-export type ProductsImagesArgs = {
+export type ProductsProduct_ImagesArgs = {
   distinct_on?: InputMaybe<Array<Product_Images_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1654,7 +1638,7 @@ export type ProductsImagesArgs = {
 
 
 /** Products table for e-commerce */
-export type ProductsImages_AggregateArgs = {
+export type ProductsProduct_Images_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Product_Images_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -1764,10 +1748,10 @@ export type Products_Bool_Exp = {
   created_at?: InputMaybe<Timestamp_Comparison_Exp>;
   description?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
-  images?: InputMaybe<Product_Images_Bool_Exp>;
-  images_aggregate?: InputMaybe<Product_Images_Aggregate_Bool_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   price?: InputMaybe<Numeric_Comparison_Exp>;
+  product_images?: InputMaybe<Product_Images_Bool_Exp>;
+  product_images_aggregate?: InputMaybe<Product_Images_Aggregate_Bool_Exp>;
   slug?: InputMaybe<String_Comparison_Exp>;
   status?: InputMaybe<String_Comparison_Exp>;
   stock?: InputMaybe<Int_Comparison_Exp>;
@@ -1808,11 +1792,11 @@ export type Products_Insert_Input = {
   description?: InputMaybe<Scalars['String']['input']>;
   /** Primary key */
   id?: InputMaybe<Scalars['Int']['input']>;
-  images?: InputMaybe<Product_Images_Arr_Rel_Insert_Input>;
   /** Product name */
   name?: InputMaybe<Scalars['String']['input']>;
   /** Product price */
   price?: InputMaybe<Scalars['numeric']['input']>;
+  product_images?: InputMaybe<Product_Images_Arr_Rel_Insert_Input>;
   /** Unique URL slug */
   slug?: InputMaybe<Scalars['String']['input']>;
   /** Product status: active or inactive */
@@ -1952,9 +1936,9 @@ export type Products_Order_By = {
   created_at?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  images_aggregate?: InputMaybe<Product_Images_Aggregate_Order_By>;
   name?: InputMaybe<Order_By>;
   price?: InputMaybe<Order_By>;
+  product_images_aggregate?: InputMaybe<Product_Images_Aggregate_Order_By>;
   slug?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
   stock?: InputMaybe<Order_By>;
@@ -2298,9 +2282,9 @@ export type Query_Root = {
   posts_aggregate: Posts_Aggregate;
   /** fetch data from the table: "posts" using primary key columns */
   posts_by_pk?: Maybe<Posts>;
-  /** fetch data from the table: "product_images" */
+  /** An array relationship */
   product_images: Array<Product_Images>;
-  /** fetch aggregated fields from the table: "product_images" */
+  /** An aggregate relationship */
   product_images_aggregate: Product_Images_Aggregate;
   /** fetch data from the table: "product_images" using primary key columns */
   product_images_by_pk?: Maybe<Product_Images>;
@@ -2451,9 +2435,9 @@ export type Subscription_Root = {
   posts_by_pk?: Maybe<Posts>;
   /** fetch data from the table in a streaming manner: "posts" */
   posts_stream: Array<Posts>;
-  /** fetch data from the table: "product_images" */
+  /** An array relationship */
   product_images: Array<Product_Images>;
-  /** fetch aggregated fields from the table: "product_images" */
+  /** An aggregate relationship */
   product_images_aggregate: Product_Images_Aggregate;
   /** fetch data from the table: "product_images" using primary key columns */
   product_images_by_pk?: Maybe<Product_Images>;
@@ -3029,7 +3013,7 @@ export type AdminDeleteUserMutation = { __typename?: 'mutation_root', delete_use
 export type AdminProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AdminProductsQuery = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null, created_at?: any | null, user: { __typename?: 'users', username: string }, category?: { __typename?: 'categories', name: string } | null, images: Array<{ __typename?: 'product_images', id: number, image_url: string, is_primary?: boolean | null }> }> };
+export type AdminProductsQuery = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null, created_at?: any | null, user: { __typename?: 'users', username: string }, category?: { __typename?: 'categories', name: string } | null, product_images: Array<{ __typename?: 'product_images', id: number, image_url: string, is_primary?: boolean | null }> }> };
 
 export type AdminCreateProductMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -3128,13 +3112,12 @@ export type AdminDeleteCategoryMutationVariables = Exact<{
 export type AdminDeleteCategoryMutation = { __typename?: 'mutation_root', delete_categories_by_pk?: { __typename?: 'categories', id: number } | null };
 
 export type AdminChangePasswordMutationVariables = Exact<{
-  user_id: Scalars['Int']['input'];
-  current_password?: InputMaybe<Scalars['String']['input']>;
-  new_password: Scalars['String']['input'];
+  id: Scalars['Int']['input'];
+  password: Scalars['String']['input'];
 }>;
 
 
-export type AdminChangePasswordMutation = { __typename?: 'mutation_root', change_password?: { __typename?: 'ChangePasswordOutput', message: string, user_id: number, username: string } | null };
+export type AdminChangePasswordMutation = { __typename?: 'mutation_root', update_users_by_pk?: { __typename?: 'users', id: number, username: string } | null };
 
 export type AdminGetUserQueryVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -3148,19 +3131,19 @@ export type GetProductWithImagesQueryVariables = Exact<{
 }>;
 
 
-export type GetProductWithImagesQuery = { __typename?: 'query_root', products_by_pk?: { __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null, created_at?: any | null, category?: { __typename?: 'categories', id: number, name: string } | null, user: { __typename?: 'users', id: number, username: string }, images: Array<{ __typename?: 'product_images', id: number, alt_text?: string | null, sort_order?: number | null, is_primary?: boolean | null }> } | null };
+export type GetProductWithImagesQuery = { __typename?: 'query_root', products_by_pk?: { __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null, created_at?: any | null, category?: { __typename?: 'categories', id: number, name: string } | null, user: { __typename?: 'users', id: number, username: string }, product_images: Array<{ __typename?: 'product_images', id: number, alt_text?: string | null, sort_order?: number | null, is_primary?: boolean | null }> } | null };
 
 export type GetProductsWithImagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetProductsWithImagesQuery = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null, created_at?: any | null, category?: { __typename?: 'categories', id: number, name: string } | null, user: { __typename?: 'users', id: number, username: string }, images: Array<{ __typename?: 'product_images', id: number, image_url: string, alt_text?: string | null, sort_order?: number | null, is_primary?: boolean | null }> }> };
+export type GetProductsWithImagesQuery = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null, created_at?: any | null, category?: { __typename?: 'categories', id: number, name: string } | null, user: { __typename?: 'users', id: number, username: string }, product_images: Array<{ __typename?: 'product_images', id: number, image_url: string, alt_text?: string | null, sort_order?: number | null, is_primary?: boolean | null }> }> };
 
 export type GetProductWithImagesForEditQueryVariables = Exact<{
   id: Scalars['Int']['input'];
 }>;
 
 
-export type GetProductWithImagesForEditQuery = { __typename?: 'query_root', products_by_pk?: { __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null, created_at?: any | null, category?: { __typename?: 'categories', id: number, name: string } | null, user: { __typename?: 'users', id: number, username: string }, images: Array<{ __typename?: 'product_images', id: number, image_url: string, alt_text?: string | null, sort_order?: number | null, is_primary?: boolean | null }> } | null };
+export type GetProductWithImagesForEditQuery = { __typename?: 'query_root', products_by_pk?: { __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null, created_at?: any | null, category?: { __typename?: 'categories', id: number, name: string } | null, user: { __typename?: 'users', id: number, username: string }, product_images: Array<{ __typename?: 'product_images', id: number, image_url: string, alt_text?: string | null, sort_order?: number | null, is_primary?: boolean | null }> } | null };
 
 export type InsertProductImageMutationVariables = Exact<{
   object: Product_Images_Insert_Input;
@@ -3190,6 +3173,207 @@ export type DeleteProductImagesMutationVariables = Exact<{
 
 
 export type DeleteProductImagesMutation = { __typename?: 'mutation_root', delete_product_images?: { __typename?: 'product_images_mutation_response', affected_rows: number } | null };
+
+export type CategoriesQueryVariables = Exact<{
+  where?: InputMaybe<Categories_Bool_Exp>;
+}>;
+
+
+export type CategoriesQuery = { __typename?: 'query_root', categories: Array<{ __typename?: 'categories', id: number, name: string, type: string, created_at?: any | null, products: Array<{ __typename?: 'products', id: number, name: string, slug: string, price: any, stock?: number | null, status?: string | null }> }> };
+
+export type CategoryQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type CategoryQuery = { __typename?: 'query_root', categories_by_pk?: { __typename?: 'categories', id: number, name: string, type: string, created_at?: any | null, products: Array<{ __typename?: 'products', id: number, name: string, slug: string, price: any, stock?: number | null, status?: string | null }> } | null };
+
+export type CategoriesByTypeQueryVariables = Exact<{
+  type: Scalars['String']['input'];
+}>;
+
+
+export type CategoriesByTypeQuery = { __typename?: 'query_root', categories: Array<{ __typename?: 'categories', id: number, name: string, type: string, created_at?: any | null, products: Array<{ __typename?: 'products', id: number, name: string, slug: string, price: any, stock?: number | null, status?: string | null }> }> };
+
+export type CreateCategoryMutationVariables = Exact<{
+  object: Categories_Insert_Input;
+}>;
+
+
+export type CreateCategoryMutation = { __typename?: 'mutation_root', insert_categories_one?: { __typename?: 'categories', id: number, name: string, type: string, created_at?: any | null } | null };
+
+export type UpdateCategoryMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+  set: Categories_Set_Input;
+}>;
+
+
+export type UpdateCategoryMutation = { __typename?: 'mutation_root', update_categories_by_pk?: { __typename?: 'categories', id: number, name: string, type: string, created_at?: any | null } | null };
+
+export type DeleteCategoryMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type DeleteCategoryMutation = { __typename?: 'mutation_root', delete_categories_by_pk?: { __typename?: 'categories', id: number } | null };
+
+export type PostsQueryVariables = Exact<{
+  where?: InputMaybe<Posts_Bool_Exp>;
+}>;
+
+
+export type PostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: number, title: string, body: string, user_id: number, status?: string | null, created_at?: any | null, user: { __typename?: 'users', id: number, username: string, role?: string | null } }> };
+
+export type PostQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type PostQuery = { __typename?: 'query_root', posts_by_pk?: { __typename?: 'posts', id: number, title: string, body: string, user_id: number, status?: string | null, created_at?: any | null, user: { __typename?: 'users', id: number, username: string, role?: string | null } } | null };
+
+export type PostsByStatusQueryVariables = Exact<{
+  status: Scalars['String']['input'];
+}>;
+
+
+export type PostsByStatusQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: number, title: string, body: string, user_id: number, status?: string | null, created_at?: any | null, user: { __typename?: 'users', id: number, username: string, role?: string | null } }> };
+
+export type PostsByUserQueryVariables = Exact<{
+  userId: Scalars['Int']['input'];
+}>;
+
+
+export type PostsByUserQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: number, title: string, body: string, user_id: number, status?: string | null, created_at?: any | null, user: { __typename?: 'users', id: number, username: string, role?: string | null } }> };
+
+export type CreatePostMutationVariables = Exact<{
+  object: Posts_Insert_Input;
+}>;
+
+
+export type CreatePostMutation = { __typename?: 'mutation_root', insert_posts_one?: { __typename?: 'posts', id: number, title: string, body: string, user_id: number, status?: string | null, created_at?: any | null } | null };
+
+export type UpdatePostMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+  set: Posts_Set_Input;
+}>;
+
+
+export type UpdatePostMutation = { __typename?: 'mutation_root', update_posts_by_pk?: { __typename?: 'posts', id: number, title: string, body: string, user_id: number, status?: string | null, created_at?: any | null } | null };
+
+export type DeletePostMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type DeletePostMutation = { __typename?: 'mutation_root', delete_posts_by_pk?: { __typename?: 'posts', id: number } | null };
+
+export type ProductsQueryVariables = Exact<{
+  where?: InputMaybe<Products_Bool_Exp>;
+}>;
+
+
+export type ProductsQuery = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, category_id?: number | null, user_id: number, status?: string | null, created_at?: any | null, user: { __typename?: 'users', id: number, username: string, role?: string | null }, category?: { __typename?: 'categories', id: number, name: string, type: string } | null }> };
+
+export type ProductQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type ProductQuery = { __typename?: 'query_root', products_by_pk?: { __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, category_id?: number | null, user_id: number, status?: string | null, created_at?: any | null, user: { __typename?: 'users', id: number, username: string, role?: string | null }, category?: { __typename?: 'categories', id: number, name: string, type: string } | null } | null };
+
+export type ProductBySlugQueryVariables = Exact<{
+  slug: Scalars['String']['input'];
+}>;
+
+
+export type ProductBySlugQuery = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, category_id?: number | null, user_id: number, status?: string | null, created_at?: any | null, user: { __typename?: 'users', id: number, username: string, role?: string | null }, category?: { __typename?: 'categories', id: number, name: string, type: string } | null }> };
+
+export type ProductsByStatusQueryVariables = Exact<{
+  status: Scalars['String']['input'];
+}>;
+
+
+export type ProductsByStatusQuery = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, category_id?: number | null, user_id: number, status?: string | null, created_at?: any | null, user: { __typename?: 'users', id: number, username: string, role?: string | null }, category?: { __typename?: 'categories', id: number, name: string, type: string } | null }> };
+
+export type ProductsByCategoryQueryVariables = Exact<{
+  categoryId: Scalars['Int']['input'];
+}>;
+
+
+export type ProductsByCategoryQuery = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, category_id?: number | null, user_id: number, status?: string | null, created_at?: any | null, user: { __typename?: 'users', id: number, username: string, role?: string | null }, category?: { __typename?: 'categories', id: number, name: string, type: string } | null }> };
+
+export type ProductsByUserQueryVariables = Exact<{
+  userId: Scalars['Int']['input'];
+}>;
+
+
+export type ProductsByUserQuery = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, category_id?: number | null, user_id: number, status?: string | null, created_at?: any | null, user: { __typename?: 'users', id: number, username: string, role?: string | null }, category?: { __typename?: 'categories', id: number, name: string, type: string } | null }> };
+
+export type CreateProductMutationVariables = Exact<{
+  object: Products_Insert_Input;
+}>;
+
+
+export type CreateProductMutation = { __typename?: 'mutation_root', insert_products_one?: { __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, category_id?: number | null, user_id: number, status?: string | null, created_at?: any | null } | null };
+
+export type UpdateProductMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+  set: Products_Set_Input;
+}>;
+
+
+export type UpdateProductMutation = { __typename?: 'mutation_root', update_products_by_pk?: { __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, category_id?: number | null, user_id: number, status?: string | null, created_at?: any | null } | null };
+
+export type DeleteProductMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type DeleteProductMutation = { __typename?: 'mutation_root', delete_products_by_pk?: { __typename?: 'products', id: number } | null };
+
+export type UpdateStockMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+  stock: Scalars['Int']['input'];
+}>;
+
+
+export type UpdateStockMutation = { __typename?: 'mutation_root', update_products_by_pk?: { __typename?: 'products', id: number, name: string, stock?: number | null } | null };
+
+export type UsersQueryVariables = Exact<{
+  where?: InputMaybe<Users_Bool_Exp>;
+}>;
+
+
+export type UsersQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: number, username: string, role?: string | null, created_at?: any | null, posts: Array<{ __typename?: 'posts', id: number, title: string, status?: string | null }>, products: Array<{ __typename?: 'products', id: number, name: string, status?: string | null }> }> };
+
+export type UserQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type UserQuery = { __typename?: 'query_root', users_by_pk?: { __typename?: 'users', id: number, username: string, role?: string | null, created_at?: any | null, posts: Array<{ __typename?: 'posts', id: number, title: string, status?: string | null }>, products: Array<{ __typename?: 'products', id: number, name: string, status?: string | null }> } | null };
+
+export type GetProductsQueryVariables = Exact<{
+  status?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetProductsQuery = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null, created_at?: any | null, category?: { __typename?: 'categories', id: number, name: string, type: string } | null, product_images: Array<{ __typename?: 'product_images', id: number, image_url: string, alt_text?: string | null, is_primary?: boolean | null }> }> };
+
+export type GetProductsByCategoryQueryVariables = Exact<{
+  categoryId: Scalars['Int']['input'];
+  status?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetProductsByCategoryQuery = { __typename?: 'query_root', products: Array<{ __typename?: 'products', id: number, name: string, slug: string, description?: string | null, price: any, stock?: number | null, status?: string | null, created_at?: any | null, category?: { __typename?: 'categories', id: number, name: string, type: string } | null, product_images: Array<{ __typename?: 'product_images', id: number, image_url: string, alt_text?: string | null, is_primary?: boolean | null }> }> };
+
+export type GetCategoriesQueryVariables = Exact<{
+  type?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetCategoriesQuery = { __typename?: 'query_root', categories: Array<{ __typename?: 'categories', id: number, name: string, type: string }> };
 
 
 export const AdminStatsDocument = gql`
@@ -3419,7 +3603,7 @@ export const AdminProductsDocument = gql`
     category {
       name
     }
-    images(order_by: {is_primary: desc, sort_order: asc}, limit: 1) {
+    product_images(order_by: {is_primary: desc, sort_order: asc}, limit: 1) {
       id
       image_url
       is_primary
@@ -3900,14 +4084,9 @@ export type AdminDeleteCategoryMutationHookResult = ReturnType<typeof useAdminDe
 export type AdminDeleteCategoryMutationResult = Apollo.MutationResult<AdminDeleteCategoryMutation>;
 export type AdminDeleteCategoryMutationOptions = Apollo.BaseMutationOptions<AdminDeleteCategoryMutation, AdminDeleteCategoryMutationVariables>;
 export const AdminChangePasswordDocument = gql`
-    mutation AdminChangePassword($user_id: Int!, $current_password: String, $new_password: String!) {
-  change_password(
-    user_id: $user_id
-    current_password: $current_password
-    new_password: $new_password
-  ) {
-    message
-    user_id
+    mutation AdminChangePassword($id: Int!, $password: String!) {
+  update_users_by_pk(pk_columns: {id: $id}, _set: {password: $password}) {
+    id
     username
   }
 }
@@ -3927,9 +4106,8 @@ export type AdminChangePasswordMutationFn = Apollo.MutationFunction<AdminChangeP
  * @example
  * const [adminChangePasswordMutation, { data, loading, error }] = useAdminChangePasswordMutation({
  *   variables: {
- *      user_id: // value for 'user_id'
- *      current_password: // value for 'current_password'
- *      new_password: // value for 'new_password'
+ *      id: // value for 'id'
+ *      password: // value for 'password'
  *   },
  * });
  */
@@ -4001,7 +4179,7 @@ export const GetProductWithImagesDocument = gql`
       id
       username
     }
-    images(order_by: {sort_order: asc}) {
+    product_images(order_by: {sort_order: asc}) {
       id
       alt_text
       sort_order
@@ -4062,7 +4240,7 @@ export const GetProductsWithImagesDocument = gql`
       id
       username
     }
-    images(order_by: {sort_order: asc}) {
+    product_images(order_by: {sort_order: asc}) {
       id
       image_url
       alt_text
@@ -4123,7 +4301,7 @@ export const GetProductWithImagesForEditDocument = gql`
       id
       username
     }
-    images(order_by: {sort_order: asc}) {
+    product_images(order_by: {sort_order: asc}) {
       id
       image_url
       alt_text
@@ -4310,3 +4488,1348 @@ export function useDeleteProductImagesMutation(baseOptions?: Apollo.MutationHook
 export type DeleteProductImagesMutationHookResult = ReturnType<typeof useDeleteProductImagesMutation>;
 export type DeleteProductImagesMutationResult = Apollo.MutationResult<DeleteProductImagesMutation>;
 export type DeleteProductImagesMutationOptions = Apollo.BaseMutationOptions<DeleteProductImagesMutation, DeleteProductImagesMutationVariables>;
+export const CategoriesDocument = gql`
+    query Categories($where: categories_bool_exp = {}) {
+  categories(where: $where) {
+    id
+    name
+    type
+    created_at
+    products {
+      id
+      name
+      slug
+      price
+      stock
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useCategoriesQuery__
+ *
+ * To run a query within a React component, call `useCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoriesQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, options);
+      }
+export function useCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, options);
+        }
+export function useCategoriesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, options);
+        }
+export type CategoriesQueryHookResult = ReturnType<typeof useCategoriesQuery>;
+export type CategoriesLazyQueryHookResult = ReturnType<typeof useCategoriesLazyQuery>;
+export type CategoriesSuspenseQueryHookResult = ReturnType<typeof useCategoriesSuspenseQuery>;
+export type CategoriesQueryResult = Apollo.QueryResult<CategoriesQuery, CategoriesQueryVariables>;
+export const CategoryDocument = gql`
+    query Category($id: Int!) {
+  categories_by_pk(id: $id) {
+    id
+    name
+    type
+    created_at
+    products {
+      id
+      name
+      slug
+      price
+      stock
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useCategoryQuery__
+ *
+ * To run a query within a React component, call `useCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoryQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCategoryQuery(baseOptions: Apollo.QueryHookOptions<CategoryQuery, CategoryQueryVariables> & ({ variables: CategoryQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CategoryQuery, CategoryQueryVariables>(CategoryDocument, options);
+      }
+export function useCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoryQuery, CategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CategoryQuery, CategoryQueryVariables>(CategoryDocument, options);
+        }
+export function useCategorySuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<CategoryQuery, CategoryQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CategoryQuery, CategoryQueryVariables>(CategoryDocument, options);
+        }
+export type CategoryQueryHookResult = ReturnType<typeof useCategoryQuery>;
+export type CategoryLazyQueryHookResult = ReturnType<typeof useCategoryLazyQuery>;
+export type CategorySuspenseQueryHookResult = ReturnType<typeof useCategorySuspenseQuery>;
+export type CategoryQueryResult = Apollo.QueryResult<CategoryQuery, CategoryQueryVariables>;
+export const CategoriesByTypeDocument = gql`
+    query CategoriesByType($type: String!) {
+  categories(where: {type: {_eq: $type}}) {
+    id
+    name
+    type
+    created_at
+    products {
+      id
+      name
+      slug
+      price
+      stock
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useCategoriesByTypeQuery__
+ *
+ * To run a query within a React component, call `useCategoriesByTypeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoriesByTypeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoriesByTypeQuery({
+ *   variables: {
+ *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function useCategoriesByTypeQuery(baseOptions: Apollo.QueryHookOptions<CategoriesByTypeQuery, CategoriesByTypeQueryVariables> & ({ variables: CategoriesByTypeQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CategoriesByTypeQuery, CategoriesByTypeQueryVariables>(CategoriesByTypeDocument, options);
+      }
+export function useCategoriesByTypeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoriesByTypeQuery, CategoriesByTypeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CategoriesByTypeQuery, CategoriesByTypeQueryVariables>(CategoriesByTypeDocument, options);
+        }
+export function useCategoriesByTypeSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<CategoriesByTypeQuery, CategoriesByTypeQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CategoriesByTypeQuery, CategoriesByTypeQueryVariables>(CategoriesByTypeDocument, options);
+        }
+export type CategoriesByTypeQueryHookResult = ReturnType<typeof useCategoriesByTypeQuery>;
+export type CategoriesByTypeLazyQueryHookResult = ReturnType<typeof useCategoriesByTypeLazyQuery>;
+export type CategoriesByTypeSuspenseQueryHookResult = ReturnType<typeof useCategoriesByTypeSuspenseQuery>;
+export type CategoriesByTypeQueryResult = Apollo.QueryResult<CategoriesByTypeQuery, CategoriesByTypeQueryVariables>;
+export const CreateCategoryDocument = gql`
+    mutation CreateCategory($object: categories_insert_input!) {
+  insert_categories_one(object: $object) {
+    id
+    name
+    type
+    created_at
+  }
+}
+    `;
+export type CreateCategoryMutationFn = Apollo.MutationFunction<CreateCategoryMutation, CreateCategoryMutationVariables>;
+
+/**
+ * __useCreateCategoryMutation__
+ *
+ * To run a mutation, you first call `useCreateCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCategoryMutation, { data, loading, error }] = useCreateCategoryMutation({
+ *   variables: {
+ *      object: // value for 'object'
+ *   },
+ * });
+ */
+export function useCreateCategoryMutation(baseOptions?: Apollo.MutationHookOptions<CreateCategoryMutation, CreateCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCategoryMutation, CreateCategoryMutationVariables>(CreateCategoryDocument, options);
+      }
+export type CreateCategoryMutationHookResult = ReturnType<typeof useCreateCategoryMutation>;
+export type CreateCategoryMutationResult = Apollo.MutationResult<CreateCategoryMutation>;
+export type CreateCategoryMutationOptions = Apollo.BaseMutationOptions<CreateCategoryMutation, CreateCategoryMutationVariables>;
+export const UpdateCategoryDocument = gql`
+    mutation UpdateCategory($id: Int!, $set: categories_set_input!) {
+  update_categories_by_pk(pk_columns: {id: $id}, _set: $set) {
+    id
+    name
+    type
+    created_at
+  }
+}
+    `;
+export type UpdateCategoryMutationFn = Apollo.MutationFunction<UpdateCategoryMutation, UpdateCategoryMutationVariables>;
+
+/**
+ * __useUpdateCategoryMutation__
+ *
+ * To run a mutation, you first call `useUpdateCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCategoryMutation, { data, loading, error }] = useUpdateCategoryMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      set: // value for 'set'
+ *   },
+ * });
+ */
+export function useUpdateCategoryMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCategoryMutation, UpdateCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCategoryMutation, UpdateCategoryMutationVariables>(UpdateCategoryDocument, options);
+      }
+export type UpdateCategoryMutationHookResult = ReturnType<typeof useUpdateCategoryMutation>;
+export type UpdateCategoryMutationResult = Apollo.MutationResult<UpdateCategoryMutation>;
+export type UpdateCategoryMutationOptions = Apollo.BaseMutationOptions<UpdateCategoryMutation, UpdateCategoryMutationVariables>;
+export const DeleteCategoryDocument = gql`
+    mutation DeleteCategory($id: Int!) {
+  delete_categories_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteCategoryMutationFn = Apollo.MutationFunction<DeleteCategoryMutation, DeleteCategoryMutationVariables>;
+
+/**
+ * __useDeleteCategoryMutation__
+ *
+ * To run a mutation, you first call `useDeleteCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCategoryMutation, { data, loading, error }] = useDeleteCategoryMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteCategoryMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCategoryMutation, DeleteCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteCategoryMutation, DeleteCategoryMutationVariables>(DeleteCategoryDocument, options);
+      }
+export type DeleteCategoryMutationHookResult = ReturnType<typeof useDeleteCategoryMutation>;
+export type DeleteCategoryMutationResult = Apollo.MutationResult<DeleteCategoryMutation>;
+export type DeleteCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteCategoryMutation, DeleteCategoryMutationVariables>;
+export const PostsDocument = gql`
+    query Posts($where: posts_bool_exp = {}) {
+  posts(where: $where) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+  }
+}
+    `;
+
+/**
+ * __usePostsQuery__
+ *
+ * To run a query within a React component, call `usePostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostsQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function usePostsQuery(baseOptions?: Apollo.QueryHookOptions<PostsQuery, PostsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PostsQuery, PostsQueryVariables>(PostsDocument, options);
+      }
+export function usePostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostsQuery, PostsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PostsQuery, PostsQueryVariables>(PostsDocument, options);
+        }
+export function usePostsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<PostsQuery, PostsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PostsQuery, PostsQueryVariables>(PostsDocument, options);
+        }
+export type PostsQueryHookResult = ReturnType<typeof usePostsQuery>;
+export type PostsLazyQueryHookResult = ReturnType<typeof usePostsLazyQuery>;
+export type PostsSuspenseQueryHookResult = ReturnType<typeof usePostsSuspenseQuery>;
+export type PostsQueryResult = Apollo.QueryResult<PostsQuery, PostsQueryVariables>;
+export const PostDocument = gql`
+    query Post($id: Int!) {
+  posts_by_pk(id: $id) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+  }
+}
+    `;
+
+/**
+ * __usePostQuery__
+ *
+ * To run a query within a React component, call `usePostQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePostQuery(baseOptions: Apollo.QueryHookOptions<PostQuery, PostQueryVariables> & ({ variables: PostQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PostQuery, PostQueryVariables>(PostDocument, options);
+      }
+export function usePostLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostQuery, PostQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PostQuery, PostQueryVariables>(PostDocument, options);
+        }
+export function usePostSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<PostQuery, PostQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PostQuery, PostQueryVariables>(PostDocument, options);
+        }
+export type PostQueryHookResult = ReturnType<typeof usePostQuery>;
+export type PostLazyQueryHookResult = ReturnType<typeof usePostLazyQuery>;
+export type PostSuspenseQueryHookResult = ReturnType<typeof usePostSuspenseQuery>;
+export type PostQueryResult = Apollo.QueryResult<PostQuery, PostQueryVariables>;
+export const PostsByStatusDocument = gql`
+    query PostsByStatus($status: String!) {
+  posts(where: {status: {_eq: $status}}) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+  }
+}
+    `;
+
+/**
+ * __usePostsByStatusQuery__
+ *
+ * To run a query within a React component, call `usePostsByStatusQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostsByStatusQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostsByStatusQuery({
+ *   variables: {
+ *      status: // value for 'status'
+ *   },
+ * });
+ */
+export function usePostsByStatusQuery(baseOptions: Apollo.QueryHookOptions<PostsByStatusQuery, PostsByStatusQueryVariables> & ({ variables: PostsByStatusQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PostsByStatusQuery, PostsByStatusQueryVariables>(PostsByStatusDocument, options);
+      }
+export function usePostsByStatusLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostsByStatusQuery, PostsByStatusQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PostsByStatusQuery, PostsByStatusQueryVariables>(PostsByStatusDocument, options);
+        }
+export function usePostsByStatusSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<PostsByStatusQuery, PostsByStatusQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PostsByStatusQuery, PostsByStatusQueryVariables>(PostsByStatusDocument, options);
+        }
+export type PostsByStatusQueryHookResult = ReturnType<typeof usePostsByStatusQuery>;
+export type PostsByStatusLazyQueryHookResult = ReturnType<typeof usePostsByStatusLazyQuery>;
+export type PostsByStatusSuspenseQueryHookResult = ReturnType<typeof usePostsByStatusSuspenseQuery>;
+export type PostsByStatusQueryResult = Apollo.QueryResult<PostsByStatusQuery, PostsByStatusQueryVariables>;
+export const PostsByUserDocument = gql`
+    query PostsByUser($userId: Int!) {
+  posts(where: {user_id: {_eq: $userId}}) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+  }
+}
+    `;
+
+/**
+ * __usePostsByUserQuery__
+ *
+ * To run a query within a React component, call `usePostsByUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostsByUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostsByUserQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function usePostsByUserQuery(baseOptions: Apollo.QueryHookOptions<PostsByUserQuery, PostsByUserQueryVariables> & ({ variables: PostsByUserQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PostsByUserQuery, PostsByUserQueryVariables>(PostsByUserDocument, options);
+      }
+export function usePostsByUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostsByUserQuery, PostsByUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PostsByUserQuery, PostsByUserQueryVariables>(PostsByUserDocument, options);
+        }
+export function usePostsByUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<PostsByUserQuery, PostsByUserQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<PostsByUserQuery, PostsByUserQueryVariables>(PostsByUserDocument, options);
+        }
+export type PostsByUserQueryHookResult = ReturnType<typeof usePostsByUserQuery>;
+export type PostsByUserLazyQueryHookResult = ReturnType<typeof usePostsByUserLazyQuery>;
+export type PostsByUserSuspenseQueryHookResult = ReturnType<typeof usePostsByUserSuspenseQuery>;
+export type PostsByUserQueryResult = Apollo.QueryResult<PostsByUserQuery, PostsByUserQueryVariables>;
+export const CreatePostDocument = gql`
+    mutation CreatePost($object: posts_insert_input!) {
+  insert_posts_one(object: $object) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+  }
+}
+    `;
+export type CreatePostMutationFn = Apollo.MutationFunction<CreatePostMutation, CreatePostMutationVariables>;
+
+/**
+ * __useCreatePostMutation__
+ *
+ * To run a mutation, you first call `useCreatePostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPostMutation, { data, loading, error }] = useCreatePostMutation({
+ *   variables: {
+ *      object: // value for 'object'
+ *   },
+ * });
+ */
+export function useCreatePostMutation(baseOptions?: Apollo.MutationHookOptions<CreatePostMutation, CreatePostMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument, options);
+      }
+export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
+export type CreatePostMutationResult = Apollo.MutationResult<CreatePostMutation>;
+export type CreatePostMutationOptions = Apollo.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
+export const UpdatePostDocument = gql`
+    mutation UpdatePost($id: Int!, $set: posts_set_input!) {
+  update_posts_by_pk(pk_columns: {id: $id}, _set: $set) {
+    id
+    title
+    body
+    user_id
+    status
+    created_at
+  }
+}
+    `;
+export type UpdatePostMutationFn = Apollo.MutationFunction<UpdatePostMutation, UpdatePostMutationVariables>;
+
+/**
+ * __useUpdatePostMutation__
+ *
+ * To run a mutation, you first call `useUpdatePostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePostMutation, { data, loading, error }] = useUpdatePostMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      set: // value for 'set'
+ *   },
+ * });
+ */
+export function useUpdatePostMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePostMutation, UpdatePostMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument, options);
+      }
+export type UpdatePostMutationHookResult = ReturnType<typeof useUpdatePostMutation>;
+export type UpdatePostMutationResult = Apollo.MutationResult<UpdatePostMutation>;
+export type UpdatePostMutationOptions = Apollo.BaseMutationOptions<UpdatePostMutation, UpdatePostMutationVariables>;
+export const DeletePostDocument = gql`
+    mutation DeletePost($id: Int!) {
+  delete_posts_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export type DeletePostMutationFn = Apollo.MutationFunction<DeletePostMutation, DeletePostMutationVariables>;
+
+/**
+ * __useDeletePostMutation__
+ *
+ * To run a mutation, you first call `useDeletePostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePostMutation, { data, loading, error }] = useDeletePostMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeletePostMutation(baseOptions?: Apollo.MutationHookOptions<DeletePostMutation, DeletePostMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeletePostMutation, DeletePostMutationVariables>(DeletePostDocument, options);
+      }
+export type DeletePostMutationHookResult = ReturnType<typeof useDeletePostMutation>;
+export type DeletePostMutationResult = Apollo.MutationResult<DeletePostMutation>;
+export type DeletePostMutationOptions = Apollo.BaseMutationOptions<DeletePostMutation, DeletePostMutationVariables>;
+export const ProductsDocument = gql`
+    query Products($where: products_bool_exp = {}) {
+  products(where: $where) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    category_id
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+    category {
+      id
+      name
+      type
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductsQuery__
+ *
+ * To run a query within a React component, call `useProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductsQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useProductsQuery(baseOptions?: Apollo.QueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
+      }
+export function useProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
+        }
+export function useProductsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
+        }
+export type ProductsQueryHookResult = ReturnType<typeof useProductsQuery>;
+export type ProductsLazyQueryHookResult = ReturnType<typeof useProductsLazyQuery>;
+export type ProductsSuspenseQueryHookResult = ReturnType<typeof useProductsSuspenseQuery>;
+export type ProductsQueryResult = Apollo.QueryResult<ProductsQuery, ProductsQueryVariables>;
+export const ProductDocument = gql`
+    query Product($id: Int!) {
+  products_by_pk(id: $id) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    category_id
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+    category {
+      id
+      name
+      type
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductQuery__
+ *
+ * To run a query within a React component, call `useProductQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useProductQuery(baseOptions: Apollo.QueryHookOptions<ProductQuery, ProductQueryVariables> & ({ variables: ProductQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductQuery, ProductQueryVariables>(ProductDocument, options);
+      }
+export function useProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductQuery, ProductQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductQuery, ProductQueryVariables>(ProductDocument, options);
+        }
+export function useProductSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ProductQuery, ProductQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ProductQuery, ProductQueryVariables>(ProductDocument, options);
+        }
+export type ProductQueryHookResult = ReturnType<typeof useProductQuery>;
+export type ProductLazyQueryHookResult = ReturnType<typeof useProductLazyQuery>;
+export type ProductSuspenseQueryHookResult = ReturnType<typeof useProductSuspenseQuery>;
+export type ProductQueryResult = Apollo.QueryResult<ProductQuery, ProductQueryVariables>;
+export const ProductBySlugDocument = gql`
+    query ProductBySlug($slug: String!) {
+  products(where: {slug: {_eq: $slug}}) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    category_id
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+    category {
+      id
+      name
+      type
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductBySlugQuery__
+ *
+ * To run a query within a React component, call `useProductBySlugQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductBySlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductBySlugQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useProductBySlugQuery(baseOptions: Apollo.QueryHookOptions<ProductBySlugQuery, ProductBySlugQueryVariables> & ({ variables: ProductBySlugQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductBySlugQuery, ProductBySlugQueryVariables>(ProductBySlugDocument, options);
+      }
+export function useProductBySlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductBySlugQuery, ProductBySlugQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductBySlugQuery, ProductBySlugQueryVariables>(ProductBySlugDocument, options);
+        }
+export function useProductBySlugSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ProductBySlugQuery, ProductBySlugQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ProductBySlugQuery, ProductBySlugQueryVariables>(ProductBySlugDocument, options);
+        }
+export type ProductBySlugQueryHookResult = ReturnType<typeof useProductBySlugQuery>;
+export type ProductBySlugLazyQueryHookResult = ReturnType<typeof useProductBySlugLazyQuery>;
+export type ProductBySlugSuspenseQueryHookResult = ReturnType<typeof useProductBySlugSuspenseQuery>;
+export type ProductBySlugQueryResult = Apollo.QueryResult<ProductBySlugQuery, ProductBySlugQueryVariables>;
+export const ProductsByStatusDocument = gql`
+    query ProductsByStatus($status: String!) {
+  products(where: {status: {_eq: $status}}) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    category_id
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+    category {
+      id
+      name
+      type
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductsByStatusQuery__
+ *
+ * To run a query within a React component, call `useProductsByStatusQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductsByStatusQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductsByStatusQuery({
+ *   variables: {
+ *      status: // value for 'status'
+ *   },
+ * });
+ */
+export function useProductsByStatusQuery(baseOptions: Apollo.QueryHookOptions<ProductsByStatusQuery, ProductsByStatusQueryVariables> & ({ variables: ProductsByStatusQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductsByStatusQuery, ProductsByStatusQueryVariables>(ProductsByStatusDocument, options);
+      }
+export function useProductsByStatusLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsByStatusQuery, ProductsByStatusQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductsByStatusQuery, ProductsByStatusQueryVariables>(ProductsByStatusDocument, options);
+        }
+export function useProductsByStatusSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ProductsByStatusQuery, ProductsByStatusQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ProductsByStatusQuery, ProductsByStatusQueryVariables>(ProductsByStatusDocument, options);
+        }
+export type ProductsByStatusQueryHookResult = ReturnType<typeof useProductsByStatusQuery>;
+export type ProductsByStatusLazyQueryHookResult = ReturnType<typeof useProductsByStatusLazyQuery>;
+export type ProductsByStatusSuspenseQueryHookResult = ReturnType<typeof useProductsByStatusSuspenseQuery>;
+export type ProductsByStatusQueryResult = Apollo.QueryResult<ProductsByStatusQuery, ProductsByStatusQueryVariables>;
+export const ProductsByCategoryDocument = gql`
+    query ProductsByCategory($categoryId: Int!) {
+  products(where: {category_id: {_eq: $categoryId}}) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    category_id
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+    category {
+      id
+      name
+      type
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductsByCategoryQuery__
+ *
+ * To run a query within a React component, call `useProductsByCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductsByCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductsByCategoryQuery({
+ *   variables: {
+ *      categoryId: // value for 'categoryId'
+ *   },
+ * });
+ */
+export function useProductsByCategoryQuery(baseOptions: Apollo.QueryHookOptions<ProductsByCategoryQuery, ProductsByCategoryQueryVariables> & ({ variables: ProductsByCategoryQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductsByCategoryQuery, ProductsByCategoryQueryVariables>(ProductsByCategoryDocument, options);
+      }
+export function useProductsByCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsByCategoryQuery, ProductsByCategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductsByCategoryQuery, ProductsByCategoryQueryVariables>(ProductsByCategoryDocument, options);
+        }
+export function useProductsByCategorySuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ProductsByCategoryQuery, ProductsByCategoryQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ProductsByCategoryQuery, ProductsByCategoryQueryVariables>(ProductsByCategoryDocument, options);
+        }
+export type ProductsByCategoryQueryHookResult = ReturnType<typeof useProductsByCategoryQuery>;
+export type ProductsByCategoryLazyQueryHookResult = ReturnType<typeof useProductsByCategoryLazyQuery>;
+export type ProductsByCategorySuspenseQueryHookResult = ReturnType<typeof useProductsByCategorySuspenseQuery>;
+export type ProductsByCategoryQueryResult = Apollo.QueryResult<ProductsByCategoryQuery, ProductsByCategoryQueryVariables>;
+export const ProductsByUserDocument = gql`
+    query ProductsByUser($userId: Int!) {
+  products(where: {user_id: {_eq: $userId}}) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    category_id
+    user_id
+    status
+    created_at
+    user {
+      id
+      username
+      role
+    }
+    category {
+      id
+      name
+      type
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductsByUserQuery__
+ *
+ * To run a query within a React component, call `useProductsByUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductsByUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductsByUserQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useProductsByUserQuery(baseOptions: Apollo.QueryHookOptions<ProductsByUserQuery, ProductsByUserQueryVariables> & ({ variables: ProductsByUserQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductsByUserQuery, ProductsByUserQueryVariables>(ProductsByUserDocument, options);
+      }
+export function useProductsByUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsByUserQuery, ProductsByUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductsByUserQuery, ProductsByUserQueryVariables>(ProductsByUserDocument, options);
+        }
+export function useProductsByUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ProductsByUserQuery, ProductsByUserQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ProductsByUserQuery, ProductsByUserQueryVariables>(ProductsByUserDocument, options);
+        }
+export type ProductsByUserQueryHookResult = ReturnType<typeof useProductsByUserQuery>;
+export type ProductsByUserLazyQueryHookResult = ReturnType<typeof useProductsByUserLazyQuery>;
+export type ProductsByUserSuspenseQueryHookResult = ReturnType<typeof useProductsByUserSuspenseQuery>;
+export type ProductsByUserQueryResult = Apollo.QueryResult<ProductsByUserQuery, ProductsByUserQueryVariables>;
+export const CreateProductDocument = gql`
+    mutation CreateProduct($object: products_insert_input!) {
+  insert_products_one(object: $object) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    category_id
+    user_id
+    status
+    created_at
+  }
+}
+    `;
+export type CreateProductMutationFn = Apollo.MutationFunction<CreateProductMutation, CreateProductMutationVariables>;
+
+/**
+ * __useCreateProductMutation__
+ *
+ * To run a mutation, you first call `useCreateProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createProductMutation, { data, loading, error }] = useCreateProductMutation({
+ *   variables: {
+ *      object: // value for 'object'
+ *   },
+ * });
+ */
+export function useCreateProductMutation(baseOptions?: Apollo.MutationHookOptions<CreateProductMutation, CreateProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateProductMutation, CreateProductMutationVariables>(CreateProductDocument, options);
+      }
+export type CreateProductMutationHookResult = ReturnType<typeof useCreateProductMutation>;
+export type CreateProductMutationResult = Apollo.MutationResult<CreateProductMutation>;
+export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProductMutation, CreateProductMutationVariables>;
+export const UpdateProductDocument = gql`
+    mutation UpdateProduct($id: Int!, $set: products_set_input!) {
+  update_products_by_pk(pk_columns: {id: $id}, _set: $set) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    category_id
+    user_id
+    status
+    created_at
+  }
+}
+    `;
+export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProductMutation, UpdateProductMutationVariables>;
+
+/**
+ * __useUpdateProductMutation__
+ *
+ * To run a mutation, you first call `useUpdateProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProductMutation, { data, loading, error }] = useUpdateProductMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      set: // value for 'set'
+ *   },
+ * });
+ */
+export function useUpdateProductMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProductMutation, UpdateProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateProductMutation, UpdateProductMutationVariables>(UpdateProductDocument, options);
+      }
+export type UpdateProductMutationHookResult = ReturnType<typeof useUpdateProductMutation>;
+export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProductMutation>;
+export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<UpdateProductMutation, UpdateProductMutationVariables>;
+export const DeleteProductDocument = gql`
+    mutation DeleteProduct($id: Int!) {
+  delete_products_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteProductMutationFn = Apollo.MutationFunction<DeleteProductMutation, DeleteProductMutationVariables>;
+
+/**
+ * __useDeleteProductMutation__
+ *
+ * To run a mutation, you first call `useDeleteProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteProductMutation, { data, loading, error }] = useDeleteProductMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteProductMutation(baseOptions?: Apollo.MutationHookOptions<DeleteProductMutation, DeleteProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteProductMutation, DeleteProductMutationVariables>(DeleteProductDocument, options);
+      }
+export type DeleteProductMutationHookResult = ReturnType<typeof useDeleteProductMutation>;
+export type DeleteProductMutationResult = Apollo.MutationResult<DeleteProductMutation>;
+export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<DeleteProductMutation, DeleteProductMutationVariables>;
+export const UpdateStockDocument = gql`
+    mutation UpdateStock($id: Int!, $stock: Int!) {
+  update_products_by_pk(pk_columns: {id: $id}, _set: {stock: $stock}) {
+    id
+    name
+    stock
+  }
+}
+    `;
+export type UpdateStockMutationFn = Apollo.MutationFunction<UpdateStockMutation, UpdateStockMutationVariables>;
+
+/**
+ * __useUpdateStockMutation__
+ *
+ * To run a mutation, you first call `useUpdateStockMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateStockMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateStockMutation, { data, loading, error }] = useUpdateStockMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      stock: // value for 'stock'
+ *   },
+ * });
+ */
+export function useUpdateStockMutation(baseOptions?: Apollo.MutationHookOptions<UpdateStockMutation, UpdateStockMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateStockMutation, UpdateStockMutationVariables>(UpdateStockDocument, options);
+      }
+export type UpdateStockMutationHookResult = ReturnType<typeof useUpdateStockMutation>;
+export type UpdateStockMutationResult = Apollo.MutationResult<UpdateStockMutation>;
+export type UpdateStockMutationOptions = Apollo.BaseMutationOptions<UpdateStockMutation, UpdateStockMutationVariables>;
+export const UsersDocument = gql`
+    query Users($where: users_bool_exp = {}) {
+  users(where: $where) {
+    id
+    username
+    role
+    created_at
+    posts {
+      id
+      title
+      status
+    }
+    products {
+      id
+      name
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useUsersQuery__
+ *
+ * To run a query within a React component, call `useUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUsersQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useUsersQuery(baseOptions?: Apollo.QueryHookOptions<UsersQuery, UsersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UsersQuery, UsersQueryVariables>(UsersDocument, options);
+      }
+export function useUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UsersQuery, UsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UsersQuery, UsersQueryVariables>(UsersDocument, options);
+        }
+export function useUsersSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<UsersQuery, UsersQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<UsersQuery, UsersQueryVariables>(UsersDocument, options);
+        }
+export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>;
+export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>;
+export type UsersSuspenseQueryHookResult = ReturnType<typeof useUsersSuspenseQuery>;
+export type UsersQueryResult = Apollo.QueryResult<UsersQuery, UsersQueryVariables>;
+export const UserDocument = gql`
+    query User($id: Int!) {
+  users_by_pk(id: $id) {
+    id
+    username
+    role
+    created_at
+    posts {
+      id
+      title
+      status
+    }
+    products {
+      id
+      name
+      status
+    }
+  }
+}
+    `;
+
+/**
+ * __useUserQuery__
+ *
+ * To run a query within a React component, call `useUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUserQuery(baseOptions: Apollo.QueryHookOptions<UserQuery, UserQueryVariables> & ({ variables: UserQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+      }
+export function useUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserQuery, UserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+        }
+export function useUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<UserQuery, UserQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+        }
+export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
+export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
+export type UserSuspenseQueryHookResult = ReturnType<typeof useUserSuspenseQuery>;
+export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
+export const GetProductsDocument = gql`
+    query GetProducts($status: String = "active") {
+  products(where: {status: {_eq: $status}}, order_by: {created_at: desc}) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    status
+    created_at
+    category {
+      id
+      name
+      type
+    }
+    product_images(order_by: {is_primary: desc, sort_order: asc}, limit: 1) {
+      id
+      image_url
+      alt_text
+      is_primary
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetProductsQuery__
+ *
+ * To run a query within a React component, call `useGetProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProductsQuery({
+ *   variables: {
+ *      status: // value for 'status'
+ *   },
+ * });
+ */
+export function useGetProductsQuery(baseOptions?: Apollo.QueryHookOptions<GetProductsQuery, GetProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProductsQuery, GetProductsQueryVariables>(GetProductsDocument, options);
+      }
+export function useGetProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductsQuery, GetProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProductsQuery, GetProductsQueryVariables>(GetProductsDocument, options);
+        }
+export function useGetProductsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetProductsQuery, GetProductsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetProductsQuery, GetProductsQueryVariables>(GetProductsDocument, options);
+        }
+export type GetProductsQueryHookResult = ReturnType<typeof useGetProductsQuery>;
+export type GetProductsLazyQueryHookResult = ReturnType<typeof useGetProductsLazyQuery>;
+export type GetProductsSuspenseQueryHookResult = ReturnType<typeof useGetProductsSuspenseQuery>;
+export type GetProductsQueryResult = Apollo.QueryResult<GetProductsQuery, GetProductsQueryVariables>;
+export const GetProductsByCategoryDocument = gql`
+    query GetProductsByCategory($categoryId: Int!, $status: String = "active") {
+  products(
+    where: {category_id: {_eq: $categoryId}, status: {_eq: $status}}
+    order_by: {created_at: desc}
+  ) {
+    id
+    name
+    slug
+    description
+    price
+    stock
+    status
+    created_at
+    category {
+      id
+      name
+      type
+    }
+    product_images(order_by: {is_primary: desc, sort_order: asc}, limit: 1) {
+      id
+      image_url
+      alt_text
+      is_primary
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetProductsByCategoryQuery__
+ *
+ * To run a query within a React component, call `useGetProductsByCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductsByCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProductsByCategoryQuery({
+ *   variables: {
+ *      categoryId: // value for 'categoryId'
+ *      status: // value for 'status'
+ *   },
+ * });
+ */
+export function useGetProductsByCategoryQuery(baseOptions: Apollo.QueryHookOptions<GetProductsByCategoryQuery, GetProductsByCategoryQueryVariables> & ({ variables: GetProductsByCategoryQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProductsByCategoryQuery, GetProductsByCategoryQueryVariables>(GetProductsByCategoryDocument, options);
+      }
+export function useGetProductsByCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductsByCategoryQuery, GetProductsByCategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProductsByCategoryQuery, GetProductsByCategoryQueryVariables>(GetProductsByCategoryDocument, options);
+        }
+export function useGetProductsByCategorySuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetProductsByCategoryQuery, GetProductsByCategoryQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetProductsByCategoryQuery, GetProductsByCategoryQueryVariables>(GetProductsByCategoryDocument, options);
+        }
+export type GetProductsByCategoryQueryHookResult = ReturnType<typeof useGetProductsByCategoryQuery>;
+export type GetProductsByCategoryLazyQueryHookResult = ReturnType<typeof useGetProductsByCategoryLazyQuery>;
+export type GetProductsByCategorySuspenseQueryHookResult = ReturnType<typeof useGetProductsByCategorySuspenseQuery>;
+export type GetProductsByCategoryQueryResult = Apollo.QueryResult<GetProductsByCategoryQuery, GetProductsByCategoryQueryVariables>;
+export const GetCategoriesDocument = gql`
+    query GetCategories($type: String = "product") {
+  categories(where: {type: {_eq: $type}}, order_by: {name: asc}) {
+    id
+    name
+    type
+  }
+}
+    `;
+
+/**
+ * __useGetCategoriesQuery__
+ *
+ * To run a query within a React component, call `useGetCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCategoriesQuery({
+ *   variables: {
+ *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function useGetCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<GetCategoriesQuery, GetCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCategoriesQuery, GetCategoriesQueryVariables>(GetCategoriesDocument, options);
+      }
+export function useGetCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCategoriesQuery, GetCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCategoriesQuery, GetCategoriesQueryVariables>(GetCategoriesDocument, options);
+        }
+export function useGetCategoriesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCategoriesQuery, GetCategoriesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCategoriesQuery, GetCategoriesQueryVariables>(GetCategoriesDocument, options);
+        }
+export type GetCategoriesQueryHookResult = ReturnType<typeof useGetCategoriesQuery>;
+export type GetCategoriesLazyQueryHookResult = ReturnType<typeof useGetCategoriesLazyQuery>;
+export type GetCategoriesSuspenseQueryHookResult = ReturnType<typeof useGetCategoriesSuspenseQuery>;
+export type GetCategoriesQueryResult = Apollo.QueryResult<GetCategoriesQuery, GetCategoriesQueryVariables>;

@@ -17,7 +17,7 @@ query GetProductsWithImages {
       id
       username
     }
-    images(order_by: { sort_order: asc }) {
+    product_images(order_by: { sort_order: asc }) {
       id
       image_url
       alt_text
@@ -46,7 +46,7 @@ query GetProductWithImagesForEdit($id: Int!) {
       id
       username
     }
-    images(order_by: { sort_order: asc }) {
+    product_images(order_by: { sort_order: asc }) {
       id
       image_url
       alt_text

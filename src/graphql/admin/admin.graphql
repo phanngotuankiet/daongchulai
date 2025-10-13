@@ -74,7 +74,7 @@ query AdminProducts {
     category {
       name
     }
-    images(order_by: {is_primary: desc, sort_order: asc}, limit: 1) {
+    product_images(order_by: {is_primary: desc, sort_order: asc}, limit: 1) {
       id
       image_url
       is_primary
@@ -182,11 +182,10 @@ mutation AdminDeleteCategory($id: Int!) {
   }
 }
 
-# Change Password using Hasura Action (proper backend hashing)
-mutation AdminChangePassword($user_id: Int!, $current_password: String, $new_password: String!) {
-  change_password(user_id: $user_id, current_password: $current_password, new_password: $new_password) {
-    message
-    user_id
+# Change Password - Direct update (frontend hashing)
+mutation AdminChangePassword($id: Int!, $password: String!) {
+  update_users_by_pk(pk_columns: { id: $id }, _set: { password: $password }) {
+    id
     username
   }
 }
