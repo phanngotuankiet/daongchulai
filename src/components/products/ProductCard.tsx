@@ -74,7 +74,7 @@ const ProductCard = ({
           onClick={handleClick}
           className="text-lg font-semibold text-gray-800 hover:text-primary-600"
         >
-          Kích thước {size} (cm)
+          {size}
         </div>
         <p className="mt-2 text-sm text-gray-600 line-clamp-2">
           {weight} kg/{vien_hoac_lat}

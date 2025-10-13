@@ -31,7 +31,7 @@ const Products = () => {
     name: product.name,
     unit: "viên", // Default unit
     price: product.price,
-    image: product.images?.length > 0 ? [product.images[0].image_url] : ["/placeholder-image.jpg"],
+    image: product.product_images?.length > 0 ? [product.product_images[0].image_url] : ["/placeholder-image.jpg"],
     description: product.description || "",
     weight: 0 // Default weight
   })) || [];

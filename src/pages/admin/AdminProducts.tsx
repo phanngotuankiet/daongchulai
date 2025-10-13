@@ -374,14 +374,14 @@ const AdminProducts: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Category</label>
+                  <label className="block text-sm font-medium text-gray-700">Danh mục</label>
                   <select
                     required
                     value={formData.category_id}
                     onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
                     className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2"
                   >
-                    <option value="">Chọn category</option>
+                    <option value="">Chọn danh mục</option>
                     {categoriesData?.categories?.filter((cat: any) => cat.type === 'product').map((category: any) => (
                       <option key={category.id} value={category.id}>
                         {category.name}

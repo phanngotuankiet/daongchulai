@@ -4,8 +4,8 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import kichThuoc from "../../data/kich-thuoc.json";
-import { IProduct } from "../../components/products/ProductList";
+import { useQuery } from '@apollo/client';
+import { GetProductWithImagesDocument } from '../../generated/graphql';
 import { Link } from "react-router-dom";
 
 interface ProductDetailPopUpProps {
@@ -14,29 +14,28 @@ interface ProductDetailPopUpProps {
 }
 
 const ProductDetailPopUp = ({ id, onClose }: ProductDetailPopUpProps) => {
-  const allProducts = kichThuoc.categories.reduce(
-    (acc: IProduct[], category) => {
-      return [...acc, ...category.sizes];
-    },
-    []
-  );
+  const { data: productData, loading } = useQuery(GetProductWithImagesDocument, {
+    variables: { id: parseInt(id) },
+    skip: !id || isNaN(parseInt(id))
+  });
 
-  const product: IProduct = allProducts.find(
-    (product) => product.id === id
-  ) as IProduct;
-  //   {
-  //     "id": "1",
-  //     "name": "20 x 40 x 2",
-  //     "unit": "cm",
-  //     "price": 40000,
-  //     "image": "https://via.placeholder.com/150"
-  // },
+  if (loading) {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-lg p-8">
+          <div className="text-center">Đang tải...</div>
+        </div>
+      </div>
+    );
+  }
+
+  const product = productData?.products_by_pk;
   if (!product) {
     return null;
   }
 
-  // Mảng ảnh mẫu - sau này có thể lấy từ API
-  const productImages = product.image;
+  // Get product images from GraphQL
+  const productImages = product.product_images?.map(img => img.image_url) || [];
 
   return (
     // Overlay
@@ -109,6 +108,12 @@ const ProductDetailPopUp = ({ id, onClose }: ProductDetailPopUpProps) => {
                 {product.name}
               </h1>
               <p className="text-gray-600">{product.description}</p>
+              <div className="text-lg font-semibold text-gray-900">
+                Giá: {product.price?.toLocaleString('vi-VN')} VNĐ
+              </div>
+              <div className="text-sm text-gray-500">
+                Tồn kho: {product.stock} viên
+              </div>
 
               <div className="bg-gray-100 p-4 rounded-lg">
                 <p className="text-gray-800 font-medium">
